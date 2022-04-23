@@ -15,14 +15,16 @@ using System.Windows.Shapes;
 
 namespace Autobusy.UI
 {
-	/// <summary>
-	/// Interaction logic for MainWindow.xaml
-	/// </summary>
 	public partial class MainWindow : Window
 	{
+		private DataGodzina _dataGodzina;
+		
 		public MainWindow()
 		{
 			InitializeComponent();
+			
+			_dataGodzina = new DataGodzina();
+			this.DataContext = _dataGodzina;
 		}
 	}
 }

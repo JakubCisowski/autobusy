@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:Autobusy.UI.Pages"
       mc:Ignorable="d"
-      Title="DyspozytorKierowcyPage" Height="450" Width="800">
+      Title="DyspozytorKierowcyPage" Height="360" Width="800">
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="*"/>
@@ -18,13 +18,13 @@
 			<ColumnDefinition Width="*"/>
 		</Grid.ColumnDefinitions>
 		
-		<TextBlock Grid.Row="0" Grid.ColumnSpan="3" Text="Dyspozytor - Kierowcy"/>
+		<TextBlock Grid.Row="0" Grid.ColumnSpan="3" Text="Dyspozytor - Kierowcy" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" FontWeight="Bold"/>
 		
-		<ListView Grid.Row="1" Grid.ColumnSpan="3">
+		<DataGrid Grid.Column="0" Grid.Row="1" Height="150" Grid.ColumnSpan="3" CanUserAddRows="False" SelectionUnit="Cell" SelectionMode="Extended" ItemsSource="{Binding }">
 			
-		</ListView>
+		</DataGrid>
 		
-		<Button x:Name="BackButton" Grid.Row="2" Grid.ColumnSpan="3" Content="Wróć" Click="BackButton_OnClick"/>
+		<Button Grid.Column="0" x:Name="BackButton" Grid.Row="2" Grid.ColumnSpan="3" Width="150" Content="Wróć" Click="BackButton_OnClick" Style="{StaticResource MaterialDesignRaisedLightButton}"/>
 		
 	</Grid>
 </Page>

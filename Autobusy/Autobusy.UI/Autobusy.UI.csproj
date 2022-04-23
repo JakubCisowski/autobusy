@@ -9,4 +9,12 @@
         <RootNamespace>Autobusy.UI</RootNamespace>
     </PropertyGroup>
 
+    <ItemGroup>
+      <PackageReference Include="MaterialDesignThemes" Version="4.4.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Autobusy.Logic\Autobusy.Logic.csproj" />
+    </ItemGroup>
+
 </Project>

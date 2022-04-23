@@ -3,15 +3,16 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:local="clr-namespace:Autobusy.UI.Pages"
       mc:Ignorable="d"
-      Title="ZarzadcaFlotaPage" Height="450" Width="800">
+      Title="ZarzadcaFlotaPage" Height="360" Width="700">
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="*"/>
 			<RowDefinition Height="*"/>
-			<RowDefinition Height="3*"/>
-			<RowDefinition Height="*"/>
+			<RowDefinition Height="4*"/>
+			<RowDefinition Height="2*"/>
 		</Grid.RowDefinitions>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="*"/>
@@ -19,15 +20,15 @@
 			<ColumnDefinition Width="*"/>
 		</Grid.ColumnDefinitions>
 		
-		<TextBlock Grid.Row="0" Grid.ColumnSpan="3" Text="Zarządca flotą"/>
+		<TextBlock Grid.Row="0" Grid.ColumnSpan="3" Text="Zarządca flotą" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" FontWeight="Bold"/>
 		
-		<Button Grid.Row="1" Grid.Column="0" Content="Dodaj autobus"/>
+		<Button Grid.Row="1" Grid.Column="0" Width="150" Content="Dodaj autobus" Style="{StaticResource MaterialDesignRaisedDarkButton}" HorizontalAlignment="Center"/>
 		
-		<ListView Grid.Row="2" Grid.ColumnSpan="3">
+		<DataGrid Grid.Column="0" Grid.Row="2" Height="150" Grid.ColumnSpan="3" CanUserAddRows="False" SelectionUnit="Cell" SelectionMode="Extended" ItemsSource="{Binding }">
 			
-		</ListView>
+		</DataGrid>
 		
-		<Button x:Name="BackButton" Grid.Row="3" Grid.ColumnSpan="3" Content="Wróć" Click="BackButton_OnClick"/>
+		<Button Grid.Column="0" x:Name="BackButton" Grid.Row="3" Grid.ColumnSpan="3" Width="150" Content="Wróć" Click="BackButton_OnClick" Style="{StaticResource MaterialDesignRaisedDarkButton}"/>
 		
 	</Grid>
 </Page>

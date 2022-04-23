@@ -1,13 +1,29 @@
-﻿using System.Windows;
+﻿using System;
+using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Controls;
+using Autobusy.Logic.Models;
 
 namespace Autobusy.UI.Pages;
 
 public partial class DyspozytorKursyPage : Page
 {
+	private List<Kurs> _kursy;
+	
 	public DyspozytorKursyPage()
 	{
 		InitializeComponent();
+
+		_kursy = new List<Kurs>()
+		{
+			new Kurs()
+			{
+				KursId = 1,
+				DzienOdbycia = DateTime.Today
+			}
+		};
+
+		this.DataContext = _kursy;
 	}
 
 	private void BackButton_OnClick(object sender, RoutedEventArgs e)
