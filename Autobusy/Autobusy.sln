@@ -1,8 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Autobusy.UI", "Autobusy.UI\Autobusy.UI.csproj", "{9278260E-35EA-4051-B152-FAFAB3DF87BA}"
+	ProjectSection(ProjectDependencies) = postProject
+		{DBB7AE24-C2E0-403C-A1CC-9EB9C8A77422} = {DBB7AE24-C2E0-403C-A1CC-9EB9C8A77422}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Autobusy.Models", "Autobusy.Models\Autobusy.Models.csproj", "{DBB7AE24-C2E0-403C-A1CC-9EB9C8A77422}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Autobusy.Logic", "Autobusy.Logic\Autobusy.Logic.csproj", "{DBB7AE24-C2E0-403C-A1CC-9EB9C8A77422}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
