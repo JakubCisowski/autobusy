@@ -4,74 +4,7 @@
     <projectFile>Autobusy/Autobusy.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="40359969-7316-461a-9f05-be1e0ef42a41" name="Changes" comment="Generate models based on database relationships (DDL script). Add DbContext for database access and specify a connection string.">
-      <change afterPath="$PROJECT_DIR$/Autobusy.Logic/bin/Debug/net6.0/Autobusy.Logic.deps.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Autobusy.Logic/bin/Debug/net6.0/Autobusy.Models.runtimeconfig.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Autobusy.Logic/bin/Debug/net6.0/ref/Autobusy.Logic.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Autobusy.Logic/obj/Autobusy.Logic.csproj.nuget.dgspec.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Autobusy.Logic/obj/Autobusy.Models.csproj.nuget.g.props" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Autobusy.Logic/obj/Autobusy.Models.csproj.nuget.g.targets" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Autobusy.Logic/obj/Debug/net6.0/Autobusy.Logic.AssemblyInfo.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Autobusy.Logic/obj/Debug/net6.0/Autobusy.Logic.AssemblyInfoInputs.cache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Autobusy.Logic/obj/Debug/net6.0/Autobusy.Logic.GeneratedMSBuildEditorConfig.editorconfig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Autobusy.Logic/obj/Debug/net6.0/Autobusy.Logic.assets.cache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Autobusy.Logic/obj/Debug/net6.0/Autobusy.Logic.csproj.CoreCompileInputs.cache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Autobusy.Logic/obj/Debug/net6.0/Autobusy.Logic.csproj.FileListAbsolute.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Autobusy.Logic/obj/Debug/net6.0/Autobusy.Logic.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Autobusy.Logic/obj/Debug/net6.0/Autobusy.Logic.genruntimeconfig.cache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Autobusy.Logic/obj/Debug/net6.0/Autobusy.Logic.pdb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Autobusy.Logic/obj/Debug/net6.0/Autobusy.Models.GlobalUsings.g.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Autobusy.Logic/obj/Debug/net6.0/Autobusy.Models.csproj.AssemblyReference.cache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Autobusy.Logic/obj/Debug/net6.0/ref/Autobusy.Logic.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Autobusy.Logic/obj/project.packagespec.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Autobusy.Models/Autobus.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Autobusy.Logic/Models/Autobus.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Autobusy.Models/Autobusy.Models.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Autobusy.Logic/Autobusy.Logic.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Autobusy.Models/ConnectionStringManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Autobusy.Logic/ConnectionStringManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Autobusy.Models/Contexts/AutobusyContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Autobusy.Logic/Contexts/AutobusyContext.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Autobusy.Models/Kierowca.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Autobusy.Logic/Models/Kierowca.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Autobusy.Models/Kurs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Autobusy.Logic/Models/Kurs.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Autobusy.Models/Linia.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Autobusy.Logic/Models/Linia.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Autobusy.Models/Migrations/20220423114946_init.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Autobusy.Logic/Migrations/20220423114946_init.Designer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Autobusy.Models/Migrations/20220423114946_init.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Autobusy.Logic/Migrations/20220423114946_init.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Autobusy.Models/Migrations/AutobusyContextModelSnapshot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Autobusy.Logic/Migrations/AutobusyContextModelSnapshot.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Autobusy.Models/PlanKursu.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Autobusy.Logic/Models/PlanKursu.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Autobusy.Models/Przejazd.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Autobusy.Logic/Models/Przejazd.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Autobusy.Models/Przystanek.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Autobusy.Logic/Models/Przystanek.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Autobusy.Models/PrzystanekWLinii.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Autobusy.Logic/Models/PrzystanekWLinii.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Autobusy.Models/RealizacjaPrzejazdu.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Autobusy.Logic/Models/RealizacjaPrzejazdu.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Autobusy.Models/Serwis.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Autobusy.Logic/Models/Serwis.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Autobusy.Models/StanAutobusu.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Autobusy.Logic/Models/StanAutobusu.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Autobusy.Models/TypLinii.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Autobusy.Logic/Models/TypLinii.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Autobusy.Models/TypSerwisu.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Autobusy.Logic/Models/TypSerwisu.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Autobusy.Models/bin/Debug/net6.0/Autobusy.Models.deps.json" beforeDir="false" afterPath="$PROJECT_DIR$/Autobusy.Logic/bin/Debug/net6.0/Autobusy.Models.deps.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Autobusy.Models/bin/Debug/net6.0/Autobusy.Models.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Autobusy.Logic/bin/Debug/net6.0/Autobusy.Logic.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Autobusy.Models/bin/Debug/net6.0/Autobusy.Models.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Autobusy.Logic/bin/Debug/net6.0/Autobusy.Logic.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Autobusy.Models/bin/Debug/net6.0/Autobusy.Models.runtimeconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/Autobusy.Logic/bin/Debug/net6.0/Autobusy.Logic.runtimeconfig.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Autobusy.Models/bin/Debug/net6.0/ref/Autobusy.Models.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Autobusy.Logic/bin/Debug/net6.0/ref/Autobusy.Models.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Autobusy.Models/obj/Autobusy.Models.csproj.EntityFrameworkCore.targets" beforeDir="false" afterPath="$PROJECT_DIR$/Autobusy.Logic/obj/Autobusy.Models.csproj.EntityFrameworkCore.targets" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Autobusy.Models/obj/Autobusy.Models.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/Autobusy.Logic/obj/Autobusy.Models.csproj.nuget.dgspec.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Autobusy.Models/obj/Autobusy.Models.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/Autobusy.Logic/obj/Autobusy.Logic.csproj.nuget.g.props" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Autobusy.Models/obj/Autobusy.Models.csproj.nuget.g.targets" beforeDir="false" afterPath="$PROJECT_DIR$/Autobusy.Logic/obj/Autobusy.Logic.csproj.nuget.g.targets" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Autobusy.Models/obj/Debug/net6.0/.NETCoreApp,Version=v6.0.AssemblyAttributes.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Autobusy.Logic/obj/Debug/net6.0/.NETCoreApp,Version=v6.0.AssemblyAttributes.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Autobusy.Models/obj/Debug/net6.0/Autobusy.Models.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Autobusy.Logic/obj/Debug/net6.0/Autobusy.Models.AssemblyInfo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Autobusy.Models/obj/Debug/net6.0/Autobusy.Models.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Autobusy.Logic/obj/Debug/net6.0/Autobusy.Models.AssemblyInfoInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Autobusy.Models/obj/Debug/net6.0/Autobusy.Models.GeneratedMSBuildEditorConfig.editorconfig" beforeDir="false" afterPath="$PROJECT_DIR$/Autobusy.Logic/obj/Debug/net6.0/Autobusy.Models.GeneratedMSBuildEditorConfig.editorconfig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Autobusy.Models/obj/Debug/net6.0/Autobusy.Models.GlobalUsings.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Autobusy.Logic/obj/Debug/net6.0/Autobusy.Logic.GlobalUsings.g.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Autobusy.Models/obj/Debug/net6.0/Autobusy.Models.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Autobusy.Logic/obj/Debug/net6.0/Autobusy.Models.assets.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Autobusy.Models/obj/Debug/net6.0/Autobusy.Models.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Autobusy.Logic/obj/Debug/net6.0/Autobusy.Logic.csproj.AssemblyReference.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Autobusy.Models/obj/Debug/net6.0/Autobusy.Models.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Autobusy.Logic/obj/Debug/net6.0/Autobusy.Models.csproj.CoreCompileInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Autobusy.Models/obj/Debug/net6.0/Autobusy.Models.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Autobusy.Logic/obj/Debug/net6.0/Autobusy.Models.csproj.FileListAbsolute.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Autobusy.Models/obj/Debug/net6.0/Autobusy.Models.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Autobusy.Logic/obj/Debug/net6.0/Autobusy.Models.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Autobusy.Models/obj/Debug/net6.0/Autobusy.Models.genruntimeconfig.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Autobusy.Logic/obj/Debug/net6.0/Autobusy.Models.genruntimeconfig.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Autobusy.Models/obj/Debug/net6.0/Autobusy.Models.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Autobusy.Logic/obj/Debug/net6.0/Autobusy.Models.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Autobusy.Models/obj/Debug/net6.0/ref/Autobusy.Models.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Autobusy.Logic/obj/Debug/net6.0/ref/Autobusy.Models.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Autobusy.Models/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/Autobusy.Logic/obj/project.assets.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Autobusy.Models/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Autobusy.Logic/obj/project.nuget.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Autobusy.Models/obj/project.packagespec.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Autobusy.Models/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/Autobusy.Logic/obj/rider.project.restore.info" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Autobusy.UI/obj/Debug/net6.0-windows/Autobusy.UI.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Autobusy.UI/obj/Debug/net6.0-windows/Autobusy.UI.csproj.AssemblyReference.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Autobusy.sln" beforeDir="false" afterPath="$PROJECT_DIR$/Autobusy.sln" afterDir="false" />
-    </list>
+    <list default="true" id="40359969-7316-461a-9f05-be1e0ef42a41" name="Changes" comment="Reorganize project structure. Disable nullable types warnings." />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -150,7 +83,7 @@
       <option name="presentableId" value="Default" />
       <updated>1650704665975</updated>
       <workItem from="1650704670378" duration="8075000" />
-      <workItem from="1650713500584" duration="1978000" />
+      <workItem from="1650713500584" duration="2399000" />
     </task>
     <task id="LOCAL-00001" summary="Fix class and database diagrams. Add base of interface.">
       <created>1650707763804</created>
@@ -180,7 +113,21 @@
       <option name="project" value="LOCAL" />
       <updated>1650715257770</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Add database diagram generated in SSMS.">
+      <created>1650715643571</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1650715643571</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Reorganize project structure. Disable nullable types warnings.">
+      <created>1650715663512</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1650715663512</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -201,6 +148,8 @@
     <MESSAGE value="Overwrite documentation files." />
     <MESSAGE value="Remove unnecessary properties from class diagram." />
     <MESSAGE value="Generate models based on database relationships (DDL script). Add DbContext for database access and specify a connection string." />
-    <option name="LAST_COMMIT_MESSAGE" value="Generate models based on database relationships (DDL script). Add DbContext for database access and specify a connection string." />
+    <MESSAGE value="Add database diagram generated in SSMS." />
+    <MESSAGE value="Reorganize project structure. Disable nullable types warnings." />
+    <option name="LAST_COMMIT_MESSAGE" value="Reorganize project structure. Disable nullable types warnings." />
   </component>
 </project>
