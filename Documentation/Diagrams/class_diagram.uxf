@@ -64,7 +64,7 @@ ID
 ID kursu
 ID kierowcy
 ID autobusu
-Lista przyjazdów
+Lista realizacji przejazdu
 Ilość spalonego paliwa
 Ilość skasowanych biletów
 --
@@ -83,9 +83,8 @@ m2=n
 zawiera listę</panel_attributes><additional_attributes>170;170;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>405</x><y>460</y><w>210</w><h>150</h></coordinates><panel_attributes>Kurs
 --
 ID
-Data odbycia
-Godzina rozpoczecia
-Godzina zakonczenia
+Dzień odbycia
+Lista planów kursu
 --</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>765</x><y>290</y><w>210</w><h>150</h></coordinates><panel_attributes>Realizacja przejazdu
 --
 ID
