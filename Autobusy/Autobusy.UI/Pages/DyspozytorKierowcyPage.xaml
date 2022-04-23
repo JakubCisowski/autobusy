@@ -1,0 +1,30 @@
+﻿<Page x:Class="Autobusy.UI.Pages.DyspozytorKierowcyPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="clr-namespace:Autobusy.UI.Pages"
+      mc:Ignorable="d"
+      Title="DyspozytorKierowcyPage" Height="450" Width="800">
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="2*"/>
+			<RowDefinition Height="*"/>
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="*"/>
+			<ColumnDefinition Width="*"/>
+			<ColumnDefinition Width="*"/>
+		</Grid.ColumnDefinitions>
+		
+		<TextBlock Grid.Row="0" Grid.ColumnSpan="3" Text="Dyspozytor - Kierowcy"/>
+		
+		<ListView Grid.Row="1" Grid.ColumnSpan="3">
+			
+		</ListView>
+		
+		<Button x:Name="BackButton" Grid.Row="2" Grid.ColumnSpan="3" Content="Wróć" Click="BackButton_OnClick"/>
+		
+	</Grid>
+</Page>
