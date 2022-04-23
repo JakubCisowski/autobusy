@@ -1,0 +1,14 @@
+C:\Programowanie\2022_TAB_S14_NITKIEWICZ\Autobusy\Autobusy.Models\bin\Debug\net6.0\Autobusy.Models.deps.json
+C:\Programowanie\2022_TAB_S14_NITKIEWICZ\Autobusy\Autobusy.Models\bin\Debug\net6.0\Autobusy.Models.runtimeconfig.json
+C:\Programowanie\2022_TAB_S14_NITKIEWICZ\Autobusy\Autobusy.Models\bin\Debug\net6.0\Autobusy.Models.dll
+C:\Programowanie\2022_TAB_S14_NITKIEWICZ\Autobusy\Autobusy.Models\bin\Debug\net6.0\ref\Autobusy.Models.dll
+C:\Programowanie\2022_TAB_S14_NITKIEWICZ\Autobusy\Autobusy.Models\bin\Debug\net6.0\Autobusy.Models.pdb
+C:\Programowanie\2022_TAB_S14_NITKIEWICZ\Autobusy\Autobusy.Models\obj\Debug\net6.0\Autobusy.Models.csproj.AssemblyReference.cache
+C:\Programowanie\2022_TAB_S14_NITKIEWICZ\Autobusy\Autobusy.Models\obj\Debug\net6.0\Autobusy.Models.GeneratedMSBuildEditorConfig.editorconfig
+C:\Programowanie\2022_TAB_S14_NITKIEWICZ\Autobusy\Autobusy.Models\obj\Debug\net6.0\Autobusy.Models.AssemblyInfoInputs.cache
+C:\Programowanie\2022_TAB_S14_NITKIEWICZ\Autobusy\Autobusy.Models\obj\Debug\net6.0\Autobusy.Models.AssemblyInfo.cs
+C:\Programowanie\2022_TAB_S14_NITKIEWICZ\Autobusy\Autobusy.Models\obj\Debug\net6.0\Autobusy.Models.csproj.CoreCompileInputs.cache
+C:\Programowanie\2022_TAB_S14_NITKIEWICZ\Autobusy\Autobusy.Models\obj\Debug\net6.0\Autobusy.Models.dll
+C:\Programowanie\2022_TAB_S14_NITKIEWICZ\Autobusy\Autobusy.Models\obj\Debug\net6.0\ref\Autobusy.Models.dll
+C:\Programowanie\2022_TAB_S14_NITKIEWICZ\Autobusy\Autobusy.Models\obj\Debug\net6.0\Autobusy.Models.pdb
+C:\Programowanie\2022_TAB_S14_NITKIEWICZ\Autobusy\Autobusy.Models\obj\Debug\net6.0\Autobusy.Models.genruntimeconfig.cache
