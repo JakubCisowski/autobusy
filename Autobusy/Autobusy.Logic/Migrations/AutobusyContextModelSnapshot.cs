@@ -22,7 +22,7 @@ namespace Autobusy.Logic.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("Autobusy.Logic.Autobus", b =>
+            modelBuilder.Entity("Autobusy.Logic.Models.Autobus", b =>
                 {
                     b.Property<int>("AutobusId")
                         .ValueGeneratedOnAdd()
@@ -34,11 +34,9 @@ namespace Autobusy.Logic.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Marka")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NumerRejestracyjny")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("SpalanieNa100")
@@ -52,7 +50,7 @@ namespace Autobusy.Logic.Migrations
                     b.ToTable("Autobusy");
                 });
 
-            modelBuilder.Entity("Autobusy.Logic.Kierowca", b =>
+            modelBuilder.Entity("Autobusy.Logic.Models.Kierowca", b =>
                 {
                     b.Property<int>("KierowcaId")
                         .ValueGeneratedOnAdd()
@@ -64,11 +62,9 @@ namespace Autobusy.Logic.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Imie")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nazwisko")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("KierowcaId");
@@ -76,7 +72,7 @@ namespace Autobusy.Logic.Migrations
                     b.ToTable("Kierowcy");
                 });
 
-            modelBuilder.Entity("Autobusy.Logic.Kurs", b =>
+            modelBuilder.Entity("Autobusy.Logic.Models.Kurs", b =>
                 {
                     b.Property<int>("KursId")
                         .ValueGeneratedOnAdd()
@@ -84,7 +80,10 @@ namespace Autobusy.Logic.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("KursId"), 1L, 1);
 
-                    b.Property<DateTime>("DzienOdbycia")
+                    b.Property<int>("DzienTygodnia")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("GodzinaRozpoczecia")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("LiniaId")
@@ -97,7 +96,7 @@ namespace Autobusy.Logic.Migrations
                     b.ToTable("Kursy");
                 });
 
-            modelBuilder.Entity("Autobusy.Logic.Linia", b =>
+            modelBuilder.Entity("Autobusy.Logic.Models.Linia", b =>
                 {
                     b.Property<int>("LiniaId")
                         .ValueGeneratedOnAdd()
@@ -109,7 +108,6 @@ namespace Autobusy.Logic.Migrations
                         .HasColumnType("float");
 
                     b.Property<string>("Numer")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Typ")
@@ -120,7 +118,7 @@ namespace Autobusy.Logic.Migrations
                     b.ToTable("Linie");
                 });
 
-            modelBuilder.Entity("Autobusy.Logic.PlanKursu", b =>
+            modelBuilder.Entity("Autobusy.Logic.Models.PlanKursu", b =>
                 {
                     b.Property<int>("PlanKursuId")
                         .ValueGeneratedOnAdd()
@@ -128,31 +126,23 @@ namespace Autobusy.Logic.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PlanKursuId"), 1L, 1);
 
-                    b.Property<int>("KursId")
+                    b.Property<int?>("KursId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("PlanowaGodzina")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("PrzystanekId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RealizacjaPrzejazduId")
+                    b.Property<int>("PrzystanekWLiniiId")
                         .HasColumnType("int");
 
                     b.HasKey("PlanKursuId");
 
                     b.HasIndex("KursId");
 
-                    b.HasIndex("PrzystanekId");
-
-                    b.HasIndex("RealizacjaPrzejazduId")
-                        .IsUnique();
-
                     b.ToTable("PlanyKursu");
                 });
 
-            modelBuilder.Entity("Autobusy.Logic.Przejazd", b =>
+            modelBuilder.Entity("Autobusy.Logic.Models.Przejazd", b =>
                 {
                     b.Property<int>("PrzejazdId")
                         .ValueGeneratedOnAdd()
@@ -160,8 +150,11 @@ namespace Autobusy.Logic.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PrzejazdId"), 1L, 1);
 
-                    b.Property<int>("AutobusId")
+                    b.Property<int?>("AutobusId")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("Data")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("IloscSkasowanychBiletow")
                         .HasColumnType("int");
@@ -169,10 +162,10 @@ namespace Autobusy.Logic.Migrations
                     b.Property<double>("IloscSpalonegoPaliwa")
                         .HasColumnType("float");
 
-                    b.Property<int>("KierowcaId")
+                    b.Property<int?>("KierowcaId")
                         .HasColumnType("int");
 
-                    b.Property<int>("KursId")
+                    b.Property<int?>("KursId")
                         .HasColumnType("int");
 
                     b.HasKey("PrzejazdId");
@@ -186,7 +179,7 @@ namespace Autobusy.Logic.Migrations
                     b.ToTable("Przejazdy");
                 });
 
-            modelBuilder.Entity("Autobusy.Logic.Przystanek", b =>
+            modelBuilder.Entity("Autobusy.Logic.Models.Przystanek", b =>
                 {
                     b.Property<int>("PrzystanekId")
                         .ValueGeneratedOnAdd()
@@ -195,15 +188,12 @@ namespace Autobusy.Logic.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PrzystanekId"), 1L, 1);
 
                     b.Property<string>("Adres")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nazwa")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Numer")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("PrzystanekId");
@@ -211,7 +201,7 @@ namespace Autobusy.Logic.Migrations
                     b.ToTable("Przystanki");
                 });
 
-            modelBuilder.Entity("Autobusy.Logic.PrzystanekWLinii", b =>
+            modelBuilder.Entity("Autobusy.Logic.Models.PrzystanekWLinii", b =>
                 {
                     b.Property<int>("PrzystanekWLiniiId")
                         .ValueGeneratedOnAdd()
@@ -219,22 +209,32 @@ namespace Autobusy.Logic.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PrzystanekWLiniiId"), 1L, 1);
 
-                    b.Property<int>("LiniaId")
+                    b.Property<int>("LiczbaPorzadkowa")
                         .HasColumnType("int");
 
-                    b.Property<int>("PrzystanekId")
+                    b.Property<int?>("LiniaId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PlanKursuId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PrzystanekId")
                         .HasColumnType("int");
 
                     b.HasKey("PrzystanekWLiniiId");
 
                     b.HasIndex("LiniaId");
 
+                    b.HasIndex("PlanKursuId")
+                        .IsUnique()
+                        .HasFilter("[PlanKursuId] IS NOT NULL");
+
                     b.HasIndex("PrzystanekId");
 
                     b.ToTable("PrzystankiWLinii");
                 });
 
-            modelBuilder.Entity("Autobusy.Logic.RealizacjaPrzejazdu", b =>
+            modelBuilder.Entity("Autobusy.Logic.Models.RealizacjaPrzejazdu", b =>
                 {
                     b.Property<int>("RealizacjaPrzejazduId")
                         .ValueGeneratedOnAdd()
@@ -245,7 +245,7 @@ namespace Autobusy.Logic.Migrations
                     b.Property<DateTime>("FaktycznaGodzina")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("PlanKursuId")
+                    b.Property<int?>("PlanKursuId")
                         .HasColumnType("int");
 
                     b.Property<int?>("PrzejazdId")
@@ -253,12 +253,14 @@ namespace Autobusy.Logic.Migrations
 
                     b.HasKey("RealizacjaPrzejazduId");
 
+                    b.HasIndex("PlanKursuId");
+
                     b.HasIndex("PrzejazdId");
 
                     b.ToTable("RealizacjePrzejazdu");
                 });
 
-            modelBuilder.Entity("Autobusy.Logic.Serwis", b =>
+            modelBuilder.Entity("Autobusy.Logic.Models.Serwis", b =>
                 {
                     b.Property<int>("SerwisId")
                         .ValueGeneratedOnAdd()
@@ -266,7 +268,7 @@ namespace Autobusy.Logic.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SerwisId"), 1L, 1);
 
-                    b.Property<int>("AutobusId")
+                    b.Property<int?>("AutobusId")
                         .HasColumnType("int");
 
                     b.Property<double>("Cena")
@@ -276,7 +278,6 @@ namespace Autobusy.Logic.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Opis")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Typ")
@@ -289,59 +290,37 @@ namespace Autobusy.Logic.Migrations
                     b.ToTable("Serwisy");
                 });
 
-            modelBuilder.Entity("Autobusy.Logic.Kurs", b =>
+            modelBuilder.Entity("Autobusy.Logic.Models.Kurs", b =>
                 {
-                    b.HasOne("Autobusy.Logic.Linia", null)
+                    b.HasOne("Autobusy.Logic.Models.Linia", "Linia")
                         .WithMany("Kursy")
                         .HasForeignKey("LiniaId");
+
+                    b.Navigation("Linia");
                 });
 
-            modelBuilder.Entity("Autobusy.Logic.PlanKursu", b =>
+            modelBuilder.Entity("Autobusy.Logic.Models.PlanKursu", b =>
                 {
-                    b.HasOne("Autobusy.Logic.Kurs", "Kurs")
+                    b.HasOne("Autobusy.Logic.Models.Kurs", "Kurs")
                         .WithMany("PlanyKursu")
-                        .HasForeignKey("KursId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Autobusy.Logic.Przystanek", "Przystanek")
-                        .WithMany()
-                        .HasForeignKey("PrzystanekId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Autobusy.Logic.RealizacjaPrzejazdu", "RealizacjaPrzejazdu")
-                        .WithOne("PlanKursu")
-                        .HasForeignKey("Autobusy.Logic.PlanKursu", "RealizacjaPrzejazduId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("KursId");
 
                     b.Navigation("Kurs");
-
-                    b.Navigation("Przystanek");
-
-                    b.Navigation("RealizacjaPrzejazdu");
                 });
 
-            modelBuilder.Entity("Autobusy.Logic.Przejazd", b =>
+            modelBuilder.Entity("Autobusy.Logic.Models.Przejazd", b =>
                 {
-                    b.HasOne("Autobusy.Logic.Autobus", "Autobus")
-                        .WithMany()
-                        .HasForeignKey("AutobusId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Autobusy.Logic.Kierowca", "Kierowca")
+                    b.HasOne("Autobusy.Logic.Models.Autobus", "Autobus")
                         .WithMany("Przejazdy")
-                        .HasForeignKey("KierowcaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AutobusId");
 
-                    b.HasOne("Autobusy.Logic.Kurs", "Kurs")
+                    b.HasOne("Autobusy.Logic.Models.Kierowca", "Kierowca")
                         .WithMany("Przejazdy")
-                        .HasForeignKey("KursId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("KierowcaId");
+
+                    b.HasOne("Autobusy.Logic.Models.Kurs", "Kurs")
+                        .WithMany("Przejazdy")
+                        .HasForeignKey("KursId");
 
                     b.Navigation("Autobus");
 
@@ -350,81 +329,92 @@ namespace Autobusy.Logic.Migrations
                     b.Navigation("Kurs");
                 });
 
-            modelBuilder.Entity("Autobusy.Logic.PrzystanekWLinii", b =>
+            modelBuilder.Entity("Autobusy.Logic.Models.PrzystanekWLinii", b =>
                 {
-                    b.HasOne("Autobusy.Logic.Linia", "Linia")
+                    b.HasOne("Autobusy.Logic.Models.Linia", "Linia")
                         .WithMany("Przystanki")
-                        .HasForeignKey("LiniaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("LiniaId");
 
-                    b.HasOne("Autobusy.Logic.Przystanek", "Przystanek")
+                    b.HasOne("Autobusy.Logic.Models.PlanKursu", "PlanKursu")
+                        .WithOne("PrzystanekWLinii")
+                        .HasForeignKey("Autobusy.Logic.Models.PrzystanekWLinii", "PlanKursuId");
+
+                    b.HasOne("Autobusy.Logic.Models.Przystanek", "Przystanek")
                         .WithMany("Przystanki")
-                        .HasForeignKey("PrzystanekId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PrzystanekId");
 
                     b.Navigation("Linia");
+
+                    b.Navigation("PlanKursu");
 
                     b.Navigation("Przystanek");
                 });
 
-            modelBuilder.Entity("Autobusy.Logic.RealizacjaPrzejazdu", b =>
+            modelBuilder.Entity("Autobusy.Logic.Models.RealizacjaPrzejazdu", b =>
                 {
-                    b.HasOne("Autobusy.Logic.Przejazd", null)
-                        .WithMany("Realizacje")
+                    b.HasOne("Autobusy.Logic.Models.PlanKursu", "PlanKursu")
+                        .WithMany("RealizacjePrzejazdu")
+                        .HasForeignKey("PlanKursuId");
+
+                    b.HasOne("Autobusy.Logic.Models.Przejazd", "Przejazd")
+                        .WithMany("RealizacjePrzejazdu")
                         .HasForeignKey("PrzejazdId");
+
+                    b.Navigation("PlanKursu");
+
+                    b.Navigation("Przejazd");
                 });
 
-            modelBuilder.Entity("Autobusy.Logic.Serwis", b =>
+            modelBuilder.Entity("Autobusy.Logic.Models.Serwis", b =>
                 {
-                    b.HasOne("Autobusy.Logic.Autobus", "NaprawianyAutobus")
+                    b.HasOne("Autobusy.Logic.Models.Autobus", "NaprawianyAutobus")
                         .WithMany("Serwisy")
-                        .HasForeignKey("AutobusId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AutobusId");
 
                     b.Navigation("NaprawianyAutobus");
                 });
 
-            modelBuilder.Entity("Autobusy.Logic.Autobus", b =>
+            modelBuilder.Entity("Autobusy.Logic.Models.Autobus", b =>
                 {
+                    b.Navigation("Przejazdy");
+
                     b.Navigation("Serwisy");
                 });
 
-            modelBuilder.Entity("Autobusy.Logic.Kierowca", b =>
+            modelBuilder.Entity("Autobusy.Logic.Models.Kierowca", b =>
                 {
                     b.Navigation("Przejazdy");
                 });
 
-            modelBuilder.Entity("Autobusy.Logic.Kurs", b =>
+            modelBuilder.Entity("Autobusy.Logic.Models.Kurs", b =>
                 {
                     b.Navigation("PlanyKursu");
 
                     b.Navigation("Przejazdy");
                 });
 
-            modelBuilder.Entity("Autobusy.Logic.Linia", b =>
+            modelBuilder.Entity("Autobusy.Logic.Models.Linia", b =>
                 {
                     b.Navigation("Kursy");
 
                     b.Navigation("Przystanki");
                 });
 
-            modelBuilder.Entity("Autobusy.Logic.Przejazd", b =>
+            modelBuilder.Entity("Autobusy.Logic.Models.PlanKursu", b =>
                 {
-                    b.Navigation("Realizacje");
+                    b.Navigation("PrzystanekWLinii");
+
+                    b.Navigation("RealizacjePrzejazdu");
                 });
 
-            modelBuilder.Entity("Autobusy.Logic.Przystanek", b =>
+            modelBuilder.Entity("Autobusy.Logic.Models.Przejazd", b =>
+                {
+                    b.Navigation("RealizacjePrzejazdu");
+                });
+
+            modelBuilder.Entity("Autobusy.Logic.Models.Przystanek", b =>
                 {
                     b.Navigation("Przystanki");
-                });
-
-            modelBuilder.Entity("Autobusy.Logic.RealizacjaPrzejazdu", b =>
-                {
-                    b.Navigation("PlanKursu")
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

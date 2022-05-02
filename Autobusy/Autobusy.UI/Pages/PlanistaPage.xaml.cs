@@ -18,10 +18,8 @@ public partial class PlanistaPage : Page
 		{
 			new PlanKursu()
 			{
-				Kurs = new Kurs(){KursId = 1, DzienOdbycia = DateTime.Today},
 				PlanKursuId = 1,
-				PlanowaGodzina = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, 8, 0, 0),
-				Przystanek = new Przystanek(){PrzystanekId = 1, Adres = "Losowy", Nazwa = "Nazwa Przystanku", Numer = "P123"}
+				PrzystanekWLinii = new PrzystanekWLinii(){LiczbaPorzadkowa = 1}
 			}
 		};
 		
@@ -32,6 +30,6 @@ public partial class PlanistaPage : Page
 	{
 		var window = Application.Current.MainWindow as MainWindow;
 
-		window.MainFrame.Navigate(new GlownyPage());;
+		window.MainFrame.Navigate(new GlownyPage());
 	}
 }

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Autobusy.Logic.Models;
@@ -14,9 +15,8 @@ public class PlanKursu
 	[ForeignKey("KursId")]
 	public Kurs Kurs { get; set; }
 	
-	[ForeignKey("PrzystanekId")]
-	public Przystanek Przystanek { get; set; }
+	public int PrzystanekWLiniiId { get; set; }	// W przypadku relacji 1:1, jedna z encji musi posiadać nie tylko obiekt ale również id drugiego.
+	public PrzystanekWLinii PrzystanekWLinii { get; set; }
 	
-	[ForeignKey("RealizacjaPrzejazduId")]
-	public RealizacjaPrzejazdu RealizacjaPrzejazdu { get; set; }
+	public List<RealizacjaPrzejazdu> RealizacjePrzejazdu { get; set; }
 }

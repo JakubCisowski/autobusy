@@ -9,9 +9,14 @@ public class PrzystanekWLinii
 	[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 	public int PrzystanekWLiniiId { get; set; }
 	
+	public int LiczbaPorzadkowa { get; set; }
+	
 	[ForeignKey("PrzystanekId")]
 	public Przystanek Przystanek { get; set; }
 	
 	[ForeignKey("LiniaId")]
 	public Linia Linia { get; set; }
+	
+	[ForeignKey("PlanKursuId")]
+	public PlanKursu PlanKursu { get; set; }
 }

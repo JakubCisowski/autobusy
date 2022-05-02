@@ -19,7 +19,7 @@ public partial class DyspozytorKursyPage : Page
 			new Kurs()
 			{
 				KursId = 1,
-				DzienOdbycia = DateTime.Today
+				DzienTygodnia = DzienTygodnia.Poniedzialek
 			}
 		};
 

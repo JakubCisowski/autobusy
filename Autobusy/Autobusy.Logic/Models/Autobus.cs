@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Autobusy.Logic.Models;
@@ -16,4 +18,6 @@ public class Autobus
 	public double SpalanieNa100 { get; set; }
 	
 	public List<Serwis> Serwisy { get; set; }
+	
+	public List<Przejazd> Przejazdy { get; set; }
 }
