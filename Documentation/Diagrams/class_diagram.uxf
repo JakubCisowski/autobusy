@@ -1,11 +1,11 @@
-<diagram program="umletino" version="14.3.0"><zoom_level>10</zoom_level><element><id>UMLClass</id><coordinates><x>45</x><y>120</y><w>210</w><h>190</h></coordinates><panel_attributes>Kierowca
+<diagram program="umletino" version="15.0.0"><zoom_level>10</zoom_level><element><id>UMLClass</id><coordinates><x>40</x><y>120</y><w>210</w><h>190</h></coordinates><panel_attributes>Kierowca
 --
 ID
 Imie
 Nazwisko
 Doswiadczenie (w latach?)
 --
-Oblicz średnie spalanie kierowcy</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>785</x><y>50</y><w>210</w><h>190</h></coordinates><panel_attributes>Autobus
+Oblicz średnie spalanie kierowcy</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>780</x><y>50</y><w>210</w><h>190</h></coordinates><panel_attributes>Autobus
 --
 ID
 Numer rejestracyjny
@@ -15,7 +15,7 @@ Stan
 Średnie spalanie na 100km
 --
 Zmien stan
-Wyślij do serwisu</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>85</x><y>500</y><w>210</w><h>140</h></coordinates><panel_attributes>Linia
+Wyślij do serwisu</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>80</x><y>500</y><w>210</w><h>140</h></coordinates><panel_attributes>Linia
 --
 ID
 Numer 
@@ -23,42 +23,42 @@ Typ (w jedną lub obie strony)
 Długość w kilometrach
 Lista przystanków
 --
-Oblicz rentowność linii</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>455</x><y>750</y><w>210</w><h>150</h></coordinates><panel_attributes>Przystanek
+Oblicz rentowność linii</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>450</x><y>750</y><w>210</w><h>150</h></coordinates><panel_attributes>Przystanek
 --
 ID
 Numer
 Nazwa
 Adres
 --
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1095</x><y>20</y><w>210</w><h>150</h></coordinates><panel_attributes>Serwis
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1090</x><y>20</y><w>210</w><h>150</h></coordinates><panel_attributes>Serwis
 --
 ID
 Data 
 Typ (naprawa/przegląd)
 Koszt
 Opis 
---</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>245</x><y>110</y><w>190</w><h>70</h></coordinates><panel_attributes>lt=&lt;-&gt;
+--</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>240</x><y>110</y><w>190</w><h>70</h></coordinates><panel_attributes>lt=&lt;-&gt;
 m1=n
 m2=1
-jest przypisany do</panel_attributes><additional_attributes>170;50;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>985</x><y>40</y><w>130</w><h>150</h></coordinates><panel_attributes>lt=&lt;-&gt;
+jest przypisany do</panel_attributes><additional_attributes>170;50;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>980</x><y>40</y><w>130</w><h>150</h></coordinates><panel_attributes>lt=&lt;-&gt;
 m1=1
 m2=n
-w</panel_attributes><additional_attributes>10;10;110;130</additional_attributes></element><element><id>Relation</id><coordinates><x>615</x><y>40</y><w>190</w><h>140</h></coordinates><panel_attributes>lt=&lt;-&gt;
+w</panel_attributes><additional_attributes>10;10;110;130</additional_attributes></element><element><id>Relation</id><coordinates><x>610</x><y>40</y><w>190</w><h>140</h></coordinates><panel_attributes>lt=&lt;-&gt;
 m1=1
 m2=n
-bierze udział w</panel_attributes><additional_attributes>170;10;10;120</additional_attributes></element><element><id>Relation</id><coordinates><x>180</x><y>630</y><w>90</w><h>130</h></coordinates><panel_attributes>lt=&lt;-&gt;
+bierze udział w</panel_attributes><additional_attributes>170;10;10;120</additional_attributes></element><element><id>Relation</id><coordinates><x>180</x><y>630</y><w>100</w><h>130</h></coordinates><panel_attributes>lt=&lt;-&gt;
 m1=1
 m2=n
 zawiera listę</panel_attributes><additional_attributes>10;10;10;110</additional_attributes></element><element><id>Relation</id><coordinates><x>280</x><y>590</y><w>150</w><h>50</h></coordinates><panel_attributes>lt=&lt;-&gt;
 m1=1
 m2=n
-jest przypisany do</panel_attributes><additional_attributes>10;20;130;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>775</x><y>490</y><w>210</w><h>150</h></coordinates><panel_attributes>Plan kursu
+jest przypisany do</panel_attributes><additional_attributes>10;20;130;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>770</x><y>490</y><w>210</w><h>150</h></coordinates><panel_attributes>Plan kursu
 --
 ID
 ID kursu
-ID przystanku
+ID przystanku w linii
 planowa godzina
---</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>415</x><y>160</y><w>210</w><h>150</h></coordinates><panel_attributes>Przejazd
+--</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>410</x><y>160</y><w>210</w><h>150</h></coordinates><panel_attributes>Przejazd
 --
 ID
 ID kursu
@@ -67,37 +67,45 @@ ID autobusu
 Lista realizacji przejazdu
 Ilość spalonego paliwa
 Ilość skasowanych biletów
+Data
 --
 Oblicz sumę opóźnień
 </panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>500</x><y>300</y><w>80</w><h>180</h></coordinates><panel_attributes>lt=&lt;-&gt;
 m1=1
 m2=n
-w ramach</panel_attributes><additional_attributes>10;160;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>95</x><y>740</y><w>210</w><h>150</h></coordinates><panel_attributes>Przystanek w Linii
+w ramach</panel_attributes><additional_attributes>10;160;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>90</x><y>740</y><w>210</w><h>150</h></coordinates><panel_attributes>Przystanek w Linii
 --
+ID
 ID przystanku
 ID linii
+Liczba porządkowa
 --
 </panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>290</x><y>730</y><w>190</w><h>190</h></coordinates><panel_attributes>lt=&lt;-&gt;
 m1=1
 m2=n
-zawiera listę</panel_attributes><additional_attributes>170;170;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>405</x><y>460</y><w>210</w><h>150</h></coordinates><panel_attributes>Kurs
+zawiera listę</panel_attributes><additional_attributes>170;170;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>400</x><y>460</y><w>210</w><h>150</h></coordinates><panel_attributes>Kurs
 --
 ID
-Dzień odbycia
 Lista planów kursu
---</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>765</x><y>290</y><w>210</w><h>150</h></coordinates><panel_attributes>Realizacja przejazdu
+Dzień tygodnia
+Godzina rozpoczęcia
+--</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>760</x><y>290</y><w>210</w><h>150</h></coordinates><panel_attributes>Realizacja przejazdu
 --
 ID
+ID przejazdu
 ID planu kursu
-ID przystanku
 faktyczna godzina
---</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>600</x><y>450</y><w>200</w><h>210</h></coordinates><panel_attributes>lt=&lt;-&gt;
+--</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>600</x><y>530</y><w>190</w><h>60</h></coordinates><panel_attributes>lt=&lt;-&gt;
 m1=1
 m2=n
-zawiera listę</panel_attributes><additional_attributes>10;10;180;190</additional_attributes></element><element><id>Relation</id><coordinates><x>610</x><y>270</y><w>180</w><h>50</h></coordinates><panel_attributes>lt=&lt;-&gt;
+zawiera listę</panel_attributes><additional_attributes>10;20;170;30</additional_attributes></element><element><id>Relation</id><coordinates><x>610</x><y>270</y><w>180</w><h>50</h></coordinates><panel_attributes>lt=&lt;-&gt;
 m1=1
 m2=n
-zawiera listę</panel_attributes><additional_attributes>10;20;160;20</additional_attributes></element><element><id>Relation</id><coordinates><x>760</x><y>430</y><w>240</w><h>80</h></coordinates><panel_attributes>lt=&lt;-&gt;
+zawiera listę</panel_attributes><additional_attributes>10;20;160;20</additional_attributes></element><element><id>Relation</id><coordinates><x>760</x><y>430</y><w>230</w><h>80</h></coordinates><panel_attributes>lt=&lt;-&gt;
+m1=n
+m2=1
+w ramach</panel_attributes><additional_attributes>10;10;210;60</additional_attributes></element><element><id>Relation</id><coordinates><x>290</x><y>630</y><w>500</w><h>130</h></coordinates><panel_attributes>lt=&lt;-&gt;
 m1=1
 m2=1
-w ramach</panel_attributes><additional_attributes>10;10;220;60</additional_attributes></element></diagram>
+dotyczy
+</panel_attributes><additional_attributes>10;110;480;10</additional_attributes></element></diagram>
