@@ -19,4 +19,14 @@ public class PlanKursu
 	public PrzystanekWLinii PrzystanekWLinii { get; set; }
 	
 	public List<RealizacjaPrzejazdu> RealizacjePrzejazdu { get; set; }
+	
+	public override bool Equals(object obj)
+	{
+		if (obj is PlanKursu planKursu && planKursu.PlanKursuId == this.PlanKursuId)
+		{
+			return true;
+		}
+
+		return false;
+	}
 }

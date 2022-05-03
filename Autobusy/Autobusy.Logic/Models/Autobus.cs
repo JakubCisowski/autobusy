@@ -20,4 +20,14 @@ public class Autobus
 	public List<Serwis> Serwisy { get; set; }
 	
 	public List<Przejazd> Przejazdy { get; set; }
+
+	public override bool Equals(object obj)
+	{
+		if (obj is Autobus autobus && autobus.AutobusId == this.AutobusId)
+		{
+			return true;
+		}
+
+		return false;
+	}
 }

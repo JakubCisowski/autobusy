@@ -17,4 +17,14 @@ public class RealizacjaPrzejazdu
 	
 	[ForeignKey("PrzejazdId")]
 	public Przejazd Przejazd { get; set; }
+	
+	public override bool Equals(object obj)
+	{
+		if (obj is RealizacjaPrzejazdu realizacjaPrzejazdu && realizacjaPrzejazdu.RealizacjaPrzejazduId == this.RealizacjaPrzejazduId)
+		{
+			return true;
+		}
+
+		return false;
+	}
 }

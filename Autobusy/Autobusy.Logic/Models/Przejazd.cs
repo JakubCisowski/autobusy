@@ -24,4 +24,14 @@ public class Przejazd
 	public Autobus Autobus { get; set; }
 	
 	public List<RealizacjaPrzejazdu> RealizacjePrzejazdu { get; set; }
+	
+	public override bool Equals(object obj)
+	{
+		if (obj is Przejazd przejazd && przejazd.PrzejazdId == this.PrzejazdId)
+		{
+			return true;
+		}
+
+		return false;
+	}
 }

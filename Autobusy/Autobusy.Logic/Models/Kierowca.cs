@@ -15,4 +15,14 @@ public class Kierowca
 	public int Doswiadczenie{ get; set; }
 	
 	public List<Przejazd> Przejazdy { get; set; }
+
+	public override bool Equals(object obj)
+	{
+		if (obj is Kierowca kierowca && kierowca.KierowcaId == this.KierowcaId)
+		{
+			return true;
+		}
+
+		return false;
+	}
 }

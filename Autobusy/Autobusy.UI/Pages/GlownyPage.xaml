@@ -6,7 +6,7 @@
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:local="clr-namespace:Autobusy.UI.Pages"
       mc:Ignorable="d"
-      Title="GlownyPage" Height="360" Width="700">
+      Title="GlownyPage" Height="480" Width="1280">
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="*"/>

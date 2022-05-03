@@ -15,4 +15,14 @@ public class Przystanek
 	public string Adres { get; set; }
 	
 	public List<PrzystanekWLinii> Przystanki { get; set; }
+	
+	public override bool Equals(object obj)
+	{
+		if (obj is Przystanek przystanek && przystanek.PrzystanekId == this.PrzystanekId)
+		{
+			return true;
+		}
+
+		return false;
+	}
 }

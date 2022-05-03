@@ -19,4 +19,14 @@ public class PrzystanekWLinii
 	
 	[ForeignKey("PlanKursuId")]
 	public PlanKursu PlanKursu { get; set; }
+	
+	public override bool Equals(object obj)
+	{
+		if (obj is PrzystanekWLinii przystanekWLinii && przystanekWLinii.PrzystanekWLiniiId == this.PrzystanekWLiniiId)
+		{
+			return true;
+		}
+
+		return false;
+	}
 }

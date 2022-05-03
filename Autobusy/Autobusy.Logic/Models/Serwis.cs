@@ -17,4 +17,14 @@ public class Serwis
 	
 	[ForeignKey("AutobusId")]
 	public Autobus NaprawianyAutobus { get; set; }
+	
+	public override bool Equals(object obj)
+	{
+		if (obj is Serwis serwis && serwis.SerwisId == this.SerwisId)
+		{
+			return true;
+		}
+
+		return false;
+	}
 }

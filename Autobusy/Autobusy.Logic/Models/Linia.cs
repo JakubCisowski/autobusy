@@ -16,4 +16,14 @@ public class Linia
 	
 	public List<PrzystanekWLinii> Przystanki { get; set; }
 	public List<Kurs> Kursy { get; set; }
+	
+	public override bool Equals(object obj)
+	{
+		if (obj is Linia linia && linia.LiniaId == this.LiniaId)
+		{
+			return true;
+		}
+
+		return false;
+	}
 }

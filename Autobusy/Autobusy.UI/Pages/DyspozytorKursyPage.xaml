@@ -6,7 +6,7 @@
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:local="clr-namespace:Autobusy.UI.Pages"
       mc:Ignorable="d"
-      Title="DyspozytorKursyPage" Height="360" Width="700">
+      Title="DyspozytorKursyPage" Height="480" Width="1280">
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="*"/>
@@ -24,7 +24,7 @@
 		
 		<ComboBox Grid.Row="1" Grid.Column="1" Text="Wybór linii" />
 		
-		<DataGrid Grid.Column="0" Grid.Row="2" Height="150" Grid.ColumnSpan="3" CanUserAddRows="False" SelectionUnit="Cell" SelectionMode="Extended" ItemsSource="{Binding }">
+		<DataGrid Grid.Column="0" Grid.Row="2" Height="250" Grid.ColumnSpan="3" CanUserAddRows="False" SelectionUnit="Cell" SelectionMode="Extended" ItemsSource="{Binding }">
 			
 		</DataGrid>
 		

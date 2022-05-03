@@ -2,5 +2,5 @@
 
 public enum StanAutobusu
 {
-	Dobry, Zepsuty, Zniszczony
+	Dobry, Zepsuty, Zniszczony, WSerwisie
 }

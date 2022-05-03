@@ -6,17 +6,17 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:Autobusy"
         mc:Ignorable="d" WindowStyle="SingleBorderWindow" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize"
-        Title="Autobusy" Height="600" Width="800">
+        Title="Autobusy" Height="720" Width="1280" Closing="MainWindow_OnClosing">
     <Grid>
 	   <Grid.RowDefinitions>
 		   <RowDefinition Height="*"></RowDefinition>
-		   <RowDefinition Height="3*"></RowDefinition>	<!-- * = 120px -->
+		   <RowDefinition Height="4*"></RowDefinition>	<!-- * = 120px -->
 		   <RowDefinition Height="*"></RowDefinition>
 	   </Grid.RowDefinitions>
 		   
 	    <TextBlock Grid.Row="0" Text="Autobusy" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" FontWeight="Bold"/>
 	    
-	    <Frame Grid.Row="1" x:Name="MainFrame" NavigationUIVisibility="Hidden" Source="Pages/GlownyPage.xaml" Margin="50,0,50,0" />
+	    <Frame x:Name="MainFrame" Grid.Row="1" NavigationUIVisibility="Hidden" Source="Pages/GlownyPage.xaml" Margin="50,0,50,0" />
 	    
 	    <TextBlock Grid.Row="2" Text="{Binding Data, StringFormat='{}{0:dd.MM.yy HH:mm}'}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18"/>
 	    
