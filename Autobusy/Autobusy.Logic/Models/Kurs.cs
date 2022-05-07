@@ -13,7 +13,7 @@ public class Kurs
 	
 	public DzienTygodnia DzienTygodnia { get; set; }
 	public DateTime GodzinaRozpoczecia { get; set; }
-	
+
 	[ForeignKey("LiniaId")]
 	public Linia Linia { get; set; }
 	

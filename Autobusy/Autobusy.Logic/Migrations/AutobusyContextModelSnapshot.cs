@@ -132,12 +132,14 @@ namespace Autobusy.Logic.Migrations
                     b.Property<DateTime>("PlanowaGodzina")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("PrzystanekWLiniiId")
+                    b.Property<int?>("PrzystanekWLiniiId")
                         .HasColumnType("int");
 
                     b.HasKey("PlanKursuId");
 
                     b.HasIndex("KursId");
+
+                    b.HasIndex("PrzystanekWLiniiId");
 
                     b.ToTable("PlanyKursu");
                 });
@@ -215,19 +217,12 @@ namespace Autobusy.Logic.Migrations
                     b.Property<int?>("LiniaId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("PlanKursuId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("PrzystanekId")
                         .HasColumnType("int");
 
                     b.HasKey("PrzystanekWLiniiId");
 
                     b.HasIndex("LiniaId");
-
-                    b.HasIndex("PlanKursuId")
-                        .IsUnique()
-                        .HasFilter("[PlanKursuId] IS NOT NULL");
 
                     b.HasIndex("PrzystanekId");
 
@@ -305,7 +300,13 @@ namespace Autobusy.Logic.Migrations
                         .WithMany("PlanyKursu")
                         .HasForeignKey("KursId");
 
+                    b.HasOne("Autobusy.Logic.Models.PrzystanekWLinii", "PrzystanekWLinii")
+                        .WithMany("PlanyKursu")
+                        .HasForeignKey("PrzystanekWLiniiId");
+
                     b.Navigation("Kurs");
+
+                    b.Navigation("PrzystanekWLinii");
                 });
 
             modelBuilder.Entity("Autobusy.Logic.Models.Przejazd", b =>
@@ -335,17 +336,11 @@ namespace Autobusy.Logic.Migrations
                         .WithMany("Przystanki")
                         .HasForeignKey("LiniaId");
 
-                    b.HasOne("Autobusy.Logic.Models.PlanKursu", "PlanKursu")
-                        .WithOne("PrzystanekWLinii")
-                        .HasForeignKey("Autobusy.Logic.Models.PrzystanekWLinii", "PlanKursuId");
-
                     b.HasOne("Autobusy.Logic.Models.Przystanek", "Przystanek")
                         .WithMany("Przystanki")
                         .HasForeignKey("PrzystanekId");
 
                     b.Navigation("Linia");
-
-                    b.Navigation("PlanKursu");
 
                     b.Navigation("Przystanek");
                 });
@@ -402,8 +397,6 @@ namespace Autobusy.Logic.Migrations
 
             modelBuilder.Entity("Autobusy.Logic.Models.PlanKursu", b =>
                 {
-                    b.Navigation("PrzystanekWLinii");
-
                     b.Navigation("RealizacjePrzejazdu");
                 });
 
@@ -415,6 +408,11 @@ namespace Autobusy.Logic.Migrations
             modelBuilder.Entity("Autobusy.Logic.Models.Przystanek", b =>
                 {
                     b.Navigation("Przystanki");
+                });
+
+            modelBuilder.Entity("Autobusy.Logic.Models.PrzystanekWLinii", b =>
+                {
+                    b.Navigation("PlanyKursu");
                 });
 #pragma warning restore 612, 618
         }

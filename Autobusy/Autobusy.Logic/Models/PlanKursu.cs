@@ -15,7 +15,7 @@ public class PlanKursu
 	[ForeignKey("KursId")]
 	public Kurs Kurs { get; set; }
 	
-	public int PrzystanekWLiniiId { get; set; }	// W przypadku relacji 1:1, jedna z encji musi posiadać nie tylko obiekt ale również id drugiego.
+	[ForeignKey("PrzystanekWLiniiId")]
 	public PrzystanekWLinii PrzystanekWLinii { get; set; }
 	
 	public List<RealizacjaPrzejazdu> RealizacjePrzejazdu { get; set; }

@@ -68,7 +68,6 @@
 							<DatePicker SelectedDate="{Binding DataProdukcji}"/>
 						</DataTemplate>
 					</DataGridTemplateColumn.CellTemplate>
-					
 				</DataGridTemplateColumn>
 				
 				<!-- Spalanie na 100 -->

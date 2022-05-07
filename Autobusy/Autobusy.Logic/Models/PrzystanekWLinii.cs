@@ -17,8 +17,7 @@ public class PrzystanekWLinii
 	[ForeignKey("LiniaId")]
 	public Linia Linia { get; set; }
 	
-	[ForeignKey("PlanKursuId")]
-	public PlanKursu PlanKursu { get; set; }
+	public List<PlanKursu> PlanyKursu { get; set; }
 	
 	public override bool Equals(object obj)
 	{

@@ -37,6 +37,10 @@ namespace Autobusy.UI
 					planistaLiniePage.SaveChanges();
 					break;
 				
+				case PlanistaKursyPage planistaKursyPage:
+					planistaKursyPage.SaveChanges();
+					break;
+				
 				case DyspozytorKierowcyPage:
 					break;
 				
