@@ -16,7 +16,7 @@
 		   
 	    <TextBlock Grid.Row="0" Text="Autobusy" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" FontWeight="Bold"/>
 	    
-	    <Frame x:Name="MainFrame" Grid.Row="1" NavigationUIVisibility="Hidden" Source="Pages/GlownyPage.xaml" Margin="50,0,50,0" />
+	    <Frame x:Name="MainFrame" Grid.Row="1" NavigationUIVisibility="Hidden" Source="Pages/GlownyPage.xaml" Margin="50,0,50,0" Padding="0"/>
 	    
 	    <TextBlock Grid.Row="2" Text="{Binding Data, StringFormat='{}{0:dd.MM.yy HH:mm}'}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18"/>
 	    

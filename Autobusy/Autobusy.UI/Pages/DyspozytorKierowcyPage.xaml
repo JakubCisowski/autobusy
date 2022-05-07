@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:Autobusy.UI.Pages"
       mc:Ignorable="d"
-      Title="DyspozytorKierowcyPage" Height="480" Width="1280">
+      Title="DyspozytorKierowcyPage" Height="480" Width="1180">
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="*"/>

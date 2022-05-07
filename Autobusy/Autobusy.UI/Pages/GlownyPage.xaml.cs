@@ -21,7 +21,7 @@ public partial class GlownyPage : Page
 	{
 		var window = Application.Current.MainWindow as MainWindow;
 
-		window.MainFrame.Navigate(new PlanistaPage());
+		window.MainFrame.Navigate(new PlanistaMenuPage());
 	}
 
 	private void ZarzadcaButton_OnClick(object sender, RoutedEventArgs e)

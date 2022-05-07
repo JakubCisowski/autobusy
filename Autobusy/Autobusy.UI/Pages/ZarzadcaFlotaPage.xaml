@@ -8,7 +8,7 @@
       xmlns:local="clr-namespace:Autobusy.UI.Pages"
       xmlns:models="clr-namespace:Autobusy.Logic.Models;assembly=Autobusy.Logic"
       mc:Ignorable="d"
-      Title="ZarzadcaFlotaPage" Height="480" Width="1280">
+      Title="ZarzadcaFlotaPage" Height="480" Width="1180">
 	
 	<Page.Resources>
 		<ObjectDataProvider MethodName="GetValues"
@@ -37,28 +37,27 @@
 		
 		<Button x:Name="DodajAutobusButton" Grid.Row="1" Grid.Column="0" Width="150" Content="Dodaj autobus" Style="{StaticResource MaterialDesignRaisedDarkButton}" HorizontalAlignment="Center" Click="DodajAutobusButton_OnClick"/>
 		
-		<DataGrid x:Name="AutobusyGrid" Grid.Column="0" Grid.Row="2" Height="250" Grid.ColumnSpan="3" CanUserAddRows="False" SelectionUnit="Cell" SelectionMode="Extended" ItemsSource="{Binding }" AutoGenerateColumns="False" HeadersVisibility="All"
-		          >
+		<DataGrid x:Name="AutobusyGrid" Grid.Column="0" Grid.Row="2" Height="250" Grid.ColumnSpan="3" CanUserAddRows="False" SelectionUnit="Cell" SelectionMode="Extended" ItemsSource="{Binding }" AutoGenerateColumns="False" HeadersVisibility="All" >
 			
 			<DataGrid.Columns>
 				<!-- ID -->
 				<DataGridTextColumn Binding="{Binding AutobusId}" Header="Id" ElementStyle="{StaticResource 
-				MaterialDesignDataGridTextColumnStyle}"
-				                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}">
+				MaterialDesignDataGridTextColumnStyle}" IsReadOnly="True"
+				                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" FontSize="16">
 					
 				</DataGridTextColumn>
 				
 				<!-- Marka -->
 				<DataGridTextColumn Binding="{Binding Marka}" Header="Marka" ElementStyle="{StaticResource 
 				MaterialDesignDataGridTextColumnStyle}"
-				                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}">
+				                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" FontSize="16">
 					
 				</DataGridTextColumn>
 				
 				<!-- Numer Rejestracyjny -->
 				<DataGridTextColumn Binding="{Binding NumerRejestracyjny}" Header="Numer Rejestracyjny" ElementStyle="{StaticResource 
 				MaterialDesignDataGridTextColumnStyle}"
-				                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}">
+				                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" FontSize="16">
 					
 				</DataGridTextColumn>
 				
@@ -75,7 +74,7 @@
 				<!-- Spalanie na 100 -->
 				<DataGridTextColumn Binding="{Binding SpalanieNa100}" Header="Spalanie na 100" ElementStyle="{StaticResource 
 				MaterialDesignDataGridTextColumnStyle}"
-				                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}">
+				                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" FontSize="16">
 					
 				</DataGridTextColumn>
 				
@@ -92,7 +91,7 @@
 				<DataGridTemplateColumn>
 					<DataGridTemplateColumn.CellTemplate>
 						<DataTemplate>
-								<Button x:Name="WycofanieAutobusuButton" Content="Wycofanie" Style="{StaticResource MaterialDesignRaisedDarkButton}" HorizontalAlignment="Center" CommandParameter="{Binding}" Click="WycofanieAutobusuButton_OnClick"/>
+								<Button x:Name="WycofanieAutobusuButton" Content="Wycofanie" Style="{StaticResource MaterialDesignRaisedDarkButton}" HorizontalAlignment="Center" CommandParameter="{Binding}" Click="WycofanieAutobusuButton_OnClick" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
 							</DataTemplate>
 						</DataGridTemplateColumn.CellTemplate>
 				</DataGridTemplateColumn>

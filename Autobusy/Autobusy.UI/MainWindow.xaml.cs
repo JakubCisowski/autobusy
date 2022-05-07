@@ -29,7 +29,12 @@ namespace Autobusy.UI
 					zarzadcaFlotaPage.SaveChanges();
 					break;
 				
-				case PlanistaPage:
+				case PlanistaPrzystankiPage planistaPrzystankiPage:
+					planistaPrzystankiPage.SaveChanges();
+					break;
+				
+				case PlanistaLiniePage planistaLiniePage:
+					planistaLiniePage.SaveChanges();
 					break;
 				
 				case DyspozytorKierowcyPage:
