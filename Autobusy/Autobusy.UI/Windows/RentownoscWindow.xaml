@@ -1,0 +1,49 @@
+<Window x:Class="Autobusy.UI.Windows.RentownoscWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:Autobusy.UI.Windows"
+        mc:Ignorable="d"
+        Title="RentownoscWindow" Height="450" Width="800">
+	<Grid>
+		
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="*"/>
+			<ColumnDefinition Width="*"/>
+			<ColumnDefinition Width="*"/>
+			<ColumnDefinition Width="*"/>
+			<ColumnDefinition Width="*"/>
+		</Grid.ColumnDefinitions>
+		
+		<!-- Ilość kursów -->
+		<StackPanel Grid.Column="0" VerticalAlignment="Center">
+			<TextBlock Text="Ilość kursów" HorizontalAlignment="Center"/>
+			<TextBlock x:Name="IloscKursowBlock" Margin="0,10,0,0" FontSize="16" Width="150" Height="50" />
+		</StackPanel>
+		
+		<!-- Ilość spalonego paliwa -->
+		<StackPanel Grid.Column="1" VerticalAlignment="Center">
+			<TextBlock Text="Ilość spalonego paliwa" HorizontalAlignment="Center"/>
+			<TextBlock x:Name="IloscPaliwaBlock" Margin="0,10,0,0" FontSize="16" Width="150" Height="50" />
+		</StackPanel>
+
+		<!-- Ilość skasowanych biletów -->
+		<StackPanel Grid.Column="2" VerticalAlignment="Center">
+			<TextBlock Text="Ilość skasowanych biletów" HorizontalAlignment="Center"/>
+			<TextBlock x:Name="IloscBiletowBlock" Margin="0,10,0,0" FontSize="16" Width="150" Height="50"/>
+		</StackPanel>
+		
+		<!-- Najbardziej popularne dni i godziny -->
+		<StackPanel Grid.Column="3" VerticalAlignment="Center">
+			<TextBlock Text="Popularne dni" HorizontalAlignment="Center"/>
+			<TextBlock x:Name="NajwiekszyRuchBlock" Margin="0,10,0,0" FontSize="16" Width="150" Height="50"/>
+		</StackPanel>
+		
+		<!-- Najmniej popularne dni i godziny -->
+		<StackPanel Grid.Column="4" VerticalAlignment="Center">
+			<TextBlock Text="Niepopularne dni" HorizontalAlignment="Center"/>
+			<TextBlock x:Name="NajmniejszyRuchBlock" Margin="0,10,0,0" FontSize="16" Width="150" Height="50"/>
+		</StackPanel>
+	</Grid>
+</Window>
