@@ -56,4 +56,22 @@ public partial class ZarzadcaFlotaPage : Page
 		
 		AutobusyGrid.Items.Refresh();
 	}
+
+	private void SerwisAutobusuButton_OnClick(object sender, RoutedEventArgs e)
+	{
+		if ((sender as Button)?.CommandParameter is not Autobus autobus)
+		{
+			return;
+		}
+
+		autobus.StanAutobusu = StanAutobusu.WSerwisie;
+
+		var serwis = new Serwis()
+		{
+			NaprawianyAutobus = autobus,
+			Data = DateTime.Now
+		};
+		
+		// DatabaseOperations.AddSerwis(serwis);
+	}
 }

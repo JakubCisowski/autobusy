@@ -93,6 +93,16 @@ public static class DatabaseOperations
 		}
 	}
 
+	public static void AddSerwis(Serwis serwis)
+	{
+		using (var db = new AutobusyContext())
+		{
+			db.Serwisy.Add(serwis);
+			
+			db.SaveChanges();
+		}
+	}
+
 	public static void UpdateKursy(List<Kurs> kursy)
 	{
 		using (var db = new AutobusyContext())

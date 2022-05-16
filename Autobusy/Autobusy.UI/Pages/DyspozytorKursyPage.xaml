@@ -18,14 +18,62 @@
 			<ColumnDefinition Width="*"/>
 			<ColumnDefinition Width="*"/>
 			<ColumnDefinition Width="*"/>
+			<ColumnDefinition Width="*"/>
 		</Grid.ColumnDefinitions>
 		
-		<TextBlock Grid.Row="0" Grid.ColumnSpan="3" Text="Dyspozytor - Kursy" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" FontWeight="Bold"/>
+		<TextBlock Grid.Row="0" Grid.ColumnSpan="4" Text="Dyspozytor - Kursy" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" FontWeight="Bold"/>
 		
-		<ComboBox Grid.Row="1" Grid.Column="1" Text="Wybór linii" />
+		<ComboBox x:Name="LiniaComboBox" Grid.Row="1" Grid.Column="1" Width="100" Text="Wybór linii" SelectionChanged="LiniaComboBox_OnSelectionChanged" Margin="5,0,0,0"/>
 		
-		<DataGrid Grid.Column="0" Grid.Row="2" Height="250" Grid.ColumnSpan="3" CanUserAddRows="False" SelectionUnit="Cell" SelectionMode="Extended" ItemsSource="{Binding }">
+		<ComboBox x:Name="KursComboBox" Grid.Row="1" Grid.Column="2" Width="100" Text="Wybór kursu" SelectionChanged="KursComboBox_OnSelectionChanged" Margin="5,0,0,0"/>
+		
+		<Button x:Name="DodajPrzejazdButton" Grid.Row="1" Grid.Column="3" Width="150" Content="Dodaj przejazd" Style="{StaticResource MaterialDesignRaisedLightButton}" HorizontalAlignment="Center" Click="DodajPrzejazdButton_OnClick"/>
+		
+		<DataGrid x:Name="PrzejazdyGrid" Grid.Column="0" Grid.Row="2" Height="250" Grid.ColumnSpan="4" CanUserAddRows="False" SelectionUnit="Cell" SelectionMode="Extended" ItemsSource="{Binding }" AutoGenerateColumns="False" HeadersVisibility="All" >
 			
+			<DataGrid.Columns>
+				<!-- ID -->
+				<DataGridTextColumn Binding="{Binding PrzejazdId}" Header="Id" ElementStyle="{StaticResource 
+				MaterialDesignDataGridTextColumnStyle}" IsReadOnly="True"
+				                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" FontSize="16">
+					
+				</DataGridTextColumn>
+				
+				<!-- Dzień tygodnia -->
+				<DataGridTextColumn Binding="{Binding Kurs.DzienTygodnia}" Header="Dzień tygodnia" ElementStyle="{StaticResource 
+				MaterialDesignDataGridTextColumnStyle}"
+				                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" FontSize="16">
+					
+				</DataGridTextColumn>
+				
+				<!-- Godzina -->
+				<DataGridTemplateColumn Header="Godzina">
+					<DataGridTemplateColumn.CellTemplate>
+						<DataTemplate>
+							<materialDesign:TimePicker SelectedTime="{Binding Kurs.GodzinaRozpoczecia, UpdateSourceTrigger=LostFocus}"/>
+						</DataTemplate>
+					</DataGridTemplateColumn.CellTemplate>
+				</DataGridTemplateColumn>
+				
+				<!-- Kierowca -->
+				<DataGridTemplateColumn Header="Kierowca">
+					<DataGridTemplateColumn.CellTemplate>
+						<DataTemplate>
+							<ComboBox ItemsSource="{Binding Source={StaticResource EnumDataProvider}}" SelectedValue="{Binding StanAutobusu, UpdateSourceTrigger=PropertyChanged}"/>
+						</DataTemplate>
+					</DataGridTemplateColumn.CellTemplate>
+				</DataGridTemplateColumn>
+				
+				<!-- Autobus -->
+				<DataGridTemplateColumn Header="Autobus">
+					<DataGridTemplateColumn.CellTemplate>
+						<DataTemplate>
+							<ComboBox ItemsSource="{Binding Source={StaticResource EnumDataProvider}}" SelectedValue="{Binding StanAutobusu, UpdateSourceTrigger=PropertyChanged}"/>
+						</DataTemplate>
+					</DataGridTemplateColumn.CellTemplate>
+				</DataGridTemplateColumn>
+				
+			</DataGrid.Columns>
 		</DataGrid>
 		
 		<Button Grid.Column="0" x:Name="BackButton" Grid.Row="3" Grid.ColumnSpan="3" Width="150" Content="Wróć" Click="BackButton_OnClick" Style="{StaticResource MaterialDesignRaisedLightButton}"/>

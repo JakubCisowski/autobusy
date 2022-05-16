@@ -19,7 +19,7 @@ public partial class LiniaWindow : Window
 		this.DataContext = _linia;
 	}
 
-	private void LiniaWindow_OnClosing(object? sender, CancelEventArgs e)
+	private void LiniaWindow_OnClosing(object sender, CancelEventArgs e)
 	{
 		DatabaseOperations.UpdateCollection(new List<Linia> { _linia });
 	}

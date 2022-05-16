@@ -44,7 +44,7 @@ public partial class KursWindow : Window
 		KursInfoBlock.Text = $"{_kurs.KursId} - {_kurs.DzienTygodnia.ToString()} - {_kurs.GodzinaRozpoczecia.ToString("HH:mm:ss")}";
 	}
 
-	private void KursWindow_OnClosing(object? sender, CancelEventArgs e)
+	private void KursWindow_OnClosing(object sender, CancelEventArgs e)
 	{
 		//DatabaseOperations.UpdateCollection(new List<Kurs> { _kurs });
 	}

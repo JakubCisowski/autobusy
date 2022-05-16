@@ -95,6 +95,15 @@
 						</DataGridTemplateColumn.CellTemplate>
 				</DataGridTemplateColumn>
 				
+				<!-- Serwis autobusu - przycisk -->
+				<DataGridTemplateColumn>
+					<DataGridTemplateColumn.CellTemplate>
+						<DataTemplate>
+							<Button x:Name="SerwisAutobusuButton" Content="Serwis" Style="{StaticResource MaterialDesignRaisedDarkButton}" HorizontalAlignment="Center" CommandParameter="{Binding}" Click="SerwisAutobusuButton_OnClick" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+						</DataTemplate>
+					</DataGridTemplateColumn.CellTemplate>
+				</DataGridTemplateColumn>
+				
 				
 			</DataGrid.Columns>
 		</DataGrid>

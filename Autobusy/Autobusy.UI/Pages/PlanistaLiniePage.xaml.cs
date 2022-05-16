@@ -154,4 +154,13 @@ public partial class PlanistaLiniePage : Page
 		
 		PrzystankiGrid.Items.Refresh();
 	}
+
+	private void RentownoscButton_OnClick(object sender, RoutedEventArgs e)
+	{
+		var selectedLiniaNumer = LinieComboBox.SelectedItem.ToString();
+		
+		var selectedLinia = _linie.First(x => x.Numer == selectedLiniaNumer);
+
+		new RentownoscWindow(selectedLinia).ShowDialog();
+	}
 }

@@ -41,7 +41,8 @@ namespace Autobusy.UI
 					planistaKursyPage.SaveChanges();
 					break;
 				
-				case DyspozytorKierowcyPage:
+				case DyspozytorKierowcyPage dyspozytorKierowcyPage:
+					dyspozytorKierowcyPage.SaveChanges();
 					break;
 				
 				case DyspozytorKursyPage:
