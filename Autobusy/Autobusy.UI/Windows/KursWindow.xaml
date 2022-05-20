@@ -8,7 +8,7 @@
         xmlns:local="clr-namespace:Autobusy.UI.Pages"
         xmlns:models="clr-namespace:Autobusy.Logic.Models;assembly=Autobusy.Logic"
         mc:Ignorable="d"
-        Title="KursWindow" Height="450" Width="800" Closing="KursWindow_OnClosing">
+        Title="KursWindow" Height="450" Width="800" Closing="KursWindow_OnClosing" ResizeMode="CanMinimize" WindowStyle="SingleBorderWindow">
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="*"/>

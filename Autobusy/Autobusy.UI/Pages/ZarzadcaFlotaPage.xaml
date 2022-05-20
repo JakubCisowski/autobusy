@@ -37,6 +37,8 @@
 		
 		<Button x:Name="DodajAutobusButton" Grid.Row="1" Grid.Column="0" Width="150" Content="Dodaj autobus" Style="{StaticResource MaterialDesignRaisedDarkButton}" HorizontalAlignment="Center" Click="DodajAutobusButton_OnClick"/>
 		
+		<Button x:Name="SerwisyButton" Grid.Row="1" Grid.Column="2" Width="150" Content="Serwisy" Style="{StaticResource MaterialDesignRaisedDarkButton}" HorizontalAlignment="Center" Click="SerwisyButton_OnClick"/>
+		
 		<DataGrid x:Name="AutobusyGrid" Grid.Column="0" Grid.Row="2" Height="250" Grid.ColumnSpan="3" CanUserAddRows="False" SelectionUnit="Cell" SelectionMode="Extended" ItemsSource="{Binding }" AutoGenerateColumns="False" HeadersVisibility="All" >
 			
 			<DataGrid.Columns>
@@ -48,14 +50,14 @@
 				</DataGridTextColumn>
 				
 				<!-- Marka -->
-				<DataGridTextColumn Binding="{Binding Marka}" Header="Marka" ElementStyle="{StaticResource 
+				<DataGridTextColumn Binding="{Binding Marka, UpdateSourceTrigger=LostFocus}" Header="Marka" ElementStyle="{StaticResource 
 				MaterialDesignDataGridTextColumnStyle}"
 				                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" FontSize="16">
 					
 				</DataGridTextColumn>
 				
 				<!-- Numer Rejestracyjny -->
-				<DataGridTextColumn Binding="{Binding NumerRejestracyjny}" Header="Numer Rejestracyjny" ElementStyle="{StaticResource 
+				<DataGridTextColumn Binding="{Binding NumerRejestracyjny, UpdateSourceTrigger=LostFocus}" Header="Numer Rejestracyjny" ElementStyle="{StaticResource 
 				MaterialDesignDataGridTextColumnStyle}"
 				                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" FontSize="16">
 					

@@ -62,7 +62,7 @@
 				<DataGridTemplateColumn>
 					<DataGridTemplateColumn.CellTemplate>
 						<DataTemplate>
-								<Button x:Name="UsuwaniePrzystankuButton" Content="Wycofanie" Style="{StaticResource MaterialDesignRaisedDarkButton}" HorizontalAlignment="Center" CommandParameter="{Binding}" Click="UsuwaniePrzystankuButton_OnClick" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+								<Button x:Name="UsuwaniePrzystankuButton" Content="Wycofanie" Style="{StaticResource MaterialDesignRaisedButton}" HorizontalAlignment="Center" CommandParameter="{Binding}" Click="UsuwaniePrzystankuButton_OnClick" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
 							</DataTemplate>
 						</DataGridTemplateColumn.CellTemplate>
 				</DataGridTemplateColumn>

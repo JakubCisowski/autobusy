@@ -8,7 +8,7 @@
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="LiniaWindow" Height="450" Width="800" Closing="LiniaWindow_OnClosing">
+        Title="LiniaWindow" Height="450" Width="800" Closing="LiniaWindow_OnClosing" ResizeMode="CanMinimize" WindowStyle="SingleBorderWindow">
 	
 	<Window.Resources>
 		<ObjectDataProvider MethodName="GetValues"

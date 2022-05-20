@@ -15,7 +15,7 @@ public partial class DyspozytorKierowcyPage : Page
 	{
 		InitializeComponent();
 
-		_kierowcy = DatabaseOperations.GetCollection<Kierowca>();
+		_kierowcy = DatabaseOperations.GetKierowcy();
 
 		this.DataContext = _kierowcy;
 	}

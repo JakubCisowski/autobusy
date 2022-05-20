@@ -30,7 +30,7 @@
 		
 		<ComboBox x:Name="LinieComboBox" Grid.Row="1" Grid.Column="2" Width="100" Text="Wybór linii" HorizontalAlignment="Center" SelectionChanged="LinieComboBox_OnSelectionChanged" Margin="5,0,0,0"/>
 		
-		<Button x:Name="RentownoscButton" Grid.Row="0" Grid.Column="4" Width="150" Content="Sprawdź rentowność" Style="{StaticResource MaterialDesignRaisedButton}" HorizontalAlignment="Center" Click="RentownoscButton_OnClick"/>
+		<Button x:Name="RentownoscButton" Grid.Row="0" Grid.Column="4" Width="180" Content="Sprawdź rentowność" Style="{StaticResource MaterialDesignRaisedButton}" HorizontalAlignment="Center" Click="RentownoscButton_OnClick"/>
 		
 		<Button x:Name="DodajLinieButton" Grid.Row="1" Grid.Column="3" Width="150" Content="Dodaj linię" Style="{StaticResource MaterialDesignRaisedButton}" HorizontalAlignment="Center" Click="DodajLinieButton_OnClick" Margin="5,0,0,0"/>
 		
@@ -79,7 +79,7 @@
 				<DataGridTemplateColumn>
 					<DataGridTemplateColumn.CellTemplate>
 						<DataTemplate>
-							<Button x:Name="UsuwaniePrzystankuButton" Content="Usunięcie" Style="{StaticResource MaterialDesignRaisedDarkButton}" HorizontalAlignment="Center" CommandParameter="{Binding}" Click="UsuwaniePrzystankuButton_OnClick" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+							<Button x:Name="UsuwaniePrzystankuButton" Content="Usunięcie" Style="{StaticResource MaterialDesignRaisedButton}" HorizontalAlignment="Center" CommandParameter="{Binding}" Click="UsuwaniePrzystankuButton_OnClick" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
 						</DataTemplate>
 					</DataGridTemplateColumn.CellTemplate>
 				</DataGridTemplateColumn>

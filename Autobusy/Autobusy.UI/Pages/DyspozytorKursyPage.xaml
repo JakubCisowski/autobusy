@@ -46,29 +46,29 @@
 					
 				</DataGridTextColumn>
 				
-				<!-- Godzina -->
-				<DataGridTemplateColumn Header="Godzina">
+				<!-- Data -->
+				<DataGridTemplateColumn Header="Data">
 					<DataGridTemplateColumn.CellTemplate>
 						<DataTemplate>
-							<materialDesign:TimePicker SelectedTime="{Binding Kurs.GodzinaRozpoczecia, UpdateSourceTrigger=LostFocus}"/>
+							<materialDesign:TimePicker SelectedTime="{Binding Data, UpdateSourceTrigger=LostFocus}"/>
 						</DataTemplate>
 					</DataGridTemplateColumn.CellTemplate>
 				</DataGridTemplateColumn>
 				
-				<!-- Kierowca -->
+				<!-- Wybierz kierowcę - przycisk -->
 				<DataGridTemplateColumn Header="Kierowca">
 					<DataGridTemplateColumn.CellTemplate>
 						<DataTemplate>
-							<ComboBox ItemsSource="{Binding Source={StaticResource EnumDataProvider}}" SelectedValue="{Binding StanAutobusu, UpdateSourceTrigger=PropertyChanged}"/>
+							<Button x:Name="WybierzKierowceButton" Content="Wybierz" Style="{StaticResource MaterialDesignRaisedLightButton}" HorizontalAlignment="Center" CommandParameter="{Binding}" Click="WybierzKierowceButton_OnClick" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
 						</DataTemplate>
 					</DataGridTemplateColumn.CellTemplate>
 				</DataGridTemplateColumn>
 				
-				<!-- Autobus -->
+				<!-- Wybierz autobus - przycisk -->
 				<DataGridTemplateColumn Header="Autobus">
 					<DataGridTemplateColumn.CellTemplate>
 						<DataTemplate>
-							<ComboBox ItemsSource="{Binding Source={StaticResource EnumDataProvider}}" SelectedValue="{Binding StanAutobusu, UpdateSourceTrigger=PropertyChanged}"/>
+							<Button x:Name="WybierzAutobusButton" Content="Wybierz" Style="{StaticResource MaterialDesignRaisedLightButton}" HorizontalAlignment="Center" CommandParameter="{Binding}" Click="WybierzAutobusButton_OnClick" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
 						</DataTemplate>
 					</DataGridTemplateColumn.CellTemplate>
 				</DataGridTemplateColumn>

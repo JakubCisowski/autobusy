@@ -22,7 +22,7 @@ public partial class PlanistaLiniePage : Page
 		_linie = DatabaseOperations.GetLinie();
 		LinieComboBox.ItemsSource = _linie.Select(x=>x.Numer);
 		
-		var przystanki = DatabaseOperations.GetCollection<Przystanek>();
+		var przystanki = DatabaseOperations.GetPrzystanki();
 		PrzystankiComboBox.ItemsSource = przystanki.Select(x=>x.Nazwa);
 	}
 	
@@ -104,7 +104,7 @@ public partial class PlanistaLiniePage : Page
 	private void DodajPrzystanekButton_OnClick(object sender, RoutedEventArgs e)
 	{
 		var selectedPrzystanek = PrzystankiComboBox.SelectedItem.ToString();
-		var przystanek = DatabaseOperations.GetCollection<Przystanek>().FirstOrDefault(x => x.Nazwa == selectedPrzystanek);
+		var przystanek = DatabaseOperations.GetPrzystanki().FirstOrDefault(x => x.Nazwa == selectedPrzystanek);
 
 		var przystanekWLinii = new PrzystanekWLinii()
 		{

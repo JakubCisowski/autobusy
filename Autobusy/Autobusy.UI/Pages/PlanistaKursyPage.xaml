@@ -70,7 +70,7 @@
 				<DataGridTemplateColumn>
 					<DataGridTemplateColumn.CellTemplate>
 						<DataTemplate>
-							<Button x:Name="EdycjaKursuButton" Content="Edycja" Style="{StaticResource MaterialDesignRaisedDarkButton}" HorizontalAlignment="Center" CommandParameter="{Binding}" Click="EdycjaKursuButton_OnClick" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+							<Button x:Name="EdycjaKursuButton" Content="Edycja" Style="{StaticResource MaterialDesignRaisedButton}" HorizontalAlignment="Center" CommandParameter="{Binding}" Click="EdycjaKursuButton_OnClick" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
 						</DataTemplate>
 					</DataGridTemplateColumn.CellTemplate>
 				</DataGridTemplateColumn>
@@ -79,7 +79,7 @@
 				<DataGridTemplateColumn>
 					<DataGridTemplateColumn.CellTemplate>
 						<DataTemplate>
-							<Button x:Name="UsuwanieKursuButton" Content="Usunięcie" Style="{StaticResource MaterialDesignRaisedDarkButton}" HorizontalAlignment="Center" CommandParameter="{Binding}" Click="UsuwanieKursuButton_OnClick" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+							<Button x:Name="UsuwanieKursuButton" Content="Usunięcie" Style="{StaticResource MaterialDesignRaisedButton}" HorizontalAlignment="Center" CommandParameter="{Binding}" Click="UsuwanieKursuButton_OnClick" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
 						</DataTemplate>
 					</DataGridTemplateColumn.CellTemplate>
 				</DataGridTemplateColumn>

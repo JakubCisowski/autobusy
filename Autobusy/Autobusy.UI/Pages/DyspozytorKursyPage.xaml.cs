@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using Autobusy.Logic.Models;
 using Autobusy.Logic.Operations;
+using Autobusy.UI.Windows;
 
 namespace Autobusy.UI.Pages;
 
@@ -71,5 +72,16 @@ public partial class DyspozytorKursyPage : Page
 		this.DataContext = _przejazdy;
 		
 		PrzejazdyGrid.Items.Refresh();
+	}
+
+	private void WybierzKierowceButton_OnClick(object sender, RoutedEventArgs e)
+	{
+		var kierowca = new Kierowca();
+		new WyborKierowcyWindow(ref kierowca).ShowDialog();
+	}
+
+	private void WybierzAutobusButton_OnClick(object sender, RoutedEventArgs e)
+	{
+		throw new NotImplementedException();
 	}
 }

@@ -49,7 +49,7 @@ public partial class PlanistaKursyPage : Page
 
 		_kursy.Add(nowyKurs);
 		
-		//DatabaseOperations.AddKurs(nowyKurs);
+		DatabaseOperations.AddKurs(nowyKurs);
 		
 		KursyGrid.Items.Refresh();
 	}
@@ -78,7 +78,7 @@ public partial class PlanistaKursyPage : Page
 		}
 
 		_kursy.Remove(kurs);
-		DatabaseOperations.Delete(kurs);
+		DatabaseOperations.DeleteKurs(kurs);
 		
 		KursyGrid.Items.Refresh();
 	}
@@ -96,6 +96,6 @@ public partial class PlanistaKursyPage : Page
 	public void SaveChanges()
 	{
 		// Save changes in database.
-		// DatabaseOperations.UpdateKursy(_kursy);
+		DatabaseOperations.UpdateKursy(_kursy);
 	}
 }

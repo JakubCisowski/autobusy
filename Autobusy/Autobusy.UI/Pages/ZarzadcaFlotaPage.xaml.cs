@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using Autobusy.Logic.Models;
 using Autobusy.Logic.Operations;
+using Autobusy.UI.Windows;
 
 namespace Autobusy.UI.Pages;
 
@@ -15,7 +16,7 @@ public partial class ZarzadcaFlotaPage : Page
 	{
 		InitializeComponent();
 
-		_autobusy = DatabaseOperations.GetCollection<Autobus>();
+		_autobusy = DatabaseOperations.GetAutobusy();
 
 		this.DataContext = _autobusy;
 	}
@@ -72,6 +73,11 @@ public partial class ZarzadcaFlotaPage : Page
 			Data = DateTime.Now
 		};
 		
-		// DatabaseOperations.AddSerwis(serwis);
+		DatabaseOperations.AddSerwis(serwis);
+	}
+
+	private void SerwisyButton_OnClick(object sender, RoutedEventArgs e)
+	{
+		new SerwisyWindow().ShowDialog();
 	}
 }

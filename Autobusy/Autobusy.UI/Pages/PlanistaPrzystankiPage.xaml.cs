@@ -15,7 +15,7 @@ public partial class PlanistaPrzystankiPage : Page
 	{
 		InitializeComponent();
 		
-		_przystanki = DatabaseOperations.GetCollection<Przystanek>();
+		_przystanki = DatabaseOperations.GetPrzystanki();
 
 		this.DataContext = _przystanki;
 	}

@@ -6,22 +6,6 @@ namespace Autobusy.Logic.Operations;
 
 public static class DatabaseOperations
 {
-	public static TEntity GetById<TEntity>(int id) where TEntity:class
-	{
-		using (var db = new AutobusyContext())
-		{
-			return db.Set<TEntity>().Find(id);
-		}
-	}
-	
-	public static List<TEntity> GetCollection<TEntity>() where TEntity:class
-	{
-		using (var db = new AutobusyContext())
-		{
-			return db.Set<TEntity>().ToList();
-		}
-	}
-
 	public static List<Przystanek> GetPrzystanki()
 	{
 		using (var db = new AutobusyContext())
@@ -46,13 +30,36 @@ public static class DatabaseOperations
 				.ToList();
 		}
 	}
-	
-	public static void Add<TEntity>(TEntity entity) where TEntity:class
+
+	public static List<Kierowca> GetKierowcy()
 	{
 		using (var db = new AutobusyContext())
 		{
-			db.Set<TEntity>().Add(entity);
-			db.SaveChanges();
+			return db.Kierowcy.Include(x => x.Przejazdy).ToList();
+		}
+	}
+	
+	public static List<Autobus> GetAutobusy()
+	{
+		using (var db = new AutobusyContext())
+		{
+			return db.Autobusy.Include(x => x.Przejazdy).Include(y=>y.Serwisy).ToList();
+		}
+	}
+
+	public static List<Kurs> GetKursy()
+	{
+		using (var db = new AutobusyContext())
+		{
+			return db.Kursy.Include(x => x.Linia).Include(y=>y.Przejazdy).ToList();
+		}
+	}
+
+	public static List<Przejazd> GetPrzejazdy()
+	{
+		using (var db = new AutobusyContext())
+		{
+			return db.Przejazdy.Include(x => x.Autobus).Include(y => y.Kierowca).ToList();
 		}
 	}
 
@@ -85,8 +92,65 @@ public static class DatabaseOperations
 			if (liniaZDb != null)
 			{
 				kurs.Linia = liniaZDb;
+			}
+			else
+			{
+				db.Attach(kurs.Linia);
+			}
 
-				db.Kursy.Add(kurs);
+			foreach (var planKursu in kurs.PlanyKursu)
+			{
+				db.PlanyKursu.Add(planKursu);
+			}
+			
+			// TODO: możliwe że trzeba wejść głębiej i pobrać z bazy danych np. przystanki
+			
+			db.Kursy.Add(kurs);
+
+			db.SaveChanges();
+		}
+	}
+
+	public static void DeleteKurs(Kurs kurs)
+	{
+		using (var db = new AutobusyContext())
+		{
+			var kursZDb = db.Kursy.Find(kurs.KursId);
+
+			if (kursZDb != null)
+			{
+				db.Kursy.Remove(kursZDb);
+			}
+
+			db.SaveChanges();
+		}
+	}
+
+	public static void UpdateKursy(IEnumerable<Kurs> kursy)
+	{
+		using (var db = new AutobusyContext())
+		{
+			foreach (var kurs in kursy)
+			{
+				var kursZDb = db.Kursy.Find(kurs.KursId);
+
+				if (kursZDb != null)
+				{
+					kursZDb.DzienTygodnia = kurs.DzienTygodnia;
+					kursZDb.GodzinaRozpoczecia = kurs.GodzinaRozpoczecia;
+				}
+
+				var liniaZDb = db.Linie.Find(kurs.Linia.LiniaId);
+				
+				if (liniaZDb != null)
+				{
+					kursZDb.Linia = liniaZDb;
+				}
+				else
+				{
+					db.Attach(kurs.Linia);
+					kursZDb.Linia = kurs.Linia;
+				}
 			}
 
 			db.SaveChanges();
@@ -97,34 +161,46 @@ public static class DatabaseOperations
 	{
 		using (var db = new AutobusyContext())
 		{
+			var autobusZDb = db.Autobusy.Find(serwis.NaprawianyAutobus.AutobusId);
+
+			if (autobusZDb != null)
+			{
+				serwis.NaprawianyAutobus = autobusZDb;
+			}
+			else
+			{
+				db.Attach(serwis.NaprawianyAutobus);
+			}
+			
 			db.Serwisy.Add(serwis);
 			
 			db.SaveChanges();
 		}
 	}
 
-	public static void UpdateKursy(List<Kurs> kursy)
+	public static void UpdateSerwisy(List<Serwis> serwisy)
 	{
 		using (var db = new AutobusyContext())
 		{
-			foreach (var kurs in kursy)
+			foreach (var serwis in serwisy)
 			{
-				var liniaFromDb = db.Linie.Find(kurs.Linia.LiniaId);
-				kurs.Linia = liniaFromDb;
-				
-				var kursFromDb = db.Kursy.Find(kurs.KursId);
+				var serwisZDb = db.Serwisy.Find(serwis.SerwisId);
 
-				if (kursFromDb is null)
+				if (serwisZDb != null)
 				{
-					db.Kursy.Add(kurs);
+					serwisZDb.Typ = serwis.Typ;
+					serwisZDb.Cena = serwis.Cena;
+					serwisZDb.Opis = serwis.Opis;
 				}
 				else
 				{
-					db.Entry(kursFromDb).CurrentValues.SetValues(kurs);
-					db.Entry(kursFromDb).State = EntityState.Modified;
+					var autobusFromDb = db.Autobusy.Find(serwis.NaprawianyAutobus.AutobusId);
+					serwis.NaprawianyAutobus = autobusFromDb;
+					
+					db.Serwisy.Add(serwis);
 				}
 			}
-			
+
 			db.SaveChanges();
 		}
 	}

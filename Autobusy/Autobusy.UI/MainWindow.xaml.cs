@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Windows;
+using Autobusy.UI.Help;
 using Autobusy.UI.Pages;
 
 namespace Autobusy.UI
@@ -48,6 +49,11 @@ namespace Autobusy.UI
 				case DyspozytorKursyPage:
 					break;
 			}
+		}
+
+		private void HelpButton_OnClick(object sender, RoutedEventArgs e)
+		{
+			new HelpWindow().ShowDialog();
 		}
 	}
 }
