@@ -20,7 +20,7 @@
 		
 		<TextBlock Grid.Row="0" Grid.ColumnSpan="3" Text="Dyspozytor - Menu" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" FontWeight="Bold"/>
 		
-		<Button x:Name="KursyButton" Grid.Row="1" Grid.Column="0" Width="200" Height="150" Content="Kursy" Click="KursyButton_OnClick" FontSize="22" Style="{StaticResource MaterialDesignRaisedLightButton}"/>
+		<Button x:Name="KursyButton" Grid.Row="1" Grid.Column="0" Width="200" Height="150" Content="Przejazdy" Click="PrzejazdyButton_OnClick" FontSize="22" Style="{StaticResource MaterialDesignRaisedLightButton}"/>
 		<Button x:Name="KierowcyButton" Grid.Row="1" Grid.Column="1" Width="200" Height="150" Content="Kierowcy" Click="KierowcyButton_OnClick" FontSize="22" Style="{StaticResource MaterialDesignRaisedLightButton}"/>
 		
 		<Button Grid.Column="0" x:Name="BackButton" Grid.Row="2" Grid.ColumnSpan="2" Width="150" Content="Wróć" Click="BackButton_OnClick" Style="{StaticResource MaterialDesignRaisedLightButton}"/>

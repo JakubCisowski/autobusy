@@ -7,6 +7,7 @@
         <UseWPF>true</UseWPF>
         <AssemblyName>Autobusy.UI</AssemblyName>
         <RootNamespace>Autobusy.UI</RootNamespace>
+        <ApplicationIcon>..\bus.ico</ApplicationIcon>
     </PropertyGroup>
 
     <ItemGroup>
@@ -15,6 +16,15 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Autobusy.Logic\Autobusy.Logic.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="..\bus.ico">
+        <Link>bus.ico</Link>
+      </None>
+      <None Include="..\bus.png">
+        <Link>bus.png</Link>
+      </None>
     </ItemGroup>
 
 </Project>

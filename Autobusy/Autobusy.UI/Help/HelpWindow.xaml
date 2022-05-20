@@ -46,6 +46,7 @@
 				<system:String>Planista</system:String>
 				<system:String>Zarządca Flotą</system:String>
 				<system:String>Baza danych</system:String>
+				<system:String>Zasoby</system:String>
 			</ListView.Items>
 			
 		</ListView>

@@ -38,7 +38,10 @@ public partial class ZarzadcaFlotaPage : Page
 
 	private void DodajAutobusButton_OnClick(object sender, RoutedEventArgs e)
 	{
-		var nowyAutobus = new Autobus();
+		var nowyAutobus = new Autobus()
+		{
+			DataProdukcji = DateTime.Now
+		};
 
 		_autobusy.Add(nowyAutobus);
 		

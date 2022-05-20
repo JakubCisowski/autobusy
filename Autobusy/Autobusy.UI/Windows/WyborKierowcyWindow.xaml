@@ -19,6 +19,6 @@
 			<RowDefinition Height="*"/>
 		</Grid.RowDefinitions>
 		
-		<ComboBox x:Name="KierowcyComboBox" Grid.Row="1" Grid.Column="1" Width="150" Height="50" />
+		<ComboBox x:Name="KierowcyComboBox" Grid.Row="1" Grid.Column="1" Width="150" Height="50" FontSize="16" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
 	</Grid>
 </Window>

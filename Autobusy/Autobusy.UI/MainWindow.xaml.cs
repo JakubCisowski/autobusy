@@ -46,7 +46,8 @@ namespace Autobusy.UI
 					dyspozytorKierowcyPage.SaveChanges();
 					break;
 				
-				case DyspozytorKursyPage:
+				case DyspozytorPrzejazdyPage dyspozytorPrzejazdyPage:
+					dyspozytorPrzejazdyPage.SaveChanges();
 					break;
 			}
 		}

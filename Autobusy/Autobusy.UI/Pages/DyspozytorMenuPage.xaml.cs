@@ -10,11 +10,11 @@ public partial class DyspozytorMenuPage : Page
 		InitializeComponent();
 	}
 
-	private void KursyButton_OnClick(object sender, RoutedEventArgs e)
+	private void PrzejazdyButton_OnClick(object sender, RoutedEventArgs e)
 	{
 		var window = Application.Current.MainWindow as MainWindow;
 
-		window.MainFrame.Navigate(new DyspozytorKursyPage());
+		window.MainFrame.Navigate(new DyspozytorPrzejazdyPage());
 	}
 
 	private void KierowcyButton_OnClick(object sender, RoutedEventArgs e)

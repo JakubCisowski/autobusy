@@ -9,7 +9,7 @@ using Autobusy.UI.Windows;
 
 namespace Autobusy.UI.Pages;
 
-public partial class DyspozytorKursyPage : Page
+public partial class DyspozytorPrzejazdyPage : Page
 {
 	private List<Linia> _linie;
 	private Linia _selectedLinia;
@@ -18,7 +18,7 @@ public partial class DyspozytorKursyPage : Page
 
 	private List<Przejazd> _przejazdy;
 	
-	public DyspozytorKursyPage()
+	public DyspozytorPrzejazdyPage()
 	{
 		InitializeComponent();
 
@@ -36,7 +36,16 @@ public partial class DyspozytorKursyPage : Page
 
 	private void DodajPrzejazdButton_OnClick(object sender, RoutedEventArgs e)
 	{
-		throw new NotImplementedException();
+		var przejazd = new Przejazd()
+		{
+			Kurs = _selectedKurs,
+			RealizacjePrzejazdu = new List<RealizacjaPrzejazdu>(),
+			Data = DateTime.Now
+		};
+		
+		_przejazdy.Add(przejazd);
+		
+		PrzejazdyGrid.Items.Refresh();
 	}
 
 	private void LiniaComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -76,12 +85,30 @@ public partial class DyspozytorKursyPage : Page
 
 	private void WybierzKierowceButton_OnClick(object sender, RoutedEventArgs e)
 	{
-		var kierowca = new Kierowca();
-		new WyborKierowcyWindow(ref kierowca).ShowDialog();
+		new WyborKierowcyWindow().ShowDialog();
+		
+		if ((sender as Button)?.CommandParameter is not Przejazd przejazd)
+		{
+			return;
+		}
+
+		przejazd.Kierowca = WyborKierowcyWindow.Kierowca;
 	}
 
 	private void WybierzAutobusButton_OnClick(object sender, RoutedEventArgs e)
 	{
-		throw new NotImplementedException();
+		new WyborAutobusuWindow().ShowDialog();
+		
+		if ((sender as Button)?.CommandParameter is not Przejazd przejazd)
+		{
+			return;
+		}
+
+		przejazd.Autobus = WyborAutobusuWindow.Autobus;
+	}
+
+	public void SaveChanges()
+	{
+		
 	}
 }

@@ -39,7 +39,8 @@ public partial class PlanistaKursyPage : Page
 		var nowyKurs = new Kurs()
 		{
 			Linia = _selectedLinia,
-			PlanyKursu = new List<PlanKursu>()
+			PlanyKursu = new List<PlanKursu>(),
+			Przejazdy = new List<Przejazd>()
 		};
 
 		foreach (var przystanekWLinii in _selectedLinia.Przystanki)

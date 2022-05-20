@@ -9,16 +9,14 @@ namespace Autobusy.UI.Windows;
 
 public partial class WyborAutobusuWindow : Window
 {
-	private static Autobus _autobus;
+	public static Autobus Autobus;
 
 	private List<Autobus> _listaAutobusow;
 	
-	public WyborAutobusuWindow(ref Autobus autobus)
+	public WyborAutobusuWindow()
 	{
 		InitializeComponent();
 		
-		_autobus = autobus;
-
 		var autobusy = DatabaseOperations.GetAutobusy();
 		
 		AutobusyComboBox.ItemsSource = autobusy.Select(x=>x.NumerRejestracyjny).ToList();
@@ -32,6 +30,6 @@ public partial class WyborAutobusuWindow : Window
 
 		var selectedAutobus = _listaAutobusow.FirstOrDefault(x => x.NumerRejestracyjny == selectedAutobusNumerRejestracyjny);
 
-		_autobus = selectedAutobus;
+		Autobus = selectedAutobus;
 	}
 }

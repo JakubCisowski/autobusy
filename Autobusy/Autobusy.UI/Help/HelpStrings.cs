@@ -18,6 +18,8 @@ public static class HelpStrings
 
 	public const string Database = "Baza danych\n\nAplikacja korzysta z lokalnej bazy danych. Przy pierwszym uruchomieniu aplikacji, jeżeli baza danych nie istnieje, zostanie automatycznie stworzona. Domyślna ścieżka: C:\\Użytkownicy\\(Aktualnie zalogowany użytkownik)\\AutobusyDB.MDF.mdf. Jest możliwość podejrzenia zawartości bazy danych za pomocą programu SSMS (SQL Server Management Studio) od firmy Microsoft. Po połączeniu z lokalną bazą danych i wybraniu z listy pliku AutobusyDB.MDF.mdf, możliwe jest zobaczenie schematu, poszczególnych tabeli oraz ich zawartości.\n\nAplikacja korzysta z bazy danych SQL Server.";
 
+	public const string Resources = "Zewnętrzne zasoby użyte w projekcie, źródła\n\n- Ikona aplikacji: Vectors Market - Flaticon (https://www.flaticon.com/free-icons)\n\n";
+
 	public static List<Inline> StringToInlineCollection(string str)
 	{
 		IEnumerable<Inline> stringInlines = str.Split('\n').Select(x => new Run(x));

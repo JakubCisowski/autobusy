@@ -9,16 +9,14 @@ namespace Autobusy.UI.Windows;
 
 public partial class WyborKierowcyWindow : Window
 {
-	private static Kierowca _kierowca;
+	public static Kierowca Kierowca;
 
 	private List<Kierowca> _listaKierowcow;
 	
-	public WyborKierowcyWindow(ref Kierowca kierowca)
+	public WyborKierowcyWindow()
 	{
 		InitializeComponent();
-
-		_kierowca = kierowca;
-
+		
 		var kierowcy = DatabaseOperations.GetKierowcy();
 		
 		KierowcyComboBox.ItemsSource = kierowcy.Select(x=>x.Imie + " " + x.Nazwisko).ToList();
@@ -34,6 +32,6 @@ public partial class WyborKierowcyWindow : Window
 		
 		var selectedKierowca = _listaKierowcow.FirstOrDefault(x=>x.Imie == selectedKierowcaImieNazwiskoSplit[0] && x.Nazwisko == selectedKierowcaImieNazwiskoSplit[1]);
 
-		_kierowca = selectedKierowca;
+		Kierowca = selectedKierowca;
 	}
 }

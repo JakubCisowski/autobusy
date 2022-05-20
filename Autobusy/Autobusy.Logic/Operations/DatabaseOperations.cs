@@ -26,7 +26,7 @@ public static class DatabaseOperations
 	{
 		using (var db = new AutobusyContext())
 		{
-			return db.Linie.Include(x=>x.Przystanki).Include(y=>y.Kursy)
+			return db.Linie.Include(x=>x.Kursy).Include(y=>y.Przystanki).ThenInclude(z=>z.Przystanek)
 				.ToList();
 		}
 	}
@@ -100,6 +100,19 @@ public static class DatabaseOperations
 
 			foreach (var planKursu in kurs.PlanyKursu)
 			{
+				var przystanekWLiniiZDb = db.PrzystankiWLinii.Find(planKursu.PrzystanekWLinii.PrzystanekWLiniiId);
+
+				if (przystanekWLiniiZDb != null)
+				{
+					planKursu.PrzystanekWLinii = przystanekWLiniiZDb;
+				}
+				else
+				{
+					db.Attach(planKursu.PrzystanekWLinii);
+				}
+
+				planKursu.PrzystanekWLinii.Linia = liniaZDb ?? kurs.Linia;
+				
 				db.PlanyKursu.Add(planKursu);
 			}
 			
