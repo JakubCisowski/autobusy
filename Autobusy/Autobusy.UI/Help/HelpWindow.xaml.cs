@@ -43,6 +43,10 @@ public partial class HelpWindow : Window
 			case "baza danych":
 				CreateDatabasePanel();
 				break;
+			
+			case "zasoby":
+				CreateResourcesPanel();
+				break;
 		}
 	}
 
@@ -150,6 +154,24 @@ public partial class HelpWindow : Window
 		};
 
 		block.Inlines.AddRange(HelpStrings.StringToInlineCollection(HelpStrings.Database));
+
+		HelpContentPanel.Children.Add(block);
+	}
+	
+	private void CreateResourcesPanel()
+	{
+		HelpContentPanel.Children.Clear();
+
+		var block = new TextBlock()
+		{
+			FontSize = 14,
+			TextWrapping = TextWrapping.Wrap,
+			TextAlignment = TextAlignment.Center,
+			Width = 320,
+			Margin = new Thickness(20,0,40,0)
+		};
+
+		block.Inlines.AddRange(HelpStrings.StringToInlineCollection(HelpStrings.Resources));
 
 		HelpContentPanel.Children.Add(block);
 	}

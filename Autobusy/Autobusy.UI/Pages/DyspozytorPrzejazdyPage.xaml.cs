@@ -45,6 +45,12 @@ public partial class DyspozytorPrzejazdyPage : Page
 		
 		_przejazdy.Add(przejazd);
 		
+		DatabaseOperations.AddPrzejazd(przejazd);
+
+		_przejazdy = DatabaseOperations.GetPrzejazdy().Where(x=>x.Kurs?.KursId == _selectedKurs.KursId).ToList();
+
+		PrzejazdyGrid.ItemsSource = _przejazdy;
+		
 		PrzejazdyGrid.Items.Refresh();
 	}
 
@@ -76,7 +82,7 @@ public partial class DyspozytorPrzejazdyPage : Page
 
 		_selectedKurs = _kursy.ElementAt(selectedIndexKursu);
 
-		_przejazdy = _selectedKurs.Przejazdy ?? new List<Przejazd>();
+		_przejazdy = DatabaseOperations.GetPrzejazdy().Where(x=>x.Kurs?.KursId == _selectedKurs.KursId).ToList();
 
 		this.DataContext = _przejazdy;
 		
@@ -92,7 +98,9 @@ public partial class DyspozytorPrzejazdyPage : Page
 			return;
 		}
 
-		przejazd.Kierowca = WyborKierowcyWindow.Kierowca;
+		var przejazdFromList = _przejazdy.FirstOrDefault(x => x.PrzejazdId == przejazd.PrzejazdId);
+
+		przejazdFromList.Kierowca = WyborKierowcyWindow.Kierowca;
 	}
 
 	private void WybierzAutobusButton_OnClick(object sender, RoutedEventArgs e)
@@ -103,12 +111,14 @@ public partial class DyspozytorPrzejazdyPage : Page
 		{
 			return;
 		}
+		
+		var przejazdFromList = _przejazdy.FirstOrDefault(x => x.PrzejazdId == przejazd.PrzejazdId);
 
-		przejazd.Autobus = WyborAutobusuWindow.Autobus;
+		przejazdFromList.Autobus = WyborAutobusuWindow.Autobus;
 	}
 
 	public void SaveChanges()
 	{
-		
+		DatabaseOperations.UpdatePrzejazdy(_przejazdy);
 	}
 }

@@ -26,7 +26,7 @@ public static class DatabaseOperations
 	{
 		using (var db = new AutobusyContext())
 		{
-			return db.Linie.Include(x=>x.Kursy).Include(y=>y.Przystanki).ThenInclude(z=>z.Przystanek)
+			return db.Linie.Include(x=>x.Kursy).ThenInclude(a=>a.PlanyKursu).Include(y=>y.Przystanki).ThenInclude(z=>z.Przystanek)
 				.ToList();
 		}
 	}
@@ -51,7 +51,7 @@ public static class DatabaseOperations
 	{
 		using (var db = new AutobusyContext())
 		{
-			return db.Kursy.Include(x => x.Linia).Include(y=>y.Przejazdy).ToList();
+			return db.Kursy.Include(x => x.Linia).Include(y=>y.Przejazdy).Include(z=>z.PlanyKursu).ToList();
 		}
 	}
 
@@ -59,7 +59,7 @@ public static class DatabaseOperations
 	{
 		using (var db = new AutobusyContext())
 		{
-			return db.Przejazdy.Include(x => x.Autobus).Include(y => y.Kierowca).ToList();
+			return db.Przejazdy.Include(x => x.Autobus).Include(y => y.Kierowca).Include(z=>z.Kurs).ThenInclude(a=>a.PlanyKursu).ToList();
 		}
 	}
 
@@ -87,38 +87,17 @@ public static class DatabaseOperations
 	{
 		using (var db = new AutobusyContext())
 		{
-			var liniaZDb = db.Linie.Find(kurs.Linia.LiniaId);
-			
-			if (liniaZDb != null)
-			{
-				kurs.Linia = liniaZDb;
-			}
-			else
-			{
-				db.Attach(kurs.Linia);
-			}
+			db.Database.ExecuteSqlRaw("INSERT INTO dbo.Kursy (DzienTygodnia, GodzinaRozpoczecia, LiniaId) VALUES ({0}, {1}, {2})",
+				kurs.DzienTygodnia, kurs.GodzinaRozpoczecia, kurs.Linia.LiniaId);
 
+			db.SaveChanges();
+
+			var kursFromDb = db.Kursy.OrderBy(x=>x.KursId).Last();
+			
 			foreach (var planKursu in kurs.PlanyKursu)
 			{
-				var przystanekWLiniiZDb = db.PrzystankiWLinii.Find(planKursu.PrzystanekWLinii.PrzystanekWLiniiId);
-
-				if (przystanekWLiniiZDb != null)
-				{
-					planKursu.PrzystanekWLinii = przystanekWLiniiZDb;
-				}
-				else
-				{
-					db.Attach(planKursu.PrzystanekWLinii);
-				}
-
-				planKursu.PrzystanekWLinii.Linia = liniaZDb ?? kurs.Linia;
-				
-				db.PlanyKursu.Add(planKursu);
+				db.Database.ExecuteSqlRaw("INSERT INTO dbo.PlanyKursu (PlanowaGodzina, KursId, PrzystanekWLiniiId) VALUES ({0}, {1}, {2})", planKursu.PlanowaGodzina, kursFromDb.KursId, planKursu.PrzystanekWLinii.PrzystanekWLiniiId);
 			}
-			
-			// TODO: możliwe że trzeba wejść głębiej i pobrać z bazy danych np. przystanki
-			
-			db.Kursy.Add(kurs);
 
 			db.SaveChanges();
 		}
@@ -145,28 +124,60 @@ public static class DatabaseOperations
 		{
 			foreach (var kurs in kursy)
 			{
-				var kursZDb = db.Kursy.Find(kurs.KursId);
+				db.Database.ExecuteSqlRaw("UPDATE dbo.Kursy SET DzienTygodnia = {0}, GodzinaRozpoczecia = {1} WHERE KursId = {2}",
+					kurs.DzienTygodnia, kurs.GodzinaRozpoczecia, kurs.KursId);
 
-				if (kursZDb != null)
+				db.SaveChanges();
+
+				foreach (var planKursu in kurs.PlanyKursu)
 				{
-					kursZDb.DzienTygodnia = kurs.DzienTygodnia;
-					kursZDb.GodzinaRozpoczecia = kurs.GodzinaRozpoczecia;
+					db.Database.ExecuteSqlRaw("UPDATE dbo.PlanyKursu SET PlanowaGodzina = {0} WHERE PlanKursuId = {1}", 
+						planKursu.PlanowaGodzina, planKursu.PlanKursuId);
 				}
 
-				var liniaZDb = db.Linie.Find(kurs.Linia.LiniaId);
-				
-				if (liniaZDb != null)
-				{
-					kursZDb.Linia = liniaZDb;
-				}
-				else
-				{
-					db.Attach(kurs.Linia);
-					kursZDb.Linia = kurs.Linia;
-				}
+				db.SaveChanges();
+			}
+		}
+	}
+
+	public static void AddPrzejazd(Przejazd przejazd)
+	{
+		using (var db = new AutobusyContext())
+		{
+			db.Database.ExecuteSqlRaw("INSERT INTO dbo.Przejazdy (IloscSpalonegoPaliwa, IloscSkasowanychBiletow, Data, KursId) VALUES ({0}, {1}, {2}, {3})",
+				przejazd.IloscSpalonegoPaliwa, przejazd.IloscSkasowanychBiletow, przejazd.Data, przejazd.Kurs.KursId);
+
+			db.SaveChanges();
+		}
+	}
+
+	public static void DeletePrzejazd(Przejazd przejazd)
+	{
+		using (var db = new AutobusyContext())
+		{
+			var przejazdZDb = db.Przejazdy.Find(przejazd.PrzejazdId);
+
+			if (przejazdZDb != null)
+			{
+				db.Przejazdy.Remove(przejazdZDb);
 			}
 
 			db.SaveChanges();
+		}
+	}
+
+	public static void UpdatePrzejazdy(IEnumerable<Przejazd> przejazdy)
+	{
+		using (var db = new AutobusyContext())
+		{
+			foreach (var przejazd in przejazdy)
+			{
+				db.Database.ExecuteSqlRaw("UPDATE dbo.Przejazdy SET IloscSpalonegoPaliwa = {0}, IloscSkasowanychBiletow = {1}, Data = {2}, KursId = {3}, KierowcaId = {4}, AutobusId = {5} WHERE PrzejazdId = {6}",
+					przejazd.IloscSpalonegoPaliwa, przejazd.IloscSkasowanychBiletow, przejazd.Data, przejazd.Kurs.KursId,
+					przejazd.Kierowca.KierowcaId, przejazd.Autobus.AutobusId, przejazd.PrzejazdId);
+
+				db.SaveChanges();
+			}
 		}
 	}
 
