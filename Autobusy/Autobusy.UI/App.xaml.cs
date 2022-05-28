@@ -15,7 +15,10 @@ namespace Autobusy
 		{
 			using (var db = new AutobusyContext())
 			{
-				db.Database.EnsureCreated();
+				if (!db.Database.CanConnect())
+				{
+					db.Database.EnsureCreated();
+				}
 			}
 		}
 	}

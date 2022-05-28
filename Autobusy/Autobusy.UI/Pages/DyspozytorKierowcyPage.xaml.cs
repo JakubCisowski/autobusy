@@ -61,4 +61,38 @@ public partial class DyspozytorKierowcyPage : Page
 	{
 		DatabaseOperations.UpdateCollection(_kierowcy);
 	}
+
+	private void SpoznieniaButton_OnClick(object sender, RoutedEventArgs e)
+	{
+		if ((sender as Button)?.CommandParameter is not Kierowca kierowca)
+		{
+			return;
+		}
+
+		var przejazdyKierowcy = kierowca.Przejazdy;
+
+		double spoznieniaSuma = 0;
+		int spoznieniaIlosc = 0;
+
+		if (przejazdyKierowcy != null)
+		{
+			foreach (var przejazdKierowcy in przejazdyKierowcy)
+			{
+				if (przejazdKierowcy.RealizacjePrzejazdu is not null && przejazdKierowcy.RealizacjePrzejazdu.Count > 0)
+				{
+					spoznieniaIlosc++;
+					spoznieniaSuma+= przejazdKierowcy.RealizacjePrzejazdu.Sum(x => (x.FaktycznaGodzina - x.PlanKursu.PlanowaGodzina).TotalMinutes);
+				}
+			}
+
+			if (spoznieniaIlosc != 0)
+			{
+				MessageBox.Show($"Średni czas spóźnienia kierowcy {kierowca.Imie} {kierowca.Nazwisko} wynosi: {spoznieniaSuma / spoznieniaIlosc} minut.", "Średni czas spóźnienia kierowcy");
+				
+				return;
+			}
+		}
+		
+		MessageBox.Show($"Brak danych o spóźnieniach dla kierowcy {kierowca.Imie} {kierowca.Nazwisko}.", "Średni czas spóźnienia kierowcy");
+	}
 }

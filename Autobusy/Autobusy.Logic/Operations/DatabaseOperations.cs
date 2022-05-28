@@ -63,6 +63,17 @@ public static class DatabaseOperations
 		}
 	}
 
+	public static Przejazd GetPrzejazd(int id)
+	{
+		using (var db = new AutobusyContext())
+		{
+			return db.Przejazdy
+				.Include(x=>x.Kurs).ThenInclude(y=>y.PlanyKursu)
+				.Include(z=>z.Kurs.Linia)
+				.FirstOrDefault(x => x.PrzejazdId == id);
+		}
+	}
+
 	public static void AddPrzystanekWLinii(PrzystanekWLinii przystanekWLinii)
 	{
 		using (var db = new AutobusyContext())
