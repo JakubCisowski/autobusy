@@ -20,14 +20,14 @@ public class StatisticsRepository : IDisposable, IStatisticsRepository
 	public IEnumerable<(string, int)> GetDatabaseObjectsStatistics()
 	{
 		yield return ("Autobusy", _dbContext.Autobusy.Count());
-		yield return ("Kierowcy", _dbContext.Autobusy.Count());
-		yield return ("Kursy", _dbContext.Autobusy.Count());
-		yield return ("Linie", _dbContext.Autobusy.Count());
-		yield return ("Przejazdy", _dbContext.Autobusy.Count());
-		yield return ("Realizacje przejazdu", _dbContext.Autobusy.Count());
-		yield return ("Plany kursów", _dbContext.Autobusy.Count());
-		yield return ("Przystanki", _dbContext.Autobusy.Count());
-		yield return ("Przystanki w linii", _dbContext.Autobusy.Count());
-		yield return ("Serwisy", _dbContext.Autobusy.Count());
+		yield return ("Kierowcy", _dbContext.Kierowcy.Count());
+		yield return ("Kursy", _dbContext.Kursy.Count());
+		yield return ("Linie", _dbContext.Linie.Count());
+		yield return ("Przejazdy", _dbContext.Przejazdy.Count());
+		yield return ("Realizacje przejazdu", _dbContext.RealizacjePrzejazdu.Count());
+		yield return ("Plany kursów", _dbContext.PlanyKursu.Count());
+		yield return ("Przystanki", _dbContext.Przystanki.Count());
+		yield return ("Przystanki w linii", _dbContext.PrzystankiWLinii.Count());
+		yield return ("Serwisy", _dbContext.Serwisy.Count());
 	}
 }

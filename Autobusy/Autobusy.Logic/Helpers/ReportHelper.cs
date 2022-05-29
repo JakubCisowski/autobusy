@@ -17,7 +17,7 @@ public class ReportHelper
 		_includeLinieInfo = includeLinieInfo;
 		_includeEntityStatistics = includeEntityStatistics;
 
-		var date = DateTime.Now.ToString("dd/MM/yyyy hh/mm");
+		var date = DateTime.Now.ToString("dd/MM/yyyy HH/mm");
 
 		Document.Create(container =>
 			{
@@ -110,6 +110,23 @@ public class ReportHelper
 			kierowcyFromDb = repo.List(x => x.Przejazdy);
 		}
 
+		using (var repo = new DatabaseRepository<Przejazd>(new AutobusyContext()))
+		{
+			foreach (var kierowca in kierowcyFromDb)
+			{
+				var przejazdy = new List<Przejazd>();
+				
+				foreach (var przejazd in kierowca.Przejazdy)
+				{
+					var przejazdFromDb = repo.GetById(przejazd.Id, x=>x.Kurs, y=>y.Kurs.Linia);
+					
+					przejazdy.Add(przejazdFromDb);
+				}
+
+				kierowca.Przejazdy = przejazdy;
+			}
+		}
+
 		container.Table(table =>
 		{
 			table.ColumnsDefinition(columns =>
@@ -172,6 +189,7 @@ public class ReportHelper
 		});
 	}
 
+	
 	private static void CreateLinieInfo(IContainer container)
 	{
 		List<Linia> linieFromDb;
@@ -185,59 +203,60 @@ public class ReportHelper
 		{
 			foreach (var linia in linieFromDb)
 			{
-				// Informacje o linii
+				var kursyLinii = repo.List(x => x.LiniaId == linia.Id, y => y.Linia, z => z.Przejazdy);;
+				
 				container.Column(column =>
 				{
+					// Informacje o linii
 					column.Item().Text(text =>
 					{
-						text.Line("Id linii - Numer linii - Typ linii - Długość linii");
-						text.Line($"{linia.Id} - {linia.Numer} - {linia.Typ.ToString()} - {linia.DlugoscWKm.ToString("0.00")}");
+						text.Line($"Id linii: {linia.Id}");
+						text.Line($"Numer linii: {linia.Numer}");
+						text.Line($"Typ linii: {linia.Typ.ToString()}");
+						text.Line($"Długość linii: {linia.DlugoscWKm:0.00}");
 					});
-				});
-
-				// Tabela z kursami
-				container.Table(table =>
-				{
-					table.ColumnsDefinition(columns =>
-					{
-						columns.ConstantColumn(25); // Id kursu w ramach linii
-						columns.RelativeColumn(2); // Dzień tygodnia
-						columns.RelativeColumn(2); // Godzina
-						columns.RelativeColumn(2); // Ilość przejazdów w ramach kursu
-						columns.RelativeColumn(2); // Ilość sprzedanych biletów
-						columns.RelativeColumn(2); // Ilość spalonego paliwa
-					});
-
-					table.Header(header =>
-					{
-						header.Cell().Element(CellStyle).Text("Id");
-						header.Cell().Element(CellStyle).Text("Dzień tygodnia");
-						header.Cell().Element(CellStyle).AlignRight().Text("Godzina");
-						header.Cell().Element(CellStyle).AlignRight().Text("Ilość przejazdów");
-						header.Cell().Element(CellStyle).AlignRight().Text("Ilość sprzedanych biletów");
-						header.Cell().Element(CellStyle).AlignRight().Text("Ilość spalonego paliwa");
-					});
-
-					var kursyLinii = repo.List(x => x.LiniaId == linia.Id, y => y.Linia, z => z.Przejazdy);
-
-					foreach (var kurs in kursyLinii)
-					{
-						table.Cell().Element(CellStyle).Text(kurs.Id);
-						table.Cell().Element(CellStyle).Text(kurs.DzienTygodnia.ToString());
-						table.Cell().Element(CellStyle).Text(kurs.GodzinaRozpoczecia.ToString("hh:mm"));
-						table.Cell().Element(CellStyle).Text(kurs.Przejazdy.Count);
-
-						if (kurs.Przejazdy.Count == 0)
+					
+					// Tabela z kursami
+					column.Item().Table(table =>{
+						table.ColumnsDefinition(columns =>
 						{
-							table.Cell().Element(CellStyle).Text("-");
-							table.Cell().Element(CellStyle).Text("-");
-						}
-						else
+							columns.ConstantColumn(25); // Id kursu w ramach linii
+							columns.RelativeColumn(2); // Dzień tygodnia
+							columns.RelativeColumn(1); // Godzina
+							columns.RelativeColumn(1); // Ilość przejazdów w ramach kursu
+							columns.RelativeColumn(1); // Ilość sprzedanych biletów
+							columns.RelativeColumn(1); // Ilość spalonego paliwa
+						});
+
+						table.Header(header =>
 						{
-							table.Cell().Element(CellStyle).Text(kurs.Przejazdy.Sum(x => x.IloscSkasowanychBiletow));
-							table.Cell().Element(CellStyle).Text(kurs.Przejazdy.Sum(x => x.IloscSpalonegoPaliwa));
+							header.Cell().Element(CellStyle).Text("Id");
+							header.Cell().Element(CellStyle).Text("Dzień tygodnia");
+							header.Cell().Element(CellStyle).AlignRight().Text("Godzina");
+							header.Cell().Element(CellStyle).AlignRight().Text("Ilość przejazdów");
+							header.Cell().Element(CellStyle).AlignRight().Text("Ilość sprzedanych biletów");
+							header.Cell().Element(CellStyle).AlignRight().Text("Ilość spalonego paliwa");
+						});
+						
+						foreach (var kurs in kursyLinii)
+						{
+							table.Cell().Element(CellStyle).Text(kurs.Id);
+							table.Cell().Element(CellStyle).Text(kurs.DzienTygodnia.ToString());
+							table.Cell().Element(CellStyle).AlignRight().Text(kurs.GodzinaRozpoczecia.ToString("hh:mm"));
+							table.Cell().Element(CellStyle).AlignRight().Text(kurs.Przejazdy.Count);
+
+							if (kurs.Przejazdy.Count == 0)
+							{
+								table.Cell().Element(CellStyle).AlignRight().Text("-");
+								table.Cell().Element(CellStyle).AlignRight().Text("-");
+							}
+							else
+							{
+								table.Cell().Element(CellStyle).AlignRight().Text(kurs.Przejazdy.Sum(x => x.IloscSkasowanychBiletow));
+								table.Cell().Element(CellStyle).AlignRight().Text(kurs.Przejazdy.Sum(x => x.IloscSpalonegoPaliwa));
+							}
 						}
-					}
+					});
 				});
 			}
 		}
