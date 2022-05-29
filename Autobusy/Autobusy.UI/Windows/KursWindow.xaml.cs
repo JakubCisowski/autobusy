@@ -19,31 +19,22 @@ public partial class KursWindow : Window
 	{
 		InitializeComponent();
 
-		_kurs = kurs;
-
-		if (_kurs.PlanyKursu is null)
+		using (var repo = new DatabaseRepository<Kurs>(new AutobusyContext()))
 		{
-			_kurs.PlanyKursu = new List<PlanKursu>();
+			var kursFromDb = repo.GetById(kurs.Id, x => x.PlanyKursu);
+
+			_kurs = kursFromDb;
+		}
+
+		using (var repo = new DatabaseRepository<PrzystanekWLinii>(new AutobusyContext()))
+		{
+			foreach (var planKursu in _kurs.PlanyKursu)
+			{
+				planKursu.PrzystanekWLinii = repo.GetById(planKursu.PrzystanekWLiniiId, x => x.Przystanek);
+			}
 		}
 
 		_planyKursu = _kurs.PlanyKursu;
-
-		List<Przystanek> przystanki;
-
-		using (var repo = new DatabaseRepository<Przystanek>(new AutobusyContext()))
-		{
-			przystanki = repo.List(x => x.Przystanki);
-		}
-
-		foreach (var planKursu in _planyKursu)
-		{
-			var przystanek = przystanki.FirstOrDefault(x => x.Przystanki.Any(y => y.Id == planKursu.PrzystanekWLinii.Id));
-
-			if (przystanek != null)
-			{
-				planKursu.PrzystanekWLinii.Przystanek = przystanek;
-			}
-		}
 
 		this.DataContext = _planyKursu;
 
@@ -54,7 +45,11 @@ public partial class KursWindow : Window
 	{
 		using (var repo = new DatabaseRepository<Kurs>(new AutobusyContext()))
 		{
-			repo.Update(_kurs);
+			var kursFromDb = repo.GetById(_kurs.Id, x=>x.PlanyKursu);
+			
+			kursFromDb.PlanyKursu = _planyKursu;
+			
+			repo.SaveChanges();
 		}
 	}
 

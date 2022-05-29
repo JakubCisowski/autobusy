@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -62,23 +63,31 @@ public partial class PlanistaKursyPage : Page
 			repo.SaveChanges();
 		}
 
+		Kurs kursFromDb;
+
 		using (var repo = new DatabaseRepository<Kurs>(new AutobusyContext()))
 		{
-			var kursFromDb = repo.GetById(nowyKurs.Id, x => x.PlanyKursu);
+			kursFromDb = repo.GetById(nowyKurs.Id, x => x.PlanyKursu);
 
 			if (kursFromDb.PlanyKursu is null)
 			{
 				kursFromDb.PlanyKursu = new List<PlanKursu>();
 			}
-			
+
+			nowyKurs = kursFromDb;
+		}
+
+		using (var repo = new DatabaseRepository<PlanKursu>(new AutobusyContext()))
+		{
 			foreach (var przystanekWLinii in _selectedLinia.PrzystankiWLinii)
 			{
-				var nowyPlanKursu = new PlanKursu() { PrzystanekWLinii = przystanekWLinii };
+				var nowyPlanKursu = new PlanKursu() { KursId = kursFromDb.Id, PrzystanekWLiniiId = przystanekWLinii.Id };
 				
-				kursFromDb.PlanyKursu.Add(nowyPlanKursu);
+				nowyKurs.PlanyKursu.Add(nowyPlanKursu);
+				
+				//repo.Add(nowyPlanKursu);
+				repo.ExecuteSqlQuery($"INSERT INTO dbo.PlanyKursu (PlanowaGodzina, KursId, PrzystanekWLiniiId) VALUES ('{DateTime.Now.ToString("s")}', {nowyPlanKursu.KursId}, {nowyPlanKursu.PrzystanekWLiniiId})");
 			}
-			
-			repo.SaveChanges();
 		}
 
 		KursyGrid.Items.Refresh();

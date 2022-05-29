@@ -117,6 +117,12 @@ public class DatabaseRepository<TEntity> : IDisposable, IGenericRepository<TEnti
 		_dbContext.SaveChanges();
 	}
 
+	public void ExecuteSqlQuery(string query)
+	{
+		_dbContext.Database.ExecuteSqlRaw(query);
+		_dbContext.SaveChanges();
+	}
+
 	public void SaveChanges()
 	{
 		_dbContext.SaveChanges();
