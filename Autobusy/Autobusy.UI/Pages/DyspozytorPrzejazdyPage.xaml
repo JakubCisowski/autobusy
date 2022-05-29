@@ -61,14 +61,14 @@
 				</DataGridTemplateColumn>
 
 				<!-- Ilość skasowanych biletów -->
-				<DataGridTextColumn Binding="{Binding IloscSkasowanychBiletow}" Header="Ilość skasowanych biletów"
+				<DataGridTextColumn Binding="{Binding IloscSkasowanychBiletow, UpdateSourceTrigger=LostFocus}" Header="Ilość skasowanych biletów"
 				                    ElementStyle="{StaticResource 
 				MaterialDesignDataGridTextColumnStyle}"
 				                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
 				                    FontSize="16" />
 
 				<!-- Ilość spalonego paliwa -->
-				<DataGridTextColumn Binding="{Binding IloscSpalonegoPaliwa}" Header="Ilość spalonego paliwa"
+				<DataGridTextColumn Binding="{Binding IloscSpalonegoPaliwa, UpdateSourceTrigger=LostFocus}" Header="Ilość spalonego paliwa"
 				                    ElementStyle="{StaticResource 
 				MaterialDesignDataGridTextColumnStyle}"
 				                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"

@@ -33,6 +33,8 @@ public partial class DyspozytorPrzejazdyPage : Page
 
 	private void BackButton_OnClick(object sender, RoutedEventArgs e)
 	{
+		SaveChanges();
+		
 		var window = Application.Current.MainWindow as MainWindow;
 
 		window.MainFrame.Navigate(new DyspozytorMenuPage());
@@ -42,7 +44,7 @@ public partial class DyspozytorPrzejazdyPage : Page
 	{
 		var przejazd = new Przejazd
 		{
-			Kurs = _selectedKurs,
+			KursId = _selectedKurs.Id,
 			RealizacjePrzejazdu = new List<RealizacjaPrzejazdu>(),
 			Data = DateTime.Now
 		};
@@ -51,7 +53,9 @@ public partial class DyspozytorPrzejazdyPage : Page
 
 		using (var repo = new DatabaseRepository<Przejazd>(new AutobusyContext()))
 		{
-			repo.Add(przejazd);
+			//repo.Add(przejazd);
+
+			repo.ExecuteSqlQuery($"INSERT INTO dbo.Przejazdy (iloscspalonegopaliwa, iloscskasowanychbiletow, data, kursid) VALUES (0, 0, '{przejazd.Data.ToString("s")}', {przejazd.KursId})");
 
 			_przejazdy = repo.List(x => x.Kurs?.Id == _selectedKurs.Id, y => y.Kurs, z => z.Kierowca, a => a.Autobus);
 		}
@@ -107,10 +111,15 @@ public partial class DyspozytorPrzejazdyPage : Page
 		{
 			return;
 		}
+		
+		using (var repo = new DatabaseRepository<Przejazd>(new AutobusyContext()))
+		{
+			var przejazdFromDb = repo.GetById(przejazd.Id);
 
-		var przejazdFromList = _przejazdy.FirstOrDefault(x => x.Id == przejazd.Id);
-
-		przejazdFromList.Kierowca = WyborKierowcyWindow.Kierowca;
+			przejazdFromDb.Kierowca = WyborKierowcyWindow.Kierowca;
+			
+			repo.SaveChanges();
+		}
 	}
 
 	private void WybierzAutobusButton_OnClick(object sender, RoutedEventArgs e)
@@ -121,10 +130,15 @@ public partial class DyspozytorPrzejazdyPage : Page
 		{
 			return;
 		}
+		
+		using (var repo = new DatabaseRepository<Przejazd>(new AutobusyContext()))
+		{
+			var przejazdFromDb = repo.GetById(przejazd.Id);
 
-		var przejazdFromList = _przejazdy.FirstOrDefault(x => x.Id == przejazd.Id);
-
-		przejazdFromList.Autobus = WyborAutobusuWindow.Autobus;
+			przejazdFromDb.Autobus = WyborAutobusuWindow.Autobus;
+			
+			repo.SaveChanges();
+		}
 	}
 
 	public void SaveChanges()

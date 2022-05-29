@@ -4,6 +4,7 @@ using Autobusy.Logic.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Autobusy.Logic.Migrations
 {
     [DbContext(typeof(AutobusyContext))]
-    partial class AutobusyContextModelSnapshot : ModelSnapshot
+    [Migration("20220529202157_MakeAutobusAndKierowcaNullable")]
+    partial class MakeAutobusAndKierowcaNullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -154,7 +156,7 @@ namespace Autobusy.Logic.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("AutobusId")
+                    b.Property<int>("AutobusId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Data")
@@ -167,7 +169,7 @@ namespace Autobusy.Logic.Migrations
                         .HasPrecision(4, 2)
                         .HasColumnType("float(4)");
 
-                    b.Property<int?>("KierowcaId")
+                    b.Property<int>("KierowcaId")
                         .HasColumnType("int");
 
                     b.Property<int>("KursId")
@@ -323,11 +325,15 @@ namespace Autobusy.Logic.Migrations
                 {
                     b.HasOne("Autobusy.Logic.Models.Autobus", "Autobus")
                         .WithMany("Przejazdy")
-                        .HasForeignKey("AutobusId");
+                        .HasForeignKey("AutobusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Autobusy.Logic.Models.Kierowca", "Kierowca")
                         .WithMany("Przejazdy")
-                        .HasForeignKey("KierowcaId");
+                        .HasForeignKey("KierowcaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Autobusy.Logic.Models.Kurs", "Kurs")
                         .WithMany("Przejazdy")

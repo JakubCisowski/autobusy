@@ -11,10 +11,10 @@ public class Przejazd : IIdentifiable
 	public int KursId { get; set; }
 	public Kurs Kurs { get; set; }
 
-	public int KierowcaId { get; set; }
+	public int? KierowcaId { get; set; }
 	public Kierowca Kierowca { get; set; }
 
-	public int AutobusId { get; set; }
+	public int? AutobusId { get; set; }
 	public Autobus Autobus { get; set; }
 
 	public List<RealizacjaPrzejazdu> RealizacjePrzejazdu { get; set; }
