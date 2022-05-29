@@ -34,9 +34,9 @@ public partial class WyborKierowcyWindow : Window
 	{
 		var selectedKierowcaImieNazwisko = KierowcyComboBox.SelectedItem as string;
 
-		string[] selectedKierowcaImieNazwiskoSplit = selectedKierowcaImieNazwisko.Split(' ');
+		var selectedKierowcaImieNazwiskoSplit = selectedKierowcaImieNazwisko.Split(' ');
 
-		Kierowca selectedKierowca = _listaKierowcow.FirstOrDefault(x => x.Imie == selectedKierowcaImieNazwiskoSplit[0] && x.Nazwisko == selectedKierowcaImieNazwiskoSplit[1]);
+		var selectedKierowca = _listaKierowcow.FirstOrDefault(x => x.Imie == selectedKierowcaImieNazwiskoSplit[0] && x.Nazwisko == selectedKierowcaImieNazwiskoSplit[1]);
 
 		Kierowca = selectedKierowca;
 	}

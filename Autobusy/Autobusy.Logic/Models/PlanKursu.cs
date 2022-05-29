@@ -17,13 +17,16 @@ public class PlanKursu : IIdentifiable
 
 	public override bool Equals(object obj)
 	{
-		if (obj is PlanKursu planKursu && planKursu.Id == Id) return true;
+		if (obj is PlanKursu planKursu && planKursu.Id == this.Id)
+		{
+			return true;
+		}
 
 		return false;
 	}
 
 	public override int GetHashCode()
 	{
-		return Id;
+		return this.Id;
 	}
 }

@@ -20,18 +20,18 @@ public partial class RentownoscWindow : Window
 
 	private void ObliczRentownosc()
 	{
-		int? iloscKursow = _linia.Kursy?.Count;
+		var iloscKursow = _linia.Kursy?.Count;
 
-		double? iloscSpalonegoPaliwa = _linia.Kursy?.Sum(x => x.Przejazdy?.Sum(y => y.IloscSpalonegoPaliwa));
+		var iloscSpalonegoPaliwa = _linia.Kursy?.Sum(x => x.Przejazdy?.Sum(y => y.IloscSpalonegoPaliwa));
 
-		int? iloscSkasowanychBiletow = _linia.Kursy?.Sum(x => x.Przejazdy?.Sum(y => y.IloscSkasowanychBiletow));
+		var iloscSkasowanychBiletow = _linia.Kursy?.Sum(x => x.Przejazdy?.Sum(y => y.IloscSkasowanychBiletow));
 
-		Kurs kursNajwiekszyRuch = _linia.Kursy?.SelectMany(x => x.Przejazdy).OrderByDescending(x => x?.IloscSkasowanychBiletow).FirstOrDefault()?.Kurs;
+		var kursNajwiekszyRuch = _linia.Kursy?.SelectMany(x => x.Przejazdy).OrderByDescending(x => x?.IloscSkasowanychBiletow).FirstOrDefault()?.Kurs;
 
 		var najwiekszyRuchDzienTygodnia = kursNajwiekszyRuch?.DzienTygodnia.ToString();
 		var najwiekszyRuchGodzina = kursNajwiekszyRuch?.GodzinaRozpoczecia.ToString("HH:mm:ss");
 
-		Kurs kursNajmniejszyRuch = _linia.Kursy?.SelectMany(x => x.Przejazdy).OrderBy(x => x.IloscSkasowanychBiletow).FirstOrDefault()?.Kurs;
+		var kursNajmniejszyRuch = _linia.Kursy?.SelectMany(x => x.Przejazdy).OrderBy(x => x.IloscSkasowanychBiletow).FirstOrDefault()?.Kurs;
 
 		var najmniejszyRuchDzienTygodnia = kursNajmniejszyRuch?.DzienTygodnia.ToString();
 		var najmniejszyRuchGodzina = kursNajmniejszyRuch?.GodzinaRozpoczecia.ToString("HH:mm:ss");

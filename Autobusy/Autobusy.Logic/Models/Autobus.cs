@@ -17,13 +17,16 @@ public class Autobus : IIdentifiable
 
 	public override bool Equals(object obj)
 	{
-		if (obj is Autobus autobus && autobus.Id == Id) return true;
+		if (obj is Autobus autobus && autobus.Id == this.Id)
+		{
+			return true;
+		}
 
 		return false;
 	}
 
 	public override int GetHashCode()
 	{
-		return Id;
+		return this.Id;
 	}
 }

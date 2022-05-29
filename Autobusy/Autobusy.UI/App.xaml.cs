@@ -9,7 +9,10 @@ public partial class App : Application
 	{
 		using (var db = new AutobusyContext())
 		{
-			if (!db.Database.CanConnect()) db.Database.EnsureCreated();
+			if (!db.Database.CanConnect())
+			{
+				db.Database.EnsureCreated();
+			}
 		}
 	}
 }

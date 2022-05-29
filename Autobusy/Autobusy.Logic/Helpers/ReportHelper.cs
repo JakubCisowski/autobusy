@@ -35,7 +35,7 @@ public class ReportHelper
 
 							text.Line($"Autobusy - Raport, {date}").SemiBold().FontSize(24).FontColor(Colors.Blue.Medium);
 
-							string coZawieraRaport = $"{(includeKierowcyInfo ? "Informacje o kierowcach " : "")} {(includeLinieInfo ? "Informacje o liniach " : "")} {(includeEntityStatistics ? "Statystyki bazy danych " : "")}";
+							var coZawieraRaport = $"{(includeKierowcyInfo ? "Informacje o kierowcach " : "")} {(includeLinieInfo ? "Informacje o liniach " : "")} {(includeEntityStatistics ? "Statystyki bazy danych " : "")}";
 
 							text.Line($"Raport zawiera: {coZawieraRaport}").FontSize(18).FontColor(Colors.Blue.Darken1);
 						});
@@ -107,7 +107,7 @@ public class ReportHelper
 
 		using (var repo = new DatabaseRepository<Kierowca>(new AutobusyContext()))
 		{
-			kierowcyFromDb = repo.List();
+			kierowcyFromDb = repo.List(x => x.Przejazdy);
 		}
 
 		container.Table(table =>
@@ -132,7 +132,7 @@ public class ReportHelper
 				header.Cell().Element(CellStyle).AlignRight().Text("Średnie spóźnienie");
 			});
 
-			foreach (Kierowca kierowca in kierowcyFromDb)
+			foreach (var kierowca in kierowcyFromDb)
 			{
 				table.Cell().Element(CellStyle).Text(kierowca.Id);
 				table.Cell().Element(CellStyle).Text(kierowca.Imie + " " + kierowca.Nazwisko);
@@ -141,29 +141,31 @@ public class ReportHelper
 				double spalonePaliwo = 0;
 				double iloscKilometrow = 0;
 
-				foreach (Przejazd przejazd in kierowca.Przejazdy)
+				foreach (var przejazd in kierowca.Przejazdy)
 				{
 					spalonePaliwo += przejazd.IloscSpalonegoPaliwa;
 					iloscKilometrow += przejazd.Kurs.Linia.DlugoscWKm;
 				}
 
-				double srednieSpalonePaliwoNa1Km = iloscKilometrow == 0 ? 0 : spalonePaliwo / iloscKilometrow;
+				var srednieSpalonePaliwoNa1Km = iloscKilometrow == 0 ? 0 : spalonePaliwo / iloscKilometrow;
 
 				table.Cell().Element(CellStyle).AlignRight().Text(srednieSpalonePaliwoNa1Km.ToString("0.00"));
 
 				double iloscMinutSpoznienia = 0;
 				var iloscSpoznien = 0;
 
-				foreach (Przejazd przejazd in kierowca.Przejazdy)
+				foreach (var przejazd in kierowca.Przejazdy)
+				{
 					if (przejazd.RealizacjePrzejazdu is not null && przejazd.RealizacjePrzejazdu.Count > 0)
 					{
 						iloscSpoznien++;
 						iloscMinutSpoznienia += przejazd.RealizacjePrzejazdu.Sum(x => (x.FaktycznaGodzina - x.PlanKursu.PlanowaGodzina).TotalMinutes);
 					}
+				}
 
 				table.Cell().Element(CellStyle).AlignRight().Text(iloscSpoznien);
 
-				double srednieSpoznienie = iloscSpoznien == 0 ? 0 : iloscMinutSpoznienia / iloscSpoznien;
+				var srednieSpoznienie = iloscSpoznien == 0 ? 0 : iloscMinutSpoznienia / iloscSpoznien;
 
 				table.Cell().Element(CellStyle).AlignRight().Text(srednieSpoznienie);
 			}
@@ -176,12 +178,12 @@ public class ReportHelper
 
 		using (var repo = new DatabaseRepository<Linia>(new AutobusyContext()))
 		{
-			linieFromDb = repo.List();
+			linieFromDb = repo.List(x => x.Kursy);
 		}
 
 		using (var repo = new DatabaseRepository<Kurs>(new AutobusyContext()))
 		{
-			foreach (Linia linia in linieFromDb)
+			foreach (var linia in linieFromDb)
 			{
 				// Informacje o linii
 				container.Column(column =>
@@ -216,9 +218,9 @@ public class ReportHelper
 						header.Cell().Element(CellStyle).AlignRight().Text("Ilość spalonego paliwa");
 					});
 
-					var kursyLinii = repo.List(x => x.LiniaId == linia.Id);
+					var kursyLinii = repo.List(x => x.LiniaId == linia.Id, y => y.Linia, z => z.Przejazdy);
 
-					foreach (Kurs kurs in kursyLinii)
+					foreach (var kurs in kursyLinii)
 					{
 						table.Cell().Element(CellStyle).Text(kurs.Id);
 						table.Cell().Element(CellStyle).Text(kurs.DzienTygodnia.ToString());
@@ -265,7 +267,7 @@ public class ReportHelper
 			{
 				var i = 1;
 
-				foreach ((string header, int count) in statsRepo.GetDatabaseObjectsStatistics())
+				foreach ((var header, var count) in statsRepo.GetDatabaseObjectsStatistics())
 				{
 					table.Cell().Element(CellStyle).Text($"{i++}");
 					table.Cell().Element(CellStyle).Text(header);

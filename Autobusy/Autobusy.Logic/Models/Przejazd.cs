@@ -22,13 +22,16 @@ public class Przejazd : IIdentifiable
 
 	public override bool Equals(object obj)
 	{
-		if (obj is Przejazd przejazd && przejazd.Id == Id) return true;
+		if (obj is Przejazd przejazd && przejazd.Id == this.Id)
+		{
+			return true;
+		}
 
 		return false;
 	}
 
 	public override int GetHashCode()
 	{
-		return Id;
+		return this.Id;
 	}
 }

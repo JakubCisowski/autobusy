@@ -18,5 +18,8 @@ public class KursConfiguration : IEntityTypeConfiguration<Kurs>
 		builder.HasOne(k => k.Linia)
 			.WithMany(l => l.Kursy)
 			.HasForeignKey(k => k.LiniaId);
+
+		builder.Navigation(k => k.Przejazdy)
+			.AutoInclude();
 	}
 }

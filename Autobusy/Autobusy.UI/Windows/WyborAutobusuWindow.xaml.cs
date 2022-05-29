@@ -34,7 +34,7 @@ public partial class WyborAutobusuWindow : Window
 	{
 		var selectedAutobusNumerRejestracyjny = AutobusyComboBox.SelectedItem as string;
 
-		Autobus selectedAutobus = _listaAutobusow.FirstOrDefault(x => x.NumerRejestracyjny == selectedAutobusNumerRejestracyjny);
+		var selectedAutobus = _listaAutobusow.FirstOrDefault(x => x.NumerRejestracyjny == selectedAutobusNumerRejestracyjny);
 
 		Autobus = selectedAutobus;
 	}

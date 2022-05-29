@@ -14,14 +14,14 @@ public partial class MainWindow : Window
 		InitializeComponent();
 
 		_dataGodzina = new DataGodzina();
-		DataContext = _dataGodzina;
+		this.DataContext = _dataGodzina;
 	}
 
 	private void MainWindow_OnClosing(object sender, CancelEventArgs e)
 	{
 		// Save changes in database on currently displayed page.
 
-		object currentPage = MainFrame.Content;
+		var currentPage = MainFrame.Content;
 
 		switch (currentPage)
 		{

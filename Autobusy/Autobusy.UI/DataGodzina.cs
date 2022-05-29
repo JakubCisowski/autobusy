@@ -7,13 +7,12 @@ namespace Autobusy.UI;
 
 public class DataGodzina : INotifyPropertyChanged
 {
-	private DateTime _dataGodzina;
-
 	private readonly DispatcherTimer _timer;
+	private DateTime _dataGodzina;
 
 	public DataGodzina()
 	{
-		Data = DateTime.Now;
+		this.Data = DateTime.Now;
 
 		_timer = new DispatcherTimer
 		{
@@ -37,7 +36,7 @@ public class DataGodzina : INotifyPropertyChanged
 
 	private void Timer_Tick(object sender, EventArgs e)
 	{
-		Data = DateTime.Now;
+		this.Data = DateTime.Now;
 	}
 
 	protected void OnPropertyChanged([CallerMemberName] string name = null)

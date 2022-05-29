@@ -20,14 +20,14 @@ public partial class SpoznieniaWindow : Window
 
 		using (var repo = new DatabaseRepository<Przejazd>(new AutobusyContext()))
 		{
-			_przejazd = repo.GetById(przejazd.Id);
+			_przejazd = repo.GetById(przejazd.Id, x => x.RealizacjePrzejazdu);
 		}
 
 		PrzejazdInfoBlock.Text = $"Data: {_przejazd.Data}, linia: {_przejazd.Kurs.Linia.Numer}";
 
 		_realizacjePrzejazdu = new List<RealizacjaPrzejazdu>();
 
-		foreach (PlanKursu planKursu in _przejazd.Kurs.PlanyKursu)
+		foreach (var planKursu in _przejazd.Kurs.PlanyKursu)
 		{
 			var realizacjaPrzejazdu = new RealizacjaPrzejazdu
 			{
@@ -41,7 +41,7 @@ public partial class SpoznieniaWindow : Window
 
 		_przejazd.RealizacjePrzejazdu = _realizacjePrzejazdu;
 
-		DataContext = _realizacjePrzejazdu;
+		this.DataContext = _realizacjePrzejazdu;
 	}
 
 	private void SpoznieniaWindow_OnClosing(object sender, CancelEventArgs e)

@@ -11,8 +11,8 @@ namespace Autobusy.UI.Pages;
 
 public partial class PlanistaKursyPage : Page
 {
-	private List<Kurs> _kursy;
 	private readonly List<Linia> _linie;
+	private List<Kurs> _kursy;
 	private Linia _selectedLinia;
 
 	public PlanistaKursyPage()
@@ -21,7 +21,7 @@ public partial class PlanistaKursyPage : Page
 
 		using (var repo = new DatabaseRepository<Linia>(new AutobusyContext()))
 		{
-			_linie = repo.List();
+			_linie = repo.List(x=>x.PrzystankiWLinii, y=>y.Kursy);
 		}
 
 		LinieComboBox.ItemsSource = _linie.Select(x => x.Numer);
@@ -40,18 +40,45 @@ public partial class PlanistaKursyPage : Page
 	{
 		var nowyKurs = new Kurs
 		{
-			Linia = _selectedLinia,
 			PlanyKursu = new List<PlanKursu>(),
 			Przejazdy = new List<Przejazd>()
 		};
-
-		foreach (PrzystanekWLinii przystanekWLinii in _selectedLinia.PrzystankiWLinii) nowyKurs.PlanyKursu.Add(new PlanKursu {  Kurs = nowyKurs });
-
+		
 		_kursy.Add(nowyKurs);
+		
+		using (var repo = new DatabaseRepository<Linia>(new AutobusyContext()))
+		{
+			var liniaFromDb = repo.GetById(_selectedLinia.Id, x => x.PrzystankiWLinii, y => y.Kursy);
+		
+			nowyKurs.Linia = liniaFromDb;
+
+			if (liniaFromDb.Kursy is null)
+			{
+				liniaFromDb.Kursy = new List<Kurs>();
+			}
+			
+			liniaFromDb.Kursy.Add(nowyKurs);
+			
+			repo.SaveChanges();
+		}
 
 		using (var repo = new DatabaseRepository<Kurs>(new AutobusyContext()))
 		{
-			repo.Add(nowyKurs);
+			var kursFromDb = repo.GetById(nowyKurs.Id, x => x.PlanyKursu);
+
+			if (kursFromDb.PlanyKursu is null)
+			{
+				kursFromDb.PlanyKursu = new List<PlanKursu>();
+			}
+			
+			foreach (var przystanekWLinii in _selectedLinia.PrzystankiWLinii)
+			{
+				var nowyPlanKursu = new PlanKursu() { PrzystanekWLinii = przystanekWLinii };
+				
+				kursFromDb.PlanyKursu.Add(nowyPlanKursu);
+			}
+			
+			repo.SaveChanges();
 		}
 
 		KursyGrid.Items.Refresh();
@@ -63,16 +90,22 @@ public partial class PlanistaKursyPage : Page
 
 		_selectedLinia = _linie.First(x => x.Numer == selectedNumerLinii);
 
-		if (_selectedLinia.Kursy is null) _selectedLinia.Kursy = new List<Kurs>();
+		if (_selectedLinia.Kursy is null)
+		{
+			_selectedLinia.Kursy = new List<Kurs>();
+		}
 
 		_kursy = _selectedLinia.Kursy;
 
-		DataContext = _kursy;
+		this.DataContext = _kursy;
 	}
 
 	private void UsuwanieKursuButton_OnClick(object sender, RoutedEventArgs e)
 	{
-		if ((sender as Button)?.CommandParameter is not Kurs kurs) return;
+		if ((sender as Button)?.CommandParameter is not Kurs kurs)
+		{
+			return;
+		}
 
 		_kursy.Remove(kurs);
 
@@ -86,7 +119,10 @@ public partial class PlanistaKursyPage : Page
 
 	private void EdycjaKursuButton_OnClick(object sender, RoutedEventArgs e)
 	{
-		if ((sender as Button)?.CommandParameter is not Kurs kurs) return;
+		if ((sender as Button)?.CommandParameter is not Kurs kurs)
+		{
+			return;
+		}
 
 		new KursWindow(kurs).ShowDialog();
 	}

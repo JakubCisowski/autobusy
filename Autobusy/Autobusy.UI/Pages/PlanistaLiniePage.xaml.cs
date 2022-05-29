@@ -22,7 +22,7 @@ public partial class PlanistaLiniePage : Page
 
 		using (var repo = new DatabaseRepository<Linia>(new AutobusyContext()))
 		{
-			_linie = repo.List();
+			_linie = repo.List(x => x.PrzystankiWLinii);
 		}
 
 		LinieComboBox.ItemsSource = _linie.Select(x => x.Numer);
@@ -74,6 +74,11 @@ public partial class PlanistaLiniePage : Page
 			_przystanki = linia.PrzystankiWLinii;
 		}
 
+		using (var repo = new DatabaseRepository<Linia>(new AutobusyContext()))
+		{
+			repo.Add(linia);
+		}
+
 		PrzystankiGrid.Items.Refresh();
 		LinieComboBox.ItemsSource = _linie.Select(x => x.Numer);
 		LinieComboBox.SelectedItem = linia.Numer;
@@ -105,7 +110,7 @@ public partial class PlanistaLiniePage : Page
 			_przystanki = _selectedLinia.PrzystankiWLinii;
 		}
 
-		DataContext = _przystanki;
+		this.DataContext = _przystanki;
 
 		PrzystankiGrid.Items.Refresh();
 		LinieComboBox.Items.Refresh();
@@ -121,7 +126,7 @@ public partial class PlanistaLiniePage : Page
 
 		using (var repo = new DatabaseRepository<Przystanek>(new AutobusyContext()))
 		{
-			przystanek = repo.GetFirst(x => x.Nazwa == selectedPrzystanekNazwa);
+			przystanek = repo.GetFirst(x => x.Nazwa == selectedPrzystanekNazwa, y => y.Przystanki);
 		}
 
 		var przystanekWLinii = new PrzystanekWLinii
@@ -133,9 +138,22 @@ public partial class PlanistaLiniePage : Page
 
 		_przystanki.Add(przystanekWLinii);
 
-		using (var repo = new DatabaseRepository<PrzystanekWLinii>(new AutobusyContext()))
+		_selectedLinia.PrzystankiWLinii.Add(przystanekWLinii);
+
+		using (var repo = new DatabaseRepository<Linia>(new AutobusyContext()))
 		{
-			repo.Add(przystanekWLinii);
+			var liniaFromDb = repo.GetById(_selectedLinia.Id);
+
+			if (liniaFromDb.PrzystankiWLinii is null)
+			{
+				liniaFromDb.PrzystankiWLinii = new List<PrzystanekWLinii>();
+			}
+
+			liniaFromDb.PrzystankiWLinii.Add(przystanekWLinii);
+
+			repo.Update(liniaFromDb);
+
+			_selectedLinia = liniaFromDb;
 		}
 
 		PrzystankiGrid.Items.Refresh();
@@ -149,18 +167,25 @@ public partial class PlanistaLiniePage : Page
 
 		using (var repo = new DatabaseRepository<PrzystanekWLinii>(new AutobusyContext()))
 		{
-			_przystanki = repo.List(x => x.Linia.Numer == selectedNumerLinii);
-			DataContext = _przystanki;
+			_przystanki = repo.List(x => x.Linia.Numer == selectedNumerLinii, y => y.Przystanek);
+			this.DataContext = _przystanki;
 		}
 	}
 
 	private void UsuwaniePrzystankuButton_OnClick(object sender, RoutedEventArgs e)
 	{
-		if ((sender as Button)?.CommandParameter is not PrzystanekWLinii przystanekWLinii) return;
+		if ((sender as Button)?.CommandParameter is not PrzystanekWLinii przystanekWLinii)
+		{
+			return;
+		}
 
-		foreach (PrzystanekWLinii przystanek in _przystanki)
+		foreach (var przystanek in _przystanki)
+		{
 			if (przystanek.LiczbaPorzadkowa > przystanekWLinii.LiczbaPorzadkowa)
+			{
 				przystanek.LiczbaPorzadkowa--;
+			}
+		}
 
 		_przystanki.Remove(przystanekWLinii);
 
@@ -176,7 +201,7 @@ public partial class PlanistaLiniePage : Page
 	{
 		var selectedLiniaNumer = LinieComboBox.SelectedItem.ToString();
 
-		Linia selectedLinia = _linie.First(x => x.Numer == selectedLiniaNumer);
+		var selectedLinia = _linie.First(x => x.Numer == selectedLiniaNumer);
 
 		new RentownoscWindow(selectedLinia).ShowDialog();
 	}

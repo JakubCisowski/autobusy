@@ -20,7 +20,7 @@ public partial class PlanistaPrzystankiPage : Page
 			_przystanki = repo.List();
 		}
 
-		DataContext = _przystanki;
+		this.DataContext = _przystanki;
 	}
 
 	private void DodajPrzystanekButton_OnClick(object sender, RoutedEventArgs e)
@@ -34,7 +34,10 @@ public partial class PlanistaPrzystankiPage : Page
 
 	private void UsuwaniePrzystankuButton_OnClick(object sender, RoutedEventArgs e)
 	{
-		if ((sender as Button)?.CommandParameter is not Przystanek przystanek) return;
+		if ((sender as Button)?.CommandParameter is not Przystanek przystanek)
+		{
+			return;
+		}
 
 		_przystanki.Remove(przystanek);
 

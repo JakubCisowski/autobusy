@@ -20,7 +20,7 @@ public partial class SerwisyWindow : Window
 
 		using (var repo = new DatabaseRepository<Autobus>(new AutobusyContext()))
 		{
-			_autobusy = repo.List();
+			_autobusy = repo.List(x => x.Serwisy);
 		}
 
 		AutobusComboBox.ItemsSource = _autobusy.Select(x => x.NumerRejestracyjny);
@@ -30,11 +30,11 @@ public partial class SerwisyWindow : Window
 	{
 		var selectedAutobusNumerRejestracyjny = e.AddedItems[0].ToString();
 
-		Autobus selectedAutobus = _autobusy.FirstOrDefault(x => x.NumerRejestracyjny == selectedAutobusNumerRejestracyjny);
+		var selectedAutobus = _autobusy.FirstOrDefault(x => x.NumerRejestracyjny == selectedAutobusNumerRejestracyjny);
 
 		_serwisy = selectedAutobus.Serwisy;
 
-		DataContext = _serwisy;
+		this.DataContext = _serwisy;
 	}
 
 	private void SerwisyWindow_OnClosing(object sender, CancelEventArgs e)

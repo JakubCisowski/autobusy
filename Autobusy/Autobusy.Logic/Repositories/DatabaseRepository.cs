@@ -1,4 +1,6 @@
-﻿using Autobusy.Logic.Contexts;
+﻿using System.Linq.Expressions;
+using Autobusy.Logic.Contexts;
+using Autobusy.Logic.Helpers;
 using Autobusy.Logic.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,38 +20,57 @@ public class DatabaseRepository<TEntity> : IDisposable, IGenericRepository<TEnti
 		_dbContext?.Dispose();
 	}
 
-	public TEntity GetById(int id)
+	public TEntity GetById(int id, params Expression<Func<TEntity, object>>[] includes)
 	{
-		return _dbContext.Set<TEntity>().Find(id);
+		var query = _dbContext.Set<TEntity>().AsQueryable();
+
+		query = includes.Aggregate(query, (resultSoFar, next) => resultSoFar.Include(next));
+
+		return query.FirstOrDefault(x => x.Id == id);
 	}
 
-	public TEntity GetFirst(Func<TEntity, bool> predicate)
+	public TEntity GetFirst(Func<TEntity, bool> predicate, params Expression<Func<TEntity, object>>[] includes)
 	{
-		return _dbContext.Set<TEntity>().FirstOrDefault(predicate);
+		var query = _dbContext.Set<TEntity>().AsQueryable();
+
+		query = includes.Aggregate(query, (resultSoFar, next) => resultSoFar.Include(next));
+
+		return query.FirstOrDefault(predicate);
 	}
 
-	public List<TEntity> List()
+	public List<TEntity> List(params Expression<Func<TEntity, object>>[] includes)
 	{
-		return _dbContext.Set<TEntity>().ToList();
+		var query = _dbContext.Set<TEntity>().AsQueryable();
+
+		query = includes.Aggregate(query, (resultSoFar, next) => resultSoFar.Include(next));
+
+		return query.ToList();
 	}
 
-	public List<TEntity> List(Func<TEntity, bool> predicate)
+	public List<TEntity> List(Func<TEntity, bool> predicate, params Expression<Func<TEntity, object>>[] includes)
 	{
-		return _dbContext.Set<TEntity>().Where(predicate).ToList();
+		var query = _dbContext.Set<TEntity>().AsQueryable();
+
+		query = includes.Aggregate(query, (resultSoFar, next) => resultSoFar.Include(next));
+
+		return query.AsEnumerable().Where(predicate).ToList();
 	}
 
 	public void Add(TEntity entity)
 	{
 		_dbContext.Set<TEntity>().Add(entity);
 
-		_dbContext.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Vehicles ON");
+		var tableName = TableNameHelper.GetTableName(entity);
+
+		// Tymczasowo ustawiamy IDENTITY_INSERT na ON żeby łatwo wstawić rekord z kluczem obcym pobranym już wcześniej z bazy danych
+		_dbContext.Database.ExecuteSqlRaw($"SET IDENTITY_INSERT {tableName} ON");
 		_dbContext.SaveChanges();
-		_dbContext.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Vehicles OFF");
+		_dbContext.Database.ExecuteSqlRaw($"SET IDENTITY_INSERT {tableName} OFF");
 	}
 
 	public void Delete(TEntity entity)
 	{
-		TEntity entityFromDb = _dbContext.Set<TEntity>().Find(entity.Id);
+		var entityFromDb = _dbContext.Set<TEntity>().Find(entity.Id);
 
 		_dbContext.Set<TEntity>().Remove(entityFromDb);
 
@@ -58,22 +79,46 @@ public class DatabaseRepository<TEntity> : IDisposable, IGenericRepository<TEnti
 
 	public void Update(TEntity entity)
 	{
-		TEntity entityFromDb = _dbContext.Set<TEntity>().Find(entity.Id);
+		var entityFromDb = _dbContext.Set<TEntity>().Find(entity.Id);
 
-		_dbContext.Entry(entityFromDb).CurrentValues.SetValues(entity);
+		if (entityFromDb is null)
+		{
+			Add(entity);
+		}
+		else
+		{
+			_dbContext.Entry(entityFromDb).CurrentValues.SetValues(entity);
+		}
 
 		_dbContext.SaveChanges();
 	}
 
 	public void UpdateMany(IEnumerable<TEntity> entities)
 	{
-		foreach (TEntity entity in entities)
+		if (entities is null)
 		{
-			TEntity entityFromDb = _dbContext.Set<TEntity>().Find(entity.Id);
+			return;
+		}
+		
+		foreach (var entity in entities)
+		{
+			var entityFromDb = _dbContext.Set<TEntity>().Find(entity.Id);
 
-			_dbContext.Entry(entityFromDb).CurrentValues.SetValues(entity);
+			if (entityFromDb is null)
+			{
+				Add(entity);
+			}
+			else
+			{
+				_dbContext.Entry(entityFromDb).CurrentValues.SetValues(entity);
+			}
 		}
 
+		_dbContext.SaveChanges();
+	}
+
+	public void SaveChanges()
+	{
 		_dbContext.SaveChanges();
 	}
 }

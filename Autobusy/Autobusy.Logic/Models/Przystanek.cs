@@ -13,13 +13,16 @@ public class Przystanek : IIdentifiable
 
 	public override bool Equals(object obj)
 	{
-		if (obj is Przystanek przystanek && przystanek.Id == Id) return true;
+		if (obj is Przystanek przystanek && przystanek.Id == this.Id)
+		{
+			return true;
+		}
 
 		return false;
 	}
 
 	public override int GetHashCode()
 	{
-		return Id;
+		return this.Id;
 	}
 }

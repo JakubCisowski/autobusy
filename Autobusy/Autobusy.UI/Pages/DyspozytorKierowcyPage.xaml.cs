@@ -21,7 +21,7 @@ public partial class DyspozytorKierowcyPage : Page
 			_kierowcy = repo.List();
 		}
 
-		DataContext = _kierowcy;
+		this.DataContext = _kierowcy;
 	}
 
 	private void BackButton_OnClick(object sender, RoutedEventArgs e)
@@ -44,14 +44,21 @@ public partial class DyspozytorKierowcyPage : Page
 
 	private void SpalanieButton_OnClick(object sender, RoutedEventArgs e)
 	{
-		if ((sender as Button)?.CommandParameter is not Kierowca kierowca) return;
+		if ((sender as Button)?.CommandParameter is not Kierowca kierowca)
+		{
+			return;
+		}
 
-		double? averageFuelConsumption = kierowca.Przejazdy?.Sum(x => x.IloscSpalonegoPaliwa);
+		var averageFuelConsumption = kierowca.Przejazdy?.Sum(x => x.IloscSpalonegoPaliwa);
 
 		if (averageFuelConsumption.HasValue)
+		{
 			MessageBox.Show($"Średnie spalanie kierowcy {kierowca.Imie} {kierowca.Nazwisko} wynosi: {averageFuelConsumption}.", "Średnie spalanie kierowcy");
+		}
 		else
+		{
 			MessageBox.Show($"Brak danych o spalaniu dla kierowcy {kierowca.Imie} {kierowca.Nazwisko}.", "Średnie spalanie kierowcy");
+		}
 	}
 
 	public void SaveChanges()
@@ -64,7 +71,10 @@ public partial class DyspozytorKierowcyPage : Page
 
 	private void SpoznieniaButton_OnClick(object sender, RoutedEventArgs e)
 	{
-		if ((sender as Button)?.CommandParameter is not Kierowca kierowca) return;
+		if ((sender as Button)?.CommandParameter is not Kierowca kierowca)
+		{
+			return;
+		}
 
 		var przejazdyKierowcy = kierowca.Przejazdy;
 
@@ -73,12 +83,14 @@ public partial class DyspozytorKierowcyPage : Page
 
 		if (przejazdyKierowcy != null)
 		{
-			foreach (Przejazd przejazdKierowcy in przejazdyKierowcy)
+			foreach (var przejazdKierowcy in przejazdyKierowcy)
+			{
 				if (przejazdKierowcy.RealizacjePrzejazdu is not null && przejazdKierowcy.RealizacjePrzejazdu.Count > 0)
 				{
 					spoznieniaIlosc++;
 					spoznieniaSuma += przejazdKierowcy.RealizacjePrzejazdu.Sum(x => (x.FaktycznaGodzina - x.PlanKursu.PlanowaGodzina).TotalMinutes);
 				}
+			}
 
 			if (spoznieniaIlosc != 0)
 			{

@@ -12,9 +12,9 @@ public partial class RaportWindow : Window
 
 	private void GenerujButton_OnClick(object sender, RoutedEventArgs e)
 	{
-		bool includeKierowcyInfo = KierowcyCheckBox.IsChecked.Value;
-		bool includeLinieInfo = LinieCheckBox.IsChecked.Value;
-		bool includeEntityStatistics = BazaDanychCheckBox.IsChecked.Value;
+		var includeKierowcyInfo = KierowcyCheckBox.IsChecked.Value;
+		var includeLinieInfo = LinieCheckBox.IsChecked.Value;
+		var includeEntityStatistics = BazaDanychCheckBox.IsChecked.Value;
 
 		if (!includeKierowcyInfo && !includeLinieInfo && !includeEntityStatistics)
 		{

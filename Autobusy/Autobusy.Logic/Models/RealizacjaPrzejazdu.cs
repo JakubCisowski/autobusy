@@ -15,13 +15,16 @@ public class RealizacjaPrzejazdu : IIdentifiable
 
 	public override bool Equals(object obj)
 	{
-		if (obj is RealizacjaPrzejazdu realizacjaPrzejazdu && realizacjaPrzejazdu.Id == Id) return true;
+		if (obj is RealizacjaPrzejazdu realizacjaPrzejazdu && realizacjaPrzejazdu.Id == this.Id)
+		{
+			return true;
+		}
 
 		return false;
 	}
 
 	public override int GetHashCode()
 	{
-		return Id;
+		return this.Id;
 	}
 }

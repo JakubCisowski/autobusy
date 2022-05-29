@@ -21,7 +21,10 @@ public partial class KursWindow : Window
 
 		_kurs = kurs;
 
-		if (_kurs.PlanyKursu is null) _kurs.PlanyKursu = new List<PlanKursu>();
+		if (_kurs.PlanyKursu is null)
+		{
+			_kurs.PlanyKursu = new List<PlanKursu>();
+		}
 
 		_planyKursu = _kurs.PlanyKursu;
 
@@ -29,17 +32,20 @@ public partial class KursWindow : Window
 
 		using (var repo = new DatabaseRepository<Przystanek>(new AutobusyContext()))
 		{
-			przystanki = repo.List();
+			przystanki = repo.List(x => x.Przystanki);
 		}
 
-		// foreach (PlanKursu planKursu in _planyKursu)
-		// {
-		// 	Przystanek przystanek = przystanki.FirstOrDefault(x => x.Przystanki.Any(y => y.Id == planKursu.PrzystanekWLinii.Id));
-		//
-		// 	if (przystanek != null) planKursu.PrzystanekWLinii.Przystanek = przystanek;
-		// }
+		foreach (var planKursu in _planyKursu)
+		{
+			var przystanek = przystanki.FirstOrDefault(x => x.Przystanki.Any(y => y.Id == planKursu.PrzystanekWLinii.Id));
 
-		DataContext = _planyKursu;
+			if (przystanek != null)
+			{
+				planKursu.PrzystanekWLinii.Przystanek = przystanek;
+			}
+		}
+
+		this.DataContext = _planyKursu;
 
 		KursInfoBlock.Text = $"{_kurs.Id} - {_kurs.DzienTygodnia.ToString()} - {_kurs.GodzinaRozpoczecia.ToString("HH:mm:ss")}";
 	}
@@ -66,7 +72,10 @@ public partial class KursWindow : Window
 
 	private void UsuwanieKursuButton_OnClick(object sender, RoutedEventArgs e)
 	{
-		if ((sender as Button)?.CommandParameter is not PlanKursu planKursu) return;
+		if ((sender as Button)?.CommandParameter is not PlanKursu planKursu)
+		{
+			return;
+		}
 
 		_planyKursu.Remove(planKursu);
 

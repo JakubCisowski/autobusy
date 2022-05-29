@@ -16,13 +16,16 @@ public class Kurs : IIdentifiable
 
 	public override bool Equals(object obj)
 	{
-		if (obj is Kurs kurs && kurs.Id == Id) return true;
+		if (obj is Kurs kurs && kurs.Id == this.Id)
+		{
+			return true;
+		}
 
 		return false;
 	}
 
 	public override int GetHashCode()
 	{
-		return Id;
+		return this.Id;
 	}
 }

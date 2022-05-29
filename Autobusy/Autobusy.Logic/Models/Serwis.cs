@@ -15,13 +15,16 @@ public class Serwis : IIdentifiable
 
 	public override bool Equals(object obj)
 	{
-		if (obj is Serwis serwis && serwis.Id == Id) return true;
+		if (obj is Serwis serwis && serwis.Id == this.Id)
+		{
+			return true;
+		}
 
 		return false;
 	}
 
 	public override int GetHashCode()
 	{
-		return Id;
+		return this.Id;
 	}
 }

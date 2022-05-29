@@ -55,7 +55,7 @@
 		          AutoGenerateColumns="False" HeadersVisibility="All">
 			<DataGrid.Columns>
 				<!-- ID -->
-				<DataGridTextColumn Binding="{Binding Przystanek.PrzystanekId}" Header="Id"
+				<DataGridTextColumn Binding="{Binding Przystanek.Id}" Header="Id"
 				                    ElementStyle="{StaticResource 
 				MaterialDesignDataGridTextColumnStyle}" IsReadOnly="True"
 				                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"

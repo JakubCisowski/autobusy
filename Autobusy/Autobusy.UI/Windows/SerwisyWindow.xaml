@@ -31,7 +31,7 @@
 		          HeadersVisibility="All" Margin="50,0,50,0">
 			<DataGrid.Columns>
 				<!-- ID -->
-				<DataGridTextColumn Binding="{Binding SerwisId}" Header="Id"
+				<DataGridTextColumn Binding="{Binding Id}" Header="Id"
 				                    ElementStyle="{StaticResource 
 				MaterialDesignDataGridTextColumnStyle}" IsReadOnly="True"
 				                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"

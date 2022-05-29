@@ -16,7 +16,7 @@ public partial class LiniaWindow : Window
 
 		_linia = linia;
 
-		DataContext = _linia;
+		this.DataContext = _linia;
 	}
 
 	private void LiniaWindow_OnClosing(object sender, CancelEventArgs e)

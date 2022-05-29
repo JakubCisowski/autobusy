@@ -48,7 +48,7 @@
 
 			<DataGrid.Columns>
 				<!-- ID -->
-				<DataGridTextColumn Binding="{Binding AutobusId}" Header="Id"
+				<DataGridTextColumn Binding="{Binding Id}" Header="Id"
 				                    ElementStyle="{StaticResource 
 				MaterialDesignDataGridTextColumnStyle}" IsReadOnly="True"
 				                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"

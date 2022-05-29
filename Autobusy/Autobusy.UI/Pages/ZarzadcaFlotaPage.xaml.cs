@@ -22,7 +22,7 @@ public partial class ZarzadcaFlotaPage : Page
 			_autobusy = repo.List();
 		}
 
-		DataContext = _autobusy;
+		this.DataContext = _autobusy;
 	}
 
 	private void BackButton_OnClick(object sender, RoutedEventArgs e)
@@ -57,7 +57,10 @@ public partial class ZarzadcaFlotaPage : Page
 
 	private void WycofanieAutobusuButton_OnClick(object sender, RoutedEventArgs e)
 	{
-		if ((sender as Button)?.CommandParameter is not Autobus autobus) return;
+		if ((sender as Button)?.CommandParameter is not Autobus autobus)
+		{
+			return;
+		}
 
 		_autobusy.Remove(autobus);
 
@@ -71,19 +74,31 @@ public partial class ZarzadcaFlotaPage : Page
 
 	private void SerwisAutobusuButton_OnClick(object sender, RoutedEventArgs e)
 	{
-		if ((sender as Button)?.CommandParameter is not Autobus autobus) return;
-
-		autobus.StanAutobusu = StanAutobusu.WSerwisie;
-
-		var serwis = new Serwis
+		if ((sender as Button)?.CommandParameter is not Autobus autobus)
 		{
-			NaprawianyAutobus = autobus,
-			Data = DateTime.Now
-		};
+			return;
+		}
 
-		using (var repo = new DatabaseRepository<Serwis>(new AutobusyContext()))
+		using (var repo = new DatabaseRepository<Autobus>(new AutobusyContext()))
 		{
-			repo.Add(serwis);
+			var autobusFromDb = repo.GetById(autobus.Id);
+
+			if (autobusFromDb.Serwisy is null)
+			{
+				autobusFromDb.Serwisy = new List<Serwis>();
+			}
+			
+			var serwis = new Serwis
+			{
+				NaprawianyAutobus = autobusFromDb,
+				Data = DateTime.Now
+			};
+			
+			autobusFromDb.Serwisy.Add(serwis);
+
+			autobusFromDb.StanAutobusu = StanAutobusu.WSerwisie;
+			
+			repo.Update(autobusFromDb);
 		}
 	}
 

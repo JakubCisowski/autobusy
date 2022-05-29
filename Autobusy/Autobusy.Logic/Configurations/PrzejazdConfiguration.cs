@@ -29,5 +29,8 @@ public class PrzejazdConfiguration : IEntityTypeConfiguration<Przejazd>
 		builder.HasOne(p => p.Kurs)
 			.WithMany(k => k.Przejazdy)
 			.HasForeignKey(p => p.KursId);
+
+		builder.Navigation(p => p.RealizacjePrzejazdu)
+			.AutoInclude();
 	}
 }
