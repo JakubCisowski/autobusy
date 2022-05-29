@@ -27,5 +27,7 @@
 		
 		<Button x:Name="ZarzadcaButton" Grid.Row="1" Grid.Column="2" Width="200" Height="150" Content="Zarządca flotą" Click="ZarzadcaButton_OnClick" Style="{StaticResource   MaterialDesignRaisedDarkButton}" FontSize="22"/>
 		
+		<Button x:Name="RaportyButton" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Width="250" Height="60" Content="Generacja raportów" Click="RaportyButton_OnClick" Style="{StaticResource MaterialDesignFlatButton}" FontSize="22"/>
+		
 	</Grid>
 </Page>

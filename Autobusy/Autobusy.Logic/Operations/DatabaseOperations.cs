@@ -35,7 +35,9 @@ public static class DatabaseOperations
 	{
 		using (var db = new AutobusyContext())
 		{
-			return db.Kierowcy.Include(x => x.Przejazdy).ToList();
+			return db.Kierowcy.Include(x => x.Przejazdy).ThenInclude(y=>y.RealizacjePrzejazdu)
+				.Include(x=>x.Przejazdy).ThenInclude(y=>y.Kurs).ThenInclude(z=>z.Linia)
+				.ToList();
 		}
 	}
 	
