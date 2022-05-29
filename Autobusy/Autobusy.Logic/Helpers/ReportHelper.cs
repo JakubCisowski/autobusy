@@ -1,5 +1,6 @@
 ﻿using Autobusy.Logic.Contexts;
-using Autobusy.Logic.Operations;
+using Autobusy.Logic.Models;
+using Autobusy.Logic.Repositories;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
@@ -9,7 +10,7 @@ namespace Autobusy.Logic.Helpers;
 public class ReportHelper
 {
 	private static bool _includeKierowcyInfo, _includeLinieInfo, _includeEntityStatistics;
-	
+
 	public static void CreateReport(bool includeKierowcyInfo, bool includeLinieInfo, bool includeEntityStatistics)
 	{
 		_includeKierowcyInfo = includeKierowcyInfo;
@@ -17,7 +18,7 @@ public class ReportHelper
 		_includeEntityStatistics = includeEntityStatistics;
 
 		var date = DateTime.Now.ToString("dd/MM/yyyy hh/mm");
-		
+
 		Document.Create(container =>
 			{
 				container.Page(page =>
@@ -38,13 +39,13 @@ public class ReportHelper
 
 							text.Line($"Raport zawiera: {coZawieraRaport}").FontSize(18).FontColor(Colors.Blue.Darken1);
 						});
-					
+
 					// OMEGA TODO:
 					// Wygenerować wiele page'ów w takiej formie:
 					// I. Informacje o kierowcach (tabelki z przejazdami spóźnieniami itd):
 					// 1. Jan Kowalski
 					// 2. Jakub Nowak
-					
+
 					// II. Informacje o liniach (tabelki z kursami, przejazdami, biletami, paliwem itd):
 					// 1. Linia 1:
 					//	a. Poniedziałek, 8:00
@@ -53,7 +54,7 @@ public class ReportHelper
 					// 2. Linia 2:
 					//	a. Poniedziałek, 20:00
 					//	b. Piątek, 22:00
-					
+
 					// III. Informacje o obiektach w bazie danych (skrótowo): DONE
 					// 1. Kierowcy: 2
 					// 2. Linie: 5
@@ -99,23 +100,28 @@ public class ReportHelper
 			}
 		});
 	}
-	
+
 	private static void CreateKierowcyInfo(IContainer container)
 	{
-		var kierowcyFromDb = DatabaseOperations.GetKierowcy();
-		
+		List<Kierowca> kierowcyFromDb;
+
+		using (var repo = new DatabaseRepository<Kierowca>(new AutobusyContext()))
+		{
+			kierowcyFromDb = repo.List();
+		}
+
 		container.Table(table =>
 		{
 			table.ColumnsDefinition(columns =>
 			{
-				columns.ConstantColumn(25);	// Id
-				columns.RelativeColumn(2);		// Imię i nazwisko
-				columns.RelativeColumn(1);		// Ilość przejazdów
-				columns.RelativeColumn(1);		// Średnie spalanie
-				columns.RelativeColumn(1);		// Ilość spóźnień
-				columns.RelativeColumn(1);		// Średnie spóźnienie
+				columns.ConstantColumn(25); // Id
+				columns.RelativeColumn(2); // Imię i nazwisko
+				columns.RelativeColumn(); // Ilość przejazdów
+				columns.RelativeColumn(); // Średnie spalanie
+				columns.RelativeColumn(); // Ilość spóźnień
+				columns.RelativeColumn(); // Średnie spóźnienie
 			});
-			
+
 			table.Header(header =>
 			{
 				header.Cell().Element(CellStyle).Text("Id");
@@ -126,41 +132,39 @@ public class ReportHelper
 				header.Cell().Element(CellStyle).AlignRight().Text("Średnie spóźnienie");
 			});
 
-			foreach (var kierowca in kierowcyFromDb)
+			foreach (Kierowca kierowca in kierowcyFromDb)
 			{
-				table.Cell().Element(CellStyle).Text(kierowca.KierowcaId);
+				table.Cell().Element(CellStyle).Text(kierowca.Id);
 				table.Cell().Element(CellStyle).Text(kierowca.Imie + " " + kierowca.Nazwisko);
 				table.Cell().Element(CellStyle).AlignRight().Text(kierowca.Przejazdy.Count);
 
 				double spalonePaliwo = 0;
 				double iloscKilometrow = 0;
-				
-				foreach (var przejazd in kierowca.Przejazdy)
+
+				foreach (Przejazd przejazd in kierowca.Przejazdy)
 				{
 					spalonePaliwo += przejazd.IloscSpalonegoPaliwa;
 					iloscKilometrow += przejazd.Kurs.Linia.DlugoscWKm;
 				}
 
 				double srednieSpalonePaliwoNa1Km = iloscKilometrow == 0 ? 0 : spalonePaliwo / iloscKilometrow;
-				
+
 				table.Cell().Element(CellStyle).AlignRight().Text(srednieSpalonePaliwoNa1Km.ToString("0.00"));
 
 				double iloscMinutSpoznienia = 0;
-				int iloscSpoznien = 0;
+				var iloscSpoznien = 0;
 
-				foreach (var przejazd in kierowca.Przejazdy)
-				{
+				foreach (Przejazd przejazd in kierowca.Przejazdy)
 					if (przejazd.RealizacjePrzejazdu is not null && przejazd.RealizacjePrzejazdu.Count > 0)
 					{
 						iloscSpoznien++;
-						iloscMinutSpoznienia+= przejazd.RealizacjePrzejazdu.Sum(x => (x.FaktycznaGodzina - x.PlanKursu.PlanowaGodzina).TotalMinutes);
+						iloscMinutSpoznienia += przejazd.RealizacjePrzejazdu.Sum(x => (x.FaktycznaGodzina - x.PlanKursu.PlanowaGodzina).TotalMinutes);
 					}
-				}
-				
+
 				table.Cell().Element(CellStyle).AlignRight().Text(iloscSpoznien);
-				
+
 				double srednieSpoznienie = iloscSpoznien == 0 ? 0 : iloscMinutSpoznienia / iloscSpoznien;
-				
+
 				table.Cell().Element(CellStyle).AlignRight().Text(srednieSpoznienie);
 			}
 		});
@@ -168,7 +172,73 @@ public class ReportHelper
 
 	private static void CreateLinieInfo(IContainer container)
 	{
-		
+		List<Linia> linieFromDb;
+
+		using (var repo = new DatabaseRepository<Linia>(new AutobusyContext()))
+		{
+			linieFromDb = repo.List();
+		}
+
+		using (var repo = new DatabaseRepository<Kurs>(new AutobusyContext()))
+		{
+			foreach (Linia linia in linieFromDb)
+			{
+				// Informacje o linii
+				container.Column(column =>
+				{
+					column.Item().Text(text =>
+					{
+						text.Line("Id linii - Numer linii - Typ linii - Długość linii");
+						text.Line($"{linia.Id} - {linia.Numer} - {linia.Typ.ToString()} - {linia.DlugoscWKm.ToString("0.00")}");
+					});
+				});
+
+				// Tabela z kursami
+				container.Table(table =>
+				{
+					table.ColumnsDefinition(columns =>
+					{
+						columns.ConstantColumn(25); // Id kursu w ramach linii
+						columns.RelativeColumn(2); // Dzień tygodnia
+						columns.RelativeColumn(2); // Godzina
+						columns.RelativeColumn(2); // Ilość przejazdów w ramach kursu
+						columns.RelativeColumn(2); // Ilość sprzedanych biletów
+						columns.RelativeColumn(2); // Ilość spalonego paliwa
+					});
+
+					table.Header(header =>
+					{
+						header.Cell().Element(CellStyle).Text("Id");
+						header.Cell().Element(CellStyle).Text("Dzień tygodnia");
+						header.Cell().Element(CellStyle).AlignRight().Text("Godzina");
+						header.Cell().Element(CellStyle).AlignRight().Text("Ilość przejazdów");
+						header.Cell().Element(CellStyle).AlignRight().Text("Ilość sprzedanych biletów");
+						header.Cell().Element(CellStyle).AlignRight().Text("Ilość spalonego paliwa");
+					});
+
+					var kursyLinii = repo.List(x => x.LiniaId == linia.Id);
+
+					foreach (Kurs kurs in kursyLinii)
+					{
+						table.Cell().Element(CellStyle).Text(kurs.Id);
+						table.Cell().Element(CellStyle).Text(kurs.DzienTygodnia.ToString());
+						table.Cell().Element(CellStyle).Text(kurs.GodzinaRozpoczecia.ToString("hh:mm"));
+						table.Cell().Element(CellStyle).Text(kurs.Przejazdy.Count);
+
+						if (kurs.Przejazdy.Count == 0)
+						{
+							table.Cell().Element(CellStyle).Text("-");
+							table.Cell().Element(CellStyle).Text("-");
+						}
+						else
+						{
+							table.Cell().Element(CellStyle).Text(kurs.Przejazdy.Sum(x => x.IloscSkasowanychBiletow));
+							table.Cell().Element(CellStyle).Text(kurs.Przejazdy.Sum(x => x.IloscSpalonegoPaliwa));
+						}
+					}
+				});
+			}
+		}
 	}
 
 	private static void CreateEntityInfo(IContainer container)
@@ -177,12 +247,12 @@ public class ReportHelper
 		{
 			table.ColumnsDefinition(columns =>
 			{
-				columns.ConstantColumn(25);	// Lp
-				columns.RelativeColumn(2);		// Typ obiektu
-				columns.RelativeColumn(1);		// Ilość obiektów w bazie danych
-				columns.RelativeColumn(2);		// Puste miejsce
+				columns.ConstantColumn(25); // Lp
+				columns.RelativeColumn(2); // Typ obiektu
+				columns.RelativeColumn(); // Ilość obiektów w bazie danych
+				columns.RelativeColumn(2); // Puste miejsce
 			});
-			
+
 			table.Header(header =>
 			{
 				header.Cell().Element(CellStyle).Text("#");
@@ -190,74 +260,22 @@ public class ReportHelper
 				header.Cell().Element(CellStyle).AlignRight().Text("Ilość obiektów");
 				header.Cell().Element(CellStyle).AlignRight().Text("");
 			});
-			
-			// TODO: zmienić tu po zrobieniu repository
 
-			using (var db = new AutobusyContext())
+			using (var statsRepo = new StatisticsRepository(new AutobusyContext()))
 			{
-				var kierowcy = db.Kierowcy.Count();
-				table.Cell().Element(CellStyle).Text("1");
-				table.Cell().Element(CellStyle).Text("Kierowcy");
-				table.Cell().Element(CellStyle).AlignRight().Text(kierowcy);
-				table.Cell().Element(CellStyle).AlignRight().Text("");
+				var i = 1;
 
-				var kursy = db.Kursy.Count();
-				table.Cell().Element(CellStyle).Text("2");
-				table.Cell().Element(CellStyle).Text("Kursy");
-				table.Cell().Element(CellStyle).AlignRight().Text(kursy);
-				table.Cell().Element(CellStyle).AlignRight().Text("");
-
-				var linie = db.Linie.Count();
-				table.Cell().Element(CellStyle).Text("3");
-				table.Cell().Element(CellStyle).Text("Linie");
-				table.Cell().Element(CellStyle).AlignRight().Text(linie);
-				table.Cell().Element(CellStyle).AlignRight().Text("");
-
-				var przejazdy = db.Przejazdy.Count();
-				table.Cell().Element(CellStyle).Text("4");
-				table.Cell().Element(CellStyle).Text("Przejazdy");
-				table.Cell().Element(CellStyle).AlignRight().Text(przejazdy);
-				table.Cell().Element(CellStyle).AlignRight().Text("");
-
-				var przejazdyRealizowane = db.RealizacjePrzejazdu.Count();
-				table.Cell().Element(CellStyle).Text("5");
-				table.Cell().Element(CellStyle).Text("Przejazdy realizowane");
-				table.Cell().Element(CellStyle).AlignRight().Text(przejazdyRealizowane);
-				table.Cell().Element(CellStyle).AlignRight().Text("");
-
-				var autobusy = db.Autobusy.Count();
-				table.Cell().Element(CellStyle).Text("6");
-				table.Cell().Element(CellStyle).Text("Pojazdy");
-				table.Cell().Element(CellStyle).AlignRight().Text(autobusy);
-				table.Cell().Element(CellStyle).AlignRight().Text("");
-
-				var planyKursu = db.PlanyKursu.Count();
-				table.Cell().Element(CellStyle).Text("7");
-				table.Cell().Element(CellStyle).Text("Plany kursów");
-				table.Cell().Element(CellStyle).AlignRight().Text(planyKursu);
-				table.Cell().Element(CellStyle).AlignRight().Text("");
-
-				var przystanki = db.Przystanki.Count();
-				table.Cell().Element(CellStyle).Text("8");
-				table.Cell().Element(CellStyle).Text("Przystanki");
-				table.Cell().Element(CellStyle).AlignRight().Text(przystanki);
-				table.Cell().Element(CellStyle).AlignRight().Text("");
-
-				var przystankiWLinii = db.PrzystankiWLinii.Count();
-				table.Cell().Element(CellStyle).Text("9");
-				table.Cell().Element(CellStyle).Text("Przystanki w linii");
-				table.Cell().Element(CellStyle).AlignRight().Text(przystankiWLinii);
-				table.Cell().Element(CellStyle).AlignRight().Text("");
-
-				var serwisy = db.Serwisy.Count();
-				table.Cell().Element(CellStyle).Text("10");
-				table.Cell().Element(CellStyle).Text("Serwisy");
-				table.Cell().Element(CellStyle).AlignRight().Text(serwisy);
-				table.Cell().Element(CellStyle).AlignRight().Text("");
+				foreach ((string header, int count) in statsRepo.GetDatabaseObjectsStatistics())
+				{
+					table.Cell().Element(CellStyle).Text($"{i++}");
+					table.Cell().Element(CellStyle).Text(header);
+					table.Cell().Element(CellStyle).AlignRight().Text(count);
+					table.Cell().Element(CellStyle).AlignRight().Text("");
+				}
 			}
 		});
 	}
-	
+
 	private static IContainer CellStyle(IContainer container)
 	{
 		return container.BorderBottom(1).BorderColor(Colors.Grey.Lighten2).PaddingVertical(5);

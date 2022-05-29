@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Autobusy.Logic.Migrations
 {
-    public partial class Init : Migration
+    public partial class TryFixingCyclicIssue : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,24 +13,24 @@ namespace Autobusy.Logic.Migrations
                 name: "Autobusy",
                 columns: table => new
                 {
-                    AutobusId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Marka = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     NumerRejestracyjny = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DataProdukcji = table.Column<DateTime>(type: "datetime2", nullable: false),
                     StanAutobusu = table.Column<int>(type: "int", nullable: false),
-                    SpalanieNa100 = table.Column<double>(type: "float", nullable: false)
+                    SpalanieNa100 = table.Column<double>(type: "float(4)", precision: 4, scale: 2, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Autobusy", x => x.AutobusId);
+                    table.PrimaryKey("PK_Autobusy", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Kierowcy",
                 columns: table => new
                 {
-                    KierowcaId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Imie = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Nazwisko = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -38,29 +38,29 @@ namespace Autobusy.Logic.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Kierowcy", x => x.KierowcaId);
+                    table.PrimaryKey("PK_Kierowcy", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Linie",
                 columns: table => new
                 {
-                    LiniaId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Numer = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Typ = table.Column<int>(type: "int", nullable: false),
-                    DlugoscWKm = table.Column<double>(type: "float", nullable: false)
+                    DlugoscWKm = table.Column<double>(type: "float(4)", precision: 4, scale: 2, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Linie", x => x.LiniaId);
+                    table.PrimaryKey("PK_Linie", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Przystanki",
                 columns: table => new
                 {
-                    PrzystanekId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Numer = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Nazwa = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -68,157 +68,166 @@ namespace Autobusy.Logic.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Przystanki", x => x.PrzystanekId);
+                    table.PrimaryKey("PK_Przystanki", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Serwisy",
                 columns: table => new
                 {
-                    SerwisId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Data = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Typ = table.Column<int>(type: "int", nullable: false),
-                    Cena = table.Column<double>(type: "float", nullable: false),
+                    Cena = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
                     Opis = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AutobusId = table.Column<int>(type: "int", nullable: true)
+                    AutobusId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Serwisy", x => x.SerwisId);
+                    table.PrimaryKey("PK_Serwisy", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Serwisy_Autobusy_AutobusId",
                         column: x => x.AutobusId,
                         principalTable: "Autobusy",
-                        principalColumn: "AutobusId");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Kursy",
                 columns: table => new
                 {
-                    KursId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     DzienTygodnia = table.Column<int>(type: "int", nullable: false),
                     GodzinaRozpoczecia = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    LiniaId = table.Column<int>(type: "int", nullable: true)
+                    LiniaId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Kursy", x => x.KursId);
+                    table.PrimaryKey("PK_Kursy", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Kursy_Linie_LiniaId",
                         column: x => x.LiniaId,
                         principalTable: "Linie",
-                        principalColumn: "LiniaId");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "PrzystankiWLinii",
                 columns: table => new
                 {
-                    PrzystanekWLiniiId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     LiczbaPorzadkowa = table.Column<int>(type: "int", nullable: false),
-                    PrzystanekId = table.Column<int>(type: "int", nullable: true),
-                    LiniaId = table.Column<int>(type: "int", nullable: true)
+                    PrzystanekId = table.Column<int>(type: "int", nullable: false),
+                    LiniaId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PrzystankiWLinii", x => x.PrzystanekWLiniiId);
+                    table.PrimaryKey("PK_PrzystankiWLinii", x => x.Id);
                     table.ForeignKey(
                         name: "FK_PrzystankiWLinii_Linie_LiniaId",
                         column: x => x.LiniaId,
                         principalTable: "Linie",
-                        principalColumn: "LiniaId");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_PrzystankiWLinii_Przystanki_PrzystanekId",
                         column: x => x.PrzystanekId,
                         principalTable: "Przystanki",
-                        principalColumn: "PrzystanekId");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Przejazdy",
                 columns: table => new
                 {
-                    PrzejazdId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    IloscSpalonegoPaliwa = table.Column<double>(type: "float", nullable: false),
+                    IloscSpalonegoPaliwa = table.Column<double>(type: "float(4)", precision: 4, scale: 2, nullable: false),
                     IloscSkasowanychBiletow = table.Column<int>(type: "int", nullable: false),
                     Data = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    KursId = table.Column<int>(type: "int", nullable: true),
-                    KierowcaId = table.Column<int>(type: "int", nullable: true),
-                    AutobusId = table.Column<int>(type: "int", nullable: true)
+                    KursId = table.Column<int>(type: "int", nullable: false),
+                    KierowcaId = table.Column<int>(type: "int", nullable: false),
+                    AutobusId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Przejazdy", x => x.PrzejazdId);
+                    table.PrimaryKey("PK_Przejazdy", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Przejazdy_Autobusy_AutobusId",
                         column: x => x.AutobusId,
                         principalTable: "Autobusy",
-                        principalColumn: "AutobusId");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Przejazdy_Kierowcy_KierowcaId",
                         column: x => x.KierowcaId,
                         principalTable: "Kierowcy",
-                        principalColumn: "KierowcaId");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Przejazdy_Kursy_KursId",
                         column: x => x.KursId,
                         principalTable: "Kursy",
-                        principalColumn: "KursId");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "PlanyKursu",
                 columns: table => new
                 {
-                    PlanKursuId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PlanowaGodzina = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    KursId = table.Column<int>(type: "int", nullable: true),
-                    PrzystanekWLiniiId = table.Column<int>(type: "int", nullable: true)
+                    KursId = table.Column<int>(type: "int", nullable: false),
+                    PrzystanekWLiniiId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PlanyKursu", x => x.PlanKursuId);
+                    table.PrimaryKey("PK_PlanyKursu", x => x.Id);
                     table.ForeignKey(
                         name: "FK_PlanyKursu_Kursy_KursId",
                         column: x => x.KursId,
                         principalTable: "Kursy",
-                        principalColumn: "KursId");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_PlanyKursu_PrzystankiWLinii_PrzystanekWLiniiId",
                         column: x => x.PrzystanekWLiniiId,
                         principalTable: "PrzystankiWLinii",
-                        principalColumn: "PrzystanekWLiniiId");
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
                 name: "RealizacjePrzejazdu",
                 columns: table => new
                 {
-                    RealizacjaPrzejazduId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FaktycznaGodzina = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    PlanKursuId = table.Column<int>(type: "int", nullable: true),
-                    PrzejazdId = table.Column<int>(type: "int", nullable: true)
+                    PlanKursuId = table.Column<int>(type: "int", nullable: false),
+                    PrzejazdId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RealizacjePrzejazdu", x => x.RealizacjaPrzejazduId);
+                    table.PrimaryKey("PK_RealizacjePrzejazdu", x => x.Id);
                     table.ForeignKey(
                         name: "FK_RealizacjePrzejazdu_PlanyKursu_PlanKursuId",
                         column: x => x.PlanKursuId,
                         principalTable: "PlanyKursu",
-                        principalColumn: "PlanKursuId");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_RealizacjePrzejazdu_Przejazdy_PrzejazdId",
                         column: x => x.PrzejazdId,
                         principalTable: "Przejazdy",
-                        principalColumn: "PrzejazdId");
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(

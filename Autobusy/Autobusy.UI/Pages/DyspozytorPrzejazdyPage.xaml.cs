@@ -3,26 +3,30 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using Autobusy.Logic.Contexts;
 using Autobusy.Logic.Models;
-using Autobusy.Logic.Operations;
+using Autobusy.Logic.Repositories;
 using Autobusy.UI.Windows;
 
 namespace Autobusy.UI.Pages;
 
 public partial class DyspozytorPrzejazdyPage : Page
 {
-	private List<Linia> _linie;
-	private Linia _selectedLinia;
 	private List<Kurs> _kursy;
-	private Kurs _selectedKurs;
+	private readonly List<Linia> _linie;
 
 	private List<Przejazd> _przejazdy;
-	
+	private Kurs _selectedKurs;
+	private Linia _selectedLinia;
+
 	public DyspozytorPrzejazdyPage()
 	{
 		InitializeComponent();
 
-		_linie = DatabaseOperations.GetLinie();
+		using (var repo = new DatabaseRepository<Linia>(new AutobusyContext()))
+		{
+			_linie = repo.List();
+		}
 
 		LiniaComboBox.ItemsSource = _linie.Select(x => x.Numer);
 	}
@@ -36,69 +40,66 @@ public partial class DyspozytorPrzejazdyPage : Page
 
 	private void DodajPrzejazdButton_OnClick(object sender, RoutedEventArgs e)
 	{
-		var przejazd = new Przejazd()
+		var przejazd = new Przejazd
 		{
 			Kurs = _selectedKurs,
 			RealizacjePrzejazdu = new List<RealizacjaPrzejazdu>(),
 			Data = DateTime.Now
 		};
-		
-		_przejazdy.Add(przejazd);
-		
-		DatabaseOperations.AddPrzejazd(przejazd);
 
-		_przejazdy = DatabaseOperations.GetPrzejazdy().Where(x=>x.Kurs?.KursId == _selectedKurs.KursId).ToList();
+		_przejazdy.Add(przejazd);
+
+		using (var repo = new DatabaseRepository<Przejazd>(new AutobusyContext()))
+		{
+			repo.Add(przejazd);
+
+			_przejazdy = repo.List(x => x.Kurs?.Id == _selectedKurs.Id);
+		}
 
 		PrzejazdyGrid.ItemsSource = _przejazdy;
-		
+
 		PrzejazdyGrid.Items.Refresh();
 	}
 
 	private void LiniaComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
 	{
 		var selectedNumerLinii = e.AddedItems[0].ToString();
-		
+
 		_selectedLinia = _linie.First(x => x.Numer == selectedNumerLinii);
 
-		if (_selectedLinia.Kursy is null)
-		{
-			_selectedLinia.Kursy = new List<Kurs>();
-		}
-		
+		if (_selectedLinia.Kursy is null) _selectedLinia.Kursy = new List<Kurs>();
+
 		_kursy = _selectedLinia.Kursy;
 
-		KursComboBox.ItemsSource = _kursy.Select(x => x.DzienTygodnia.ToString() + " " + x.GodzinaRozpoczecia.ToString("HH:mm"));
+		KursComboBox.ItemsSource = _kursy.Select(x => x.DzienTygodnia + " " + x.GodzinaRozpoczecia.ToString("HH:mm"));
 	}
 
 	private void KursComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
 	{
 		var selectedIdKursu = e.AddedItems[0].ToString();
-		var selectedIndexKursu = KursComboBox.ItemsSource.OfType<string>().ToList().IndexOf(selectedIdKursu);
+		int selectedIndexKursu = KursComboBox.ItemsSource.OfType<string>().ToList().IndexOf(selectedIdKursu);
 
-		if (selectedIndexKursu == -1)
-		{
-			return;
-		}
+		if (selectedIndexKursu == -1) return;
 
 		_selectedKurs = _kursy.ElementAt(selectedIndexKursu);
 
-		_przejazdy = DatabaseOperations.GetPrzejazdy().Where(x=>x.Kurs?.KursId == _selectedKurs.KursId).ToList();
+		using (var repo = new DatabaseRepository<Przejazd>(new AutobusyContext()))
+		{
+			_przejazdy = repo.List(x => x.Kurs?.Id == _selectedKurs.Id);
+		}
 
-		this.DataContext = _przejazdy;
-		
+		DataContext = _przejazdy;
+
 		PrzejazdyGrid.Items.Refresh();
 	}
 
 	private void WybierzKierowceButton_OnClick(object sender, RoutedEventArgs e)
 	{
 		new WyborKierowcyWindow().ShowDialog();
-		
-		if ((sender as Button)?.CommandParameter is not Przejazd przejazd)
-		{
-			return;
-		}
 
-		var przejazdFromList = _przejazdy.FirstOrDefault(x => x.PrzejazdId == przejazd.PrzejazdId);
+		if ((sender as Button)?.CommandParameter is not Przejazd przejazd) return;
+
+		Przejazd przejazdFromList = _przejazdy.FirstOrDefault(x => x.Id == przejazd.Id);
 
 		przejazdFromList.Kierowca = WyborKierowcyWindow.Kierowca;
 	}
@@ -106,19 +107,19 @@ public partial class DyspozytorPrzejazdyPage : Page
 	private void WybierzAutobusButton_OnClick(object sender, RoutedEventArgs e)
 	{
 		new WyborAutobusuWindow().ShowDialog();
-		
-		if ((sender as Button)?.CommandParameter is not Przejazd przejazd)
-		{
-			return;
-		}
-		
-		var przejazdFromList = _przejazdy.FirstOrDefault(x => x.PrzejazdId == przejazd.PrzejazdId);
+
+		if ((sender as Button)?.CommandParameter is not Przejazd przejazd) return;
+
+		Przejazd przejazdFromList = _przejazdy.FirstOrDefault(x => x.Id == przejazd.Id);
 
 		przejazdFromList.Autobus = WyborAutobusuWindow.Autobus;
 	}
 
 	public void SaveChanges()
 	{
-		DatabaseOperations.UpdatePrzejazdy(_przejazdy);
+		using (var repo = new DatabaseRepository<Przejazd>(new AutobusyContext()))
+		{
+			repo.UpdateMany(_przejazdy);
+		}
 	}
 }

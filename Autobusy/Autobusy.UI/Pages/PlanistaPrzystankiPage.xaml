@@ -3,75 +3,80 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-      xmlns:sys="clr-namespace:System;assembly=mscorlib"
-      xmlns:local="clr-namespace:Autobusy.UI.Pages"
-      xmlns:models="clr-namespace:Autobusy.Logic.Models;assembly=Autobusy.Logic"
       mc:Ignorable="d"
       Title="PlanistaPrzystankiPage" Height="480" Width="1180">
-	
+
 	<Grid>
 		<Grid.RowDefinitions>
-			<RowDefinition Height="*"/>
-			<RowDefinition Height="*"/>
-			<RowDefinition Height="4*"/>
-			<RowDefinition Height="2*"/>
+			<RowDefinition Height="*" />
+			<RowDefinition Height="*" />
+			<RowDefinition Height="4*" />
+			<RowDefinition Height="2*" />
 		</Grid.RowDefinitions>
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="*"/>
-			<ColumnDefinition Width="*"/>
-			<ColumnDefinition Width="*"/>
+			<ColumnDefinition Width="*" />
+			<ColumnDefinition Width="*" />
+			<ColumnDefinition Width="*" />
 		</Grid.ColumnDefinitions>
-		
-		<TextBlock Grid.Row="0" Grid.ColumnSpan="3" Text="Planista - Przystanki" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" FontWeight="Bold"/>
-		
-		<Button x:Name="DodajPrzystanekButton" Grid.Row="1" Grid.Column="0" Width="150" Content="Dodaj przystanek" Style="{StaticResource MaterialDesignRaisedButton}" HorizontalAlignment="Center" Click="DodajPrzystanekButton_OnClick"/>
-		
-		<DataGrid x:Name="PrzystankiGrid" Grid.Column="0" Grid.Row="2" Height="250" Grid.ColumnSpan="3" CanUserAddRows="False" SelectionUnit="Cell" SelectionMode="Extended" ItemsSource="{Binding }" AutoGenerateColumns="False" HeadersVisibility="All" >
-			
+
+		<TextBlock Grid.Row="0" Grid.ColumnSpan="3" Text="Planista - Przystanki" HorizontalAlignment="Center"
+		           VerticalAlignment="Center" FontSize="18" FontWeight="Bold" />
+
+		<Button x:Name="DodajPrzystanekButton" Grid.Row="1" Grid.Column="0" Width="150" Content="Dodaj przystanek"
+		        Style="{StaticResource MaterialDesignRaisedButton}" HorizontalAlignment="Center"
+		        Click="DodajPrzystanekButton_OnClick" />
+
+		<DataGrid x:Name="PrzystankiGrid" Grid.Column="0" Grid.Row="2" Height="250" Grid.ColumnSpan="3"
+		          CanUserAddRows="False" SelectionUnit="Cell" SelectionMode="Extended" ItemsSource="{Binding }"
+		          AutoGenerateColumns="False" HeadersVisibility="All">
+
 			<DataGrid.Columns>
 				<!-- ID -->
-				<DataGridTextColumn Binding="{Binding PrzystanekId}" Header="Id" ElementStyle="{StaticResource 
+				<DataGridTextColumn Binding="{Binding PrzystanekId}" Header="Id"
+				                    ElementStyle="{StaticResource 
 				MaterialDesignDataGridTextColumnStyle}" IsReadOnly="True"
-				                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" FontSize="16">
-					
-				</DataGridTextColumn>
-				
+				                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+				                    FontSize="16" />
+
 				<!-- Numer -->
-				<DataGridTextColumn Binding="{Binding Numer}" Header="Numer" ElementStyle="{StaticResource 
+				<DataGridTextColumn Binding="{Binding Numer}" Header="Numer"
+				                    ElementStyle="{StaticResource 
 				MaterialDesignDataGridTextColumnStyle}"
-				                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" FontSize="16">
-					
-				</DataGridTextColumn>
-				
+				                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+				                    FontSize="16" />
+
 				<!-- Nazwa -->
-				<DataGridTextColumn Binding="{Binding Nazwa}" Header="Nazwa" ElementStyle="{StaticResource 
+				<DataGridTextColumn Binding="{Binding Nazwa}" Header="Nazwa"
+				                    ElementStyle="{StaticResource 
 				MaterialDesignDataGridTextColumnStyle}"
-				                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" FontSize="16">
-					
-				</DataGridTextColumn>
-				
+				                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+				                    FontSize="16" />
+
 				<!-- Adres -->
-				<DataGridTextColumn Binding="{Binding Adres}" Header="Adres" ElementStyle="{StaticResource 
+				<DataGridTextColumn Binding="{Binding Adres}" Header="Adres"
+				                    ElementStyle="{StaticResource 
 				MaterialDesignDataGridTextColumnStyle}"
-				                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" FontSize="16">
-					
-				</DataGridTextColumn>
-				
+				                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+				                    FontSize="16" />
+
 				<!-- Wycofanie przystanku - przycisk -->
 				<DataGridTemplateColumn>
 					<DataGridTemplateColumn.CellTemplate>
 						<DataTemplate>
-								<Button x:Name="UsuwaniePrzystankuButton" Content="Wycofanie" Style="{StaticResource MaterialDesignRaisedButton}" HorizontalAlignment="Center" CommandParameter="{Binding}" Click="UsuwaniePrzystankuButton_OnClick" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-							</DataTemplate>
-						</DataGridTemplateColumn.CellTemplate>
+							<Button x:Name="UsuwaniePrzystankuButton" Content="Wycofanie"
+							        Style="{StaticResource MaterialDesignRaisedButton}" HorizontalAlignment="Center"
+							        CommandParameter="{Binding}" Click="UsuwaniePrzystankuButton_OnClick"
+							        HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+						</DataTemplate>
+					</DataGridTemplateColumn.CellTemplate>
 				</DataGridTemplateColumn>
-				
-				
+
+
 			</DataGrid.Columns>
 		</DataGrid>
-		
-		<Button Grid.Column="0" x:Name="BackButton" Grid.Row="3" Grid.ColumnSpan="3" Width="150" Content="Wróć" Click="BackButton_OnClick" Style="{StaticResource MaterialDesignRaisedButton}"/>
-		
+
+		<Button Grid.Column="0" x:Name="BackButton" Grid.Row="3" Grid.ColumnSpan="3" Width="150" Content="Wróć"
+		        Click="BackButton_OnClick" Style="{StaticResource MaterialDesignRaisedButton}" />
+
 	</Grid>
 </Page>

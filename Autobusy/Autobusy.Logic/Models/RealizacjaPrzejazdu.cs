@@ -1,30 +1,27 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using Autobusy.Logic.Interfaces;
 
 namespace Autobusy.Logic.Models;
 
-public class RealizacjaPrzejazdu
+public class RealizacjaPrzejazdu : IIdentifiable
 {
-	[Key]
-	[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-	public int RealizacjaPrzejazduId { get; set; }
-	
 	public DateTime FaktycznaGodzina { get; set; }
 
-	[ForeignKey("PlanKursuId")]
+	public int PlanKursuId { get; set; }
 	public PlanKursu PlanKursu { get; set; }
-	
-	[ForeignKey("PrzejazdId")]
+
+	public int PrzejazdId { get; set; }
 	public Przejazd Przejazd { get; set; }
-	
+	public int Id { get; set; }
+
 	public override bool Equals(object obj)
 	{
-		if (obj is RealizacjaPrzejazdu realizacjaPrzejazdu && realizacjaPrzejazdu.RealizacjaPrzejazduId == this.RealizacjaPrzejazduId)
-		{
-			return true;
-		}
+		if (obj is RealizacjaPrzejazdu realizacjaPrzejazdu && realizacjaPrzejazdu.Id == Id) return true;
 
 		return false;
+	}
+
+	public override int GetHashCode()
+	{
+		return Id;
 	}
 }

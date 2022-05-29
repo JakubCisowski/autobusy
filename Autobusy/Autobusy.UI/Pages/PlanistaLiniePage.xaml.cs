@@ -2,30 +2,41 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using Autobusy.Logic.Contexts;
 using Autobusy.Logic.Models;
-using Autobusy.Logic.Operations;
+using Autobusy.Logic.Repositories;
 using Autobusy.UI.Windows;
 
 namespace Autobusy.UI.Pages;
 
 public partial class PlanistaLiniePage : Page
 {
-	private List<Linia> _linie;
+	private readonly List<Linia> _linie;
 	private List<PrzystanekWLinii> _przystanki;
 
 	private Linia _selectedLinia;
-	
+
 	public PlanistaLiniePage()
 	{
 		InitializeComponent();
-		
-		_linie = DatabaseOperations.GetLinie();
-		LinieComboBox.ItemsSource = _linie.Select(x=>x.Numer);
-		
-		var przystanki = DatabaseOperations.GetPrzystanki();
-		PrzystankiComboBox.ItemsSource = przystanki.Select(x=>x.Nazwa);
+
+		using (var repo = new DatabaseRepository<Linia>(new AutobusyContext()))
+		{
+			_linie = repo.List();
+		}
+
+		LinieComboBox.ItemsSource = _linie.Select(x => x.Numer);
+
+		List<Przystanek> przystanki;
+
+		using (var repo = new DatabaseRepository<Przystanek>(new AutobusyContext()))
+		{
+			przystanki = repo.List();
+		}
+
+		PrzystankiComboBox.ItemsSource = przystanki.Select(x => x.Nazwa);
 	}
-	
+
 	private void BackButton_OnClick(object sender, RoutedEventArgs e)
 	{
 		SaveChanges();
@@ -34,34 +45,37 @@ public partial class PlanistaLiniePage : Page
 
 		window.MainFrame.Navigate(new PlanistaMenuPage());
 	}
-	
+
 	public void SaveChanges()
 	{
 		// Save changes in database.
-		DatabaseOperations.UpdateCollection(_linie);
+		using (var repo = new DatabaseRepository<Linia>(new AutobusyContext()))
+		{
+			repo.UpdateMany(_linie);
+		}
 	}
 
 	private void DodajLinieButton_OnClick(object sender, RoutedEventArgs e)
 	{
 		var linia = new Linia();
-		
+
 		new LiniaWindow(linia).ShowDialog();
-		
+
 		_linie.Add(linia);
 		_selectedLinia = linia;
 
-		if (linia.Przystanki is null)
+		if (linia.PrzystankiWLinii is null)
 		{
 			_przystanki = new List<PrzystanekWLinii>();
-			linia.Przystanki = _przystanki;
+			linia.PrzystankiWLinii = _przystanki;
 		}
 		else
 		{
-			_przystanki = linia.Przystanki;
+			_przystanki = linia.PrzystankiWLinii;
 		}
 
 		PrzystankiGrid.Items.Refresh();
-		LinieComboBox.ItemsSource = _linie.Select(x=>x.Numer);
+		LinieComboBox.ItemsSource = _linie.Select(x => x.Numer);
 		LinieComboBox.SelectedItem = linia.Numer;
 	}
 
@@ -72,29 +86,27 @@ public partial class PlanistaLiniePage : Page
 
 	private void UsunLinieButton_OnClick(object sender, RoutedEventArgs e)
 	{
-		while (_selectedLinia.Przystanki.Count > 0)
+		using (var repo = new DatabaseRepository<Linia>(new AutobusyContext()))
 		{
-			DatabaseOperations.Delete(_selectedLinia.Przystanki.First());
+			repo.Delete(_selectedLinia);
 		}
-		
-		DatabaseOperations.Delete(_selectedLinia);
 
 		_linie.Remove(_selectedLinia);
-		
+
 		_selectedLinia = _linie.FirstOrDefault();
-		
-		if (_selectedLinia.Przystanki is null)
+
+		if (_selectedLinia.PrzystankiWLinii is null)
 		{
 			_przystanki = new List<PrzystanekWLinii>();
-			_selectedLinia.Przystanki = _przystanki;
+			_selectedLinia.PrzystankiWLinii = _przystanki;
 		}
 		else
 		{
-			_przystanki = _selectedLinia.Przystanki;
+			_przystanki = _selectedLinia.PrzystankiWLinii;
 		}
 
-		this.DataContext = _przystanki;
-		
+		DataContext = _przystanki;
+
 		PrzystankiGrid.Items.Refresh();
 		LinieComboBox.Items.Refresh();
 
@@ -103,63 +115,68 @@ public partial class PlanistaLiniePage : Page
 
 	private void DodajPrzystanekButton_OnClick(object sender, RoutedEventArgs e)
 	{
-		var selectedPrzystanek = PrzystankiComboBox.SelectedItem.ToString();
-		var przystanek = DatabaseOperations.GetPrzystanki().FirstOrDefault(x => x.Nazwa == selectedPrzystanek);
+		var selectedPrzystanekNazwa = PrzystankiComboBox.SelectedItem.ToString();
 
-		var przystanekWLinii = new PrzystanekWLinii()
+		Przystanek przystanek;
+
+		using (var repo = new DatabaseRepository<Przystanek>(new AutobusyContext()))
+		{
+			przystanek = repo.GetFirst(x => x.Nazwa == selectedPrzystanekNazwa);
+		}
+
+		var przystanekWLinii = new PrzystanekWLinii
 		{
 			Linia = _selectedLinia,
 			Przystanek = przystanek,
-			LiczbaPorzadkowa = (_przystanki.Max(x=>x.LiczbaPorzadkowa as int?) ?? 0) + 1
+			LiczbaPorzadkowa = (_przystanki.Max(x => x.LiczbaPorzadkowa as int?) ?? 0) + 1
 		};
-		
+
 		_przystanki.Add(przystanekWLinii);
-		
-		DatabaseOperations.AddPrzystanekWLinii(przystanekWLinii);
-		
+
+		using (var repo = new DatabaseRepository<PrzystanekWLinii>(new AutobusyContext()))
+		{
+			repo.Add(przystanekWLinii);
+		}
+
 		PrzystankiGrid.Items.Refresh();
 	}
 
 	private void LinieComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
 	{
 		var selectedNumerLinii = e.AddedItems[0].ToString();
-		
+
 		_selectedLinia = _linie.First(x => x.Numer == selectedNumerLinii);
 
-		var przystanki = DatabaseOperations.GetPrzystankiWLinii()
-			.Where(x => x.Linia.Numer == selectedNumerLinii).ToList();
-
-		_przystanki = przystanki;
-		this.DataContext = _przystanki;
+		using (var repo = new DatabaseRepository<PrzystanekWLinii>(new AutobusyContext()))
+		{
+			_przystanki = repo.List(x => x.Linia.Numer == selectedNumerLinii);
+			DataContext = _przystanki;
+		}
 	}
 
 	private void UsuwaniePrzystankuButton_OnClick(object sender, RoutedEventArgs e)
 	{
-		if ((sender as Button)?.CommandParameter is not PrzystanekWLinii przystanekWLinii)
-		{
-			return;
-		}
+		if ((sender as Button)?.CommandParameter is not PrzystanekWLinii przystanekWLinii) return;
 
-		foreach (var przystanek in _przystanki)
-		{
+		foreach (PrzystanekWLinii przystanek in _przystanki)
 			if (przystanek.LiczbaPorzadkowa > przystanekWLinii.LiczbaPorzadkowa)
-			{
 				przystanek.LiczbaPorzadkowa--;
-			}
-		}
 
 		_przystanki.Remove(przystanekWLinii);
 
-		DatabaseOperations.Delete(przystanekWLinii);
-		
+		using (var repo = new DatabaseRepository<PrzystanekWLinii>(new AutobusyContext()))
+		{
+			repo.Delete(przystanekWLinii);
+		}
+
 		PrzystankiGrid.Items.Refresh();
 	}
 
 	private void RentownoscButton_OnClick(object sender, RoutedEventArgs e)
 	{
 		var selectedLiniaNumer = LinieComboBox.SelectedItem.ToString();
-		
-		var selectedLinia = _linie.First(x => x.Numer == selectedLiniaNumer);
+
+		Linia selectedLinia = _linie.First(x => x.Numer == selectedLiniaNumer);
 
 		new RentownoscWindow(selectedLinia).ShowDialog();
 	}

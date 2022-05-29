@@ -9,7 +9,7 @@ public partial class PlanistaMenuPage : Page
 	{
 		InitializeComponent();
 	}
-	
+
 	private void PrzystankiButton_OnClick(object sender, RoutedEventArgs e)
 	{
 		var window = Application.Current.MainWindow as MainWindow;
@@ -23,7 +23,7 @@ public partial class PlanistaMenuPage : Page
 
 		window.MainFrame.Navigate(new PlanistaLiniePage());
 	}
-	
+
 	private void KursyButton_OnClick(object sender, RoutedEventArgs e)
 	{
 		var window = Application.Current.MainWindow as MainWindow;

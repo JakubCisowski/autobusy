@@ -11,20 +11,20 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="MaterialDesignThemes" Version="4.4.0" />
+        <PackageReference Include="MaterialDesignThemes" Version="4.4.0"/>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Autobusy.Logic\Autobusy.Logic.csproj" />
+        <ProjectReference Include="..\Autobusy.Logic\Autobusy.Logic.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-      <None Include="..\bus.ico">
-        <Link>bus.ico</Link>
-      </None>
-      <None Include="..\bus.png">
-        <Link>bus.png</Link>
-      </None>
+        <None Include="..\bus.ico">
+            <Link>bus.ico</Link>
+        </None>
+        <None Include="..\bus.png">
+            <Link>bus.png</Link>
+        </None>
     </ItemGroup>
 
 </Project>

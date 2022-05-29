@@ -1,60 +1,58 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Windows;
 using Autobusy.UI.Help;
 using Autobusy.UI.Pages;
 
-namespace Autobusy.UI
+namespace Autobusy.UI;
+
+public partial class MainWindow : Window
 {
-	public partial class MainWindow : Window
+	private readonly DataGodzina _dataGodzina;
+
+	public MainWindow()
 	{
-		private DataGodzina _dataGodzina;
-		
-		public MainWindow()
+		InitializeComponent();
+
+		_dataGodzina = new DataGodzina();
+		DataContext = _dataGodzina;
+	}
+
+	private void MainWindow_OnClosing(object sender, CancelEventArgs e)
+	{
+		// Save changes in database on currently displayed page.
+
+		object currentPage = MainFrame.Content;
+
+		switch (currentPage)
 		{
-			InitializeComponent();
-			
-			_dataGodzina = new DataGodzina();
-			this.DataContext = _dataGodzina;
+			case ZarzadcaFlotaPage zarzadcaFlotaPage:
+				zarzadcaFlotaPage.SaveChanges();
+				break;
+
+			case PlanistaPrzystankiPage planistaPrzystankiPage:
+				planistaPrzystankiPage.SaveChanges();
+				break;
+
+			case PlanistaLiniePage planistaLiniePage:
+				planistaLiniePage.SaveChanges();
+				break;
+
+			case PlanistaKursyPage planistaKursyPage:
+				planistaKursyPage.SaveChanges();
+				break;
+
+			case DyspozytorKierowcyPage dyspozytorKierowcyPage:
+				dyspozytorKierowcyPage.SaveChanges();
+				break;
+
+			case DyspozytorPrzejazdyPage dyspozytorPrzejazdyPage:
+				dyspozytorPrzejazdyPage.SaveChanges();
+				break;
 		}
+	}
 
-		private void MainWindow_OnClosing(object sender, CancelEventArgs e)
-		{
-			// Save changes in database on currently displayed page.
-
-			var currentPage = MainFrame.Content;
-
-			switch (currentPage)
-			{
-				case ZarzadcaFlotaPage zarzadcaFlotaPage:
-					zarzadcaFlotaPage.SaveChanges();
-					break;
-				
-				case PlanistaPrzystankiPage planistaPrzystankiPage:
-					planistaPrzystankiPage.SaveChanges();
-					break;
-				
-				case PlanistaLiniePage planistaLiniePage:
-					planistaLiniePage.SaveChanges();
-					break;
-				
-				case PlanistaKursyPage planistaKursyPage:
-					planistaKursyPage.SaveChanges();
-					break;
-				
-				case DyspozytorKierowcyPage dyspozytorKierowcyPage:
-					dyspozytorKierowcyPage.SaveChanges();
-					break;
-				
-				case DyspozytorPrzejazdyPage dyspozytorPrzejazdyPage:
-					dyspozytorPrzejazdyPage.SaveChanges();
-					break;
-			}
-		}
-
-		private void HelpButton_OnClick(object sender, RoutedEventArgs e)
-		{
-			new HelpWindow().ShowDialog();
-		}
+	private void HelpButton_OnClick(object sender, RoutedEventArgs e)
+	{
+		new HelpWindow().ShowDialog();
 	}
 }

@@ -3,13 +3,11 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:sys="clr-namespace:System;assembly=mscorlib"
-      xmlns:local="clr-namespace:Autobusy.UI.Pages"
       xmlns:models="clr-namespace:Autobusy.Logic.Models;assembly=Autobusy.Logic"
       mc:Ignorable="d"
       Title="ZarzadcaFlotaPage" Height="480" Width="1180">
-	
+
 	<Page.Resources>
 		<ObjectDataProvider MethodName="GetValues"
 		                    ObjectType="{x:Type sys:Enum}"
@@ -19,98 +17,113 @@
 			</ObjectDataProvider.MethodParameters>
 		</ObjectDataProvider>
 	</Page.Resources>
-	
+
 	<Grid>
 		<Grid.RowDefinitions>
-			<RowDefinition Height="*"/>
-			<RowDefinition Height="*"/>
-			<RowDefinition Height="4*"/>
-			<RowDefinition Height="2*"/>
+			<RowDefinition Height="*" />
+			<RowDefinition Height="*" />
+			<RowDefinition Height="4*" />
+			<RowDefinition Height="2*" />
 		</Grid.RowDefinitions>
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="*"/>
-			<ColumnDefinition Width="*"/>
-			<ColumnDefinition Width="*"/>
+			<ColumnDefinition Width="*" />
+			<ColumnDefinition Width="*" />
+			<ColumnDefinition Width="*" />
 		</Grid.ColumnDefinitions>
-		
-		<TextBlock Grid.Row="0" Grid.ColumnSpan="3" Text="Zarządca flotą" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" FontWeight="Bold"/>
-		
-		<Button x:Name="DodajAutobusButton" Grid.Row="1" Grid.Column="0" Width="150" Content="Dodaj autobus" Style="{StaticResource MaterialDesignRaisedDarkButton}" HorizontalAlignment="Center" Click="DodajAutobusButton_OnClick"/>
-		
-		<Button x:Name="SerwisyButton" Grid.Row="1" Grid.Column="2" Width="150" Content="Serwisy" Style="{StaticResource MaterialDesignRaisedDarkButton}" HorizontalAlignment="Center" Click="SerwisyButton_OnClick"/>
-		
-		<DataGrid x:Name="AutobusyGrid" Grid.Column="0" Grid.Row="2" Height="250" Grid.ColumnSpan="3" CanUserAddRows="False" SelectionUnit="Cell" SelectionMode="Extended" ItemsSource="{Binding }" AutoGenerateColumns="False" HeadersVisibility="All" >
-			
+
+		<TextBlock Grid.Row="0" Grid.ColumnSpan="3" Text="Zarządca flotą" HorizontalAlignment="Center"
+		           VerticalAlignment="Center" FontSize="18" FontWeight="Bold" />
+
+		<Button x:Name="DodajAutobusButton" Grid.Row="1" Grid.Column="0" Width="150" Content="Dodaj autobus"
+		        Style="{StaticResource MaterialDesignRaisedDarkButton}" HorizontalAlignment="Center"
+		        Click="DodajAutobusButton_OnClick" />
+
+		<Button x:Name="SerwisyButton" Grid.Row="1" Grid.Column="2" Width="150" Content="Serwisy"
+		        Style="{StaticResource MaterialDesignRaisedDarkButton}" HorizontalAlignment="Center"
+		        Click="SerwisyButton_OnClick" />
+
+		<DataGrid x:Name="AutobusyGrid" Grid.Column="0" Grid.Row="2" Height="250" Grid.ColumnSpan="3" CanUserAddRows="False"
+		          SelectionUnit="Cell" SelectionMode="Extended" ItemsSource="{Binding }" AutoGenerateColumns="False"
+		          HeadersVisibility="All">
+
 			<DataGrid.Columns>
 				<!-- ID -->
-				<DataGridTextColumn Binding="{Binding AutobusId}" Header="Id" ElementStyle="{StaticResource 
+				<DataGridTextColumn Binding="{Binding AutobusId}" Header="Id"
+				                    ElementStyle="{StaticResource 
 				MaterialDesignDataGridTextColumnStyle}" IsReadOnly="True"
-				                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" FontSize="16">
-					
-				</DataGridTextColumn>
-				
+				                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+				                    FontSize="16" />
+
 				<!-- Marka -->
-				<DataGridTextColumn Binding="{Binding Marka, UpdateSourceTrigger=LostFocus}" Header="Marka" ElementStyle="{StaticResource 
+				<DataGridTextColumn Binding="{Binding Marka, UpdateSourceTrigger=LostFocus}" Header="Marka"
+				                    ElementStyle="{StaticResource 
 				MaterialDesignDataGridTextColumnStyle}"
-				                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" FontSize="16">
-					
-				</DataGridTextColumn>
-				
+				                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+				                    FontSize="16" />
+
 				<!-- Numer Rejestracyjny -->
-				<DataGridTextColumn Binding="{Binding NumerRejestracyjny, UpdateSourceTrigger=LostFocus}" Header="Numer Rejestracyjny" ElementStyle="{StaticResource 
+				<DataGridTextColumn Binding="{Binding NumerRejestracyjny, UpdateSourceTrigger=LostFocus}"
+				                    Header="Numer Rejestracyjny"
+				                    ElementStyle="{StaticResource 
 				MaterialDesignDataGridTextColumnStyle}"
-				                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" FontSize="16">
-					
-				</DataGridTextColumn>
-				
+				                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+				                    FontSize="16" />
+
 				<!-- Data produkcji -->
 				<DataGridTemplateColumn Header="Data Produkcji">
 					<DataGridTemplateColumn.CellTemplate>
 						<DataTemplate>
-							<DatePicker SelectedDate="{Binding DataProdukcji}"/>
+							<DatePicker SelectedDate="{Binding DataProdukcji}" />
 						</DataTemplate>
 					</DataGridTemplateColumn.CellTemplate>
 				</DataGridTemplateColumn>
-				
+
 				<!-- Spalanie na 100 -->
-				<DataGridTextColumn Binding="{Binding SpalanieNa100}" Header="Spalanie na 100" ElementStyle="{StaticResource 
+				<DataGridTextColumn Binding="{Binding SpalanieNa100}" Header="Spalanie na 100"
+				                    ElementStyle="{StaticResource 
 				MaterialDesignDataGridTextColumnStyle}"
-				                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" FontSize="16">
-					
-				</DataGridTextColumn>
-				
+				                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+				                    FontSize="16" />
+
 				<!-- Stan Autobusu - lista rozwijalna -->
 				<DataGridTemplateColumn Header="Stan Autobusu">
 					<DataGridTemplateColumn.CellTemplate>
 						<DataTemplate>
-							<ComboBox ItemsSource="{Binding Source={StaticResource EnumDataProvider}}" SelectedValue="{Binding StanAutobusu, UpdateSourceTrigger=PropertyChanged}"/>
+							<ComboBox ItemsSource="{Binding Source={StaticResource EnumDataProvider}}"
+							          SelectedValue="{Binding StanAutobusu, UpdateSourceTrigger=PropertyChanged}" />
 						</DataTemplate>
 					</DataGridTemplateColumn.CellTemplate>
 				</DataGridTemplateColumn>
-				
+
 				<!-- Wycofanie autobusu - przycisk -->
 				<DataGridTemplateColumn>
 					<DataGridTemplateColumn.CellTemplate>
 						<DataTemplate>
-								<Button x:Name="WycofanieAutobusuButton" Content="Wycofanie" Style="{StaticResource MaterialDesignRaisedDarkButton}" HorizontalAlignment="Center" CommandParameter="{Binding}" Click="WycofanieAutobusuButton_OnClick" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-							</DataTemplate>
-						</DataGridTemplateColumn.CellTemplate>
+							<Button x:Name="WycofanieAutobusuButton" Content="Wycofanie"
+							        Style="{StaticResource MaterialDesignRaisedDarkButton}" HorizontalAlignment="Center"
+							        CommandParameter="{Binding}" Click="WycofanieAutobusuButton_OnClick" HorizontalContentAlignment="Center"
+							        VerticalContentAlignment="Center" />
+						</DataTemplate>
+					</DataGridTemplateColumn.CellTemplate>
 				</DataGridTemplateColumn>
-				
+
 				<!-- Serwis autobusu - przycisk -->
 				<DataGridTemplateColumn>
 					<DataGridTemplateColumn.CellTemplate>
 						<DataTemplate>
-							<Button x:Name="SerwisAutobusuButton" Content="Serwis" Style="{StaticResource MaterialDesignRaisedDarkButton}" HorizontalAlignment="Center" CommandParameter="{Binding}" Click="SerwisAutobusuButton_OnClick" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+							<Button x:Name="SerwisAutobusuButton" Content="Serwis" Style="{StaticResource MaterialDesignRaisedDarkButton}"
+							        HorizontalAlignment="Center" CommandParameter="{Binding}" Click="SerwisAutobusuButton_OnClick"
+							        HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
 						</DataTemplate>
 					</DataGridTemplateColumn.CellTemplate>
 				</DataGridTemplateColumn>
-				
-				
+
+
 			</DataGrid.Columns>
 		</DataGrid>
-		
-		<Button Grid.Column="0" x:Name="BackButton" Grid.Row="3" Grid.ColumnSpan="3" Width="150" Content="Wróć" Click="BackButton_OnClick" Style="{StaticResource MaterialDesignRaisedDarkButton}"/>
-		
+
+		<Button Grid.Column="0" x:Name="BackButton" Grid.Row="3" Grid.ColumnSpan="3" Width="150" Content="Wróć"
+		        Click="BackButton_OnClick" Style="{StaticResource MaterialDesignRaisedDarkButton}" />
+
 	</Grid>
 </Page>

@@ -1,23 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using Autobusy.Logic.Contexts;
 using Autobusy.Logic.Models;
-using Autobusy.Logic.Operations;
+using Autobusy.Logic.Repositories;
 
 namespace Autobusy.UI.Pages;
 
 public partial class PlanistaPrzystankiPage : Page
 {
-	private List<Przystanek> _przystanki;
-	
+	private readonly List<Przystanek> _przystanki;
+
 	public PlanistaPrzystankiPage()
 	{
 		InitializeComponent();
-		
-		_przystanki = DatabaseOperations.GetPrzystanki();
 
-		this.DataContext = _przystanki;
+		using (var repo = new DatabaseRepository<Przystanek>(new AutobusyContext()))
+		{
+			_przystanki = repo.List();
+		}
+
+		DataContext = _przystanki;
 	}
 
 	private void DodajPrzystanekButton_OnClick(object sender, RoutedEventArgs e)
@@ -25,23 +28,24 @@ public partial class PlanistaPrzystankiPage : Page
 		var nowyPrzystanek = new Przystanek();
 
 		_przystanki.Add(nowyPrzystanek);
-		
+
 		PrzystankiGrid.Items.Refresh();
 	}
 
 	private void UsuwaniePrzystankuButton_OnClick(object sender, RoutedEventArgs e)
 	{
-		if ((sender as Button)?.CommandParameter is not Przystanek przystanek)
-		{
-			return;
-		}
+		if ((sender as Button)?.CommandParameter is not Przystanek przystanek) return;
 
 		_przystanki.Remove(przystanek);
-		DatabaseOperations.Delete(przystanek);
-		
+
+		using (var repo = new DatabaseRepository<Przystanek>(new AutobusyContext()))
+		{
+			repo.Delete(przystanek);
+		}
+
 		PrzystankiGrid.Items.Refresh();
 	}
-	
+
 	private void BackButton_OnClick(object sender, RoutedEventArgs e)
 	{
 		SaveChanges();
@@ -50,10 +54,13 @@ public partial class PlanistaPrzystankiPage : Page
 
 		window.MainFrame.Navigate(new PlanistaMenuPage());
 	}
-	
+
 	public void SaveChanges()
 	{
 		// Save changes in database.
-		DatabaseOperations.UpdateCollection(_przystanki);
+		using (var repo = new DatabaseRepository<Przystanek>(new AutobusyContext()))
+		{
+			repo.UpdateMany(_przystanki);
+		}
 	}
 }

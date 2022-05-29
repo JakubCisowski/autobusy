@@ -7,11 +7,21 @@ namespace Autobusy.UI;
 
 public class DataGodzina : INotifyPropertyChanged
 {
-	public event PropertyChangedEventHandler PropertyChanged;
-
-	private DispatcherTimer _timer;
-	
 	private DateTime _dataGodzina;
+
+	private readonly DispatcherTimer _timer;
+
+	public DataGodzina()
+	{
+		Data = DateTime.Now;
+
+		_timer = new DispatcherTimer
+		{
+			Interval = TimeSpan.FromSeconds(1)
+		};
+		_timer.Tick += Timer_Tick;
+		_timer.Start();
+	}
 
 	public DateTime Data
 	{
@@ -23,17 +33,7 @@ public class DataGodzina : INotifyPropertyChanged
 		}
 	}
 
-	public DataGodzina()
-	{
-		Data = DateTime.Now;
-		
-		_timer = new DispatcherTimer()
-		{
-			Interval = TimeSpan.FromSeconds(1)
-		};
-		_timer.Tick+= Timer_Tick;
-		_timer.Start();
-	}
+	public event PropertyChangedEventHandler PropertyChanged;
 
 	private void Timer_Tick(object sender, EventArgs e)
 	{

@@ -1,4 +1,5 @@
-﻿using Autobusy.Logic.Models;
+﻿using Autobusy.Logic.Configurations;
+using Autobusy.Logic.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Autobusy.Logic.Contexts;
@@ -19,5 +20,10 @@ public class AutobusyContext : DbContext
 	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 	{
 		optionsBuilder.UseSqlServer(ConnectionStringManager.ConnectionString);
+	}
+
+	protected override void OnModelCreating(ModelBuilder modelBuilder)
+	{
+		modelBuilder.ApplyConfigurationsFromAssembly(typeof(AutobusConfiguration).Assembly);
 	}
 }

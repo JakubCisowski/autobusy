@@ -3,27 +3,28 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:local="clr-namespace:Autobusy.UI.Help"
         xmlns:system="clr-namespace:System;assembly=System.Runtime"
         mc:Ignorable="d"
         Title="Help" Height="400" Width="600">
-	
+
 	<Window.Resources>
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>
-				<ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ListView.xaml" />
+				<ResourceDictionary
+					Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ListView.xaml" />
 			</ResourceDictionary.MergedDictionaries>
 		</ResourceDictionary>
 	</Window.Resources>
-	
+
 	<Grid>
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="*"/>
-			<ColumnDefinition Width="2*"/>
+			<ColumnDefinition Width="*" />
+			<ColumnDefinition Width="2*" />
 		</Grid.ColumnDefinitions>
-		
-		<ListView x:Name="TableOfContentsListView" Grid.Column="0" Style="{StaticResource MaterialDesignListView}" HorizontalAlignment="Center" SelectionChanged="TableOfContentsListView_OnSelectionChanged">
-			
+
+		<ListView x:Name="TableOfContentsListView" Grid.Column="0" Style="{StaticResource MaterialDesignListView}"
+		          HorizontalAlignment="Center" SelectionChanged="TableOfContentsListView_OnSelectionChanged">
+
 			<ListView.ItemTemplate>
 				<DataTemplate>
 					<StackPanel>
@@ -38,7 +39,7 @@
 					<Setter Property="Width" Value="160" />
 				</Style>
 			</ListView.ItemContainerStyle>
-			
+
 			<ListView.Items>
 				<system:String>Wstęp</system:String>
 				<system:String>Autorzy</system:String>
@@ -48,11 +49,13 @@
 				<system:String>Baza danych</system:String>
 				<system:String>Zasoby</system:String>
 			</ListView.Items>
-			
+
 		</ListView>
-		
-		<ScrollViewer x:Name="HelpContentScrollViewer" Grid.Column="1" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto" Margin="10">
-			<StackPanel x:Name="HelpContentPanel" Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Center" Width="400" />
+
+		<ScrollViewer x:Name="HelpContentScrollViewer" Grid.Column="1" HorizontalScrollBarVisibility="Hidden"
+		              VerticalScrollBarVisibility="Auto" Margin="10">
+			<StackPanel x:Name="HelpContentPanel" Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Center"
+			            Width="400" />
 		</ScrollViewer>
 	</Grid>
 </Window>

@@ -1,28 +1,25 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using Autobusy.Logic.Interfaces;
 
 namespace Autobusy.Logic.Models;
 
-public class Przystanek
+public class Przystanek : IIdentifiable
 {
-	[Key]
-	[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-	public int PrzystanekId { get; set; }
-	
 	public string Numer { get; set; }
 	public string Nazwa { get; set; }
 	public string Adres { get; set; }
-	
+
 	public List<PrzystanekWLinii> Przystanki { get; set; }
-	
+	public int Id { get; set; }
+
 	public override bool Equals(object obj)
 	{
-		if (obj is Przystanek przystanek && przystanek.PrzystanekId == this.PrzystanekId)
-		{
-			return true;
-		}
+		if (obj is Przystanek przystanek && przystanek.Id == Id) return true;
 
 		return false;
+	}
+
+	public override int GetHashCode()
+	{
+		return Id;
 	}
 }

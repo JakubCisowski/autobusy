@@ -3,94 +3,105 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-      xmlns:local="clr-namespace:Autobusy.UI.Pages"
       mc:Ignorable="d"
       Title="DyspozytorPrzejazdyPage" Height="480" Width="1180">
 	<Grid>
 		<Grid.RowDefinitions>
-			<RowDefinition Height="*"/>
-			<RowDefinition Height="*"/>
-			<RowDefinition Height="4*"/>
-			<RowDefinition Height="2*"/>
+			<RowDefinition Height="*" />
+			<RowDefinition Height="*" />
+			<RowDefinition Height="4*" />
+			<RowDefinition Height="2*" />
 		</Grid.RowDefinitions>
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="*"/>
-			<ColumnDefinition Width="*"/>
-			<ColumnDefinition Width="*"/>
-			<ColumnDefinition Width="*"/>
+			<ColumnDefinition Width="*" />
+			<ColumnDefinition Width="*" />
+			<ColumnDefinition Width="*" />
+			<ColumnDefinition Width="*" />
 		</Grid.ColumnDefinitions>
-		
-		<TextBlock Grid.Row="0" Grid.ColumnSpan="4" Text="Dyspozytor - Przejazdy" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" FontWeight="Bold"/>
-		
-		<ComboBox x:Name="LiniaComboBox" Grid.Row="1" Grid.Column="1" Width="100" Text="Wybór linii" SelectionChanged="LiniaComboBox_OnSelectionChanged" Margin="5,0,0,0"/>
-		
-		<ComboBox x:Name="KursComboBox" Grid.Row="1" Grid.Column="2" Width="100" Text="Wybór kursu" SelectionChanged="KursComboBox_OnSelectionChanged" Margin="5,0,0,0"/>
-		
-		<Button x:Name="DodajPrzejazdButton" Grid.Row="1" Grid.Column="3" Width="150" Content="Dodaj przejazd" Style="{StaticResource MaterialDesignRaisedLightButton}" HorizontalAlignment="Center" Click="DodajPrzejazdButton_OnClick"/>
-		
-		<DataGrid x:Name="PrzejazdyGrid" Grid.Column="0" Grid.Row="2" Height="250" Grid.ColumnSpan="4" CanUserAddRows="False" SelectionUnit="Cell" SelectionMode="Extended" ItemsSource="{Binding }" AutoGenerateColumns="False" HeadersVisibility="All" >
-			
+
+		<TextBlock Grid.Row="0" Grid.ColumnSpan="4" Text="Dyspozytor - Przejazdy" HorizontalAlignment="Center"
+		           VerticalAlignment="Center" FontSize="18" FontWeight="Bold" />
+
+		<ComboBox x:Name="LiniaComboBox" Grid.Row="1" Grid.Column="1" Width="100" Text="Wybór linii"
+		          SelectionChanged="LiniaComboBox_OnSelectionChanged" Margin="5,0,0,0" />
+
+		<ComboBox x:Name="KursComboBox" Grid.Row="1" Grid.Column="2" Width="100" Text="Wybór kursu"
+		          SelectionChanged="KursComboBox_OnSelectionChanged" Margin="5,0,0,0" />
+
+		<Button x:Name="DodajPrzejazdButton" Grid.Row="1" Grid.Column="3" Width="150" Content="Dodaj przejazd"
+		        Style="{StaticResource MaterialDesignRaisedLightButton}" HorizontalAlignment="Center"
+		        Click="DodajPrzejazdButton_OnClick" />
+
+		<DataGrid x:Name="PrzejazdyGrid" Grid.Column="0" Grid.Row="2" Height="250" Grid.ColumnSpan="4" CanUserAddRows="False"
+		          SelectionUnit="Cell" SelectionMode="Extended" ItemsSource="{Binding }" AutoGenerateColumns="False"
+		          HeadersVisibility="All">
+
 			<DataGrid.Columns>
 				<!-- ID -->
-				<DataGridTextColumn Binding="{Binding PrzejazdId}" Header="Id" ElementStyle="{StaticResource 
+				<DataGridTextColumn Binding="{Binding PrzejazdId}" Header="Id"
+				                    ElementStyle="{StaticResource 
 				MaterialDesignDataGridTextColumnStyle}" IsReadOnly="True"
-				                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" FontSize="16">
-					
-				</DataGridTextColumn>
-				
+				                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+				                    FontSize="16" />
+
 				<!-- Dzień tygodnia -->
-				<DataGridTextColumn Binding="{Binding Kurs.DzienTygodnia}" Header="Dzień tygodnia" ElementStyle="{StaticResource 
+				<DataGridTextColumn Binding="{Binding Kurs.DzienTygodnia}" Header="Dzień tygodnia"
+				                    ElementStyle="{StaticResource 
 				MaterialDesignDataGridTextColumnStyle}" IsReadOnly="True"
-				                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" FontSize="16">
-					
-				</DataGridTextColumn>
-				
+				                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+				                    FontSize="16" />
+
 				<!-- Data -->
 				<DataGridTemplateColumn Header="Data">
 					<DataGridTemplateColumn.CellTemplate>
 						<DataTemplate>
-							<DatePicker SelectedDate="{Binding Data, UpdateSourceTrigger=LostFocus}"/>
+							<DatePicker SelectedDate="{Binding Data, UpdateSourceTrigger=LostFocus}" />
 						</DataTemplate>
 					</DataGridTemplateColumn.CellTemplate>
 				</DataGridTemplateColumn>
-				
+
 				<!-- Ilość skasowanych biletów -->
-				<DataGridTextColumn Binding="{Binding IloscSkasowanychBiletow}" Header="Ilość skasowanych biletów" ElementStyle="{StaticResource 
+				<DataGridTextColumn Binding="{Binding IloscSkasowanychBiletow}" Header="Ilość skasowanych biletów"
+				                    ElementStyle="{StaticResource 
 				MaterialDesignDataGridTextColumnStyle}"
-				                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" FontSize="16">
-					
-				</DataGridTextColumn>
-				
+				                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+				                    FontSize="16" />
+
 				<!-- Ilość spalonego paliwa -->
-				<DataGridTextColumn Binding="{Binding IloscSpalonegoPaliwa}" Header="Ilość spalonego paliwa" ElementStyle="{StaticResource 
+				<DataGridTextColumn Binding="{Binding IloscSpalonegoPaliwa}" Header="Ilość spalonego paliwa"
+				                    ElementStyle="{StaticResource 
 				MaterialDesignDataGridTextColumnStyle}"
-				                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" FontSize="16">
-					
-				</DataGridTextColumn>
-				
+				                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+				                    FontSize="16" />
+
 				<!-- Wybierz kierowcę - przycisk -->
 				<DataGridTemplateColumn Header="Kierowca">
 					<DataGridTemplateColumn.CellTemplate>
 						<DataTemplate>
-							<Button x:Name="WybierzKierowceButton" Content="Wybierz" Style="{StaticResource MaterialDesignRaisedLightButton}" HorizontalAlignment="Center" CommandParameter="{Binding}" Click="WybierzKierowceButton_OnClick" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+							<Button x:Name="WybierzKierowceButton" Content="Wybierz"
+							        Style="{StaticResource MaterialDesignRaisedLightButton}" HorizontalAlignment="Center"
+							        CommandParameter="{Binding}" Click="WybierzKierowceButton_OnClick" HorizontalContentAlignment="Center"
+							        VerticalContentAlignment="Center" />
 						</DataTemplate>
 					</DataGridTemplateColumn.CellTemplate>
 				</DataGridTemplateColumn>
-				
+
 				<!-- Wybierz autobus - przycisk -->
 				<DataGridTemplateColumn Header="Autobus">
 					<DataGridTemplateColumn.CellTemplate>
 						<DataTemplate>
-							<Button x:Name="WybierzAutobusButton" Content="Wybierz" Style="{StaticResource MaterialDesignRaisedLightButton}" HorizontalAlignment="Center" CommandParameter="{Binding}" Click="WybierzAutobusButton_OnClick" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+							<Button x:Name="WybierzAutobusButton" Content="Wybierz" Style="{StaticResource MaterialDesignRaisedLightButton}"
+							        HorizontalAlignment="Center" CommandParameter="{Binding}" Click="WybierzAutobusButton_OnClick"
+							        HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
 						</DataTemplate>
 					</DataGridTemplateColumn.CellTemplate>
 				</DataGridTemplateColumn>
-				
+
 			</DataGrid.Columns>
 		</DataGrid>
-		
-		<Button Grid.Column="0" x:Name="BackButton" Grid.Row="3" Grid.ColumnSpan="4" Width="150" Content="Wróć" Click="BackButton_OnClick" Style="{StaticResource MaterialDesignRaisedLightButton}"/>
-		
+
+		<Button Grid.Column="0" x:Name="BackButton" Grid.Row="3" Grid.ColumnSpan="4" Width="150" Content="Wróć"
+		        Click="BackButton_OnClick" Style="{StaticResource MaterialDesignRaisedLightButton}" />
+
 	</Grid>
 </Page>

@@ -1,30 +1,27 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using Autobusy.Logic.Interfaces;
 
 namespace Autobusy.Logic.Models;
 
-public class Serwis
+public class Serwis : IIdentifiable
 {
-	[Key]
-	[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-	public int SerwisId { get; set; }
-
 	public DateTime Data { get; set; }
 	public TypSerwisu Typ { get; set; }
-	public double Cena { get; set; }
+	public decimal Cena { get; set; }
 	public string Opis { get; set; }
-	
-	[ForeignKey("AutobusId")]
+
+	public int AutobusId { get; set; }
 	public Autobus NaprawianyAutobus { get; set; }
-	
+	public int Id { get; set; }
+
 	public override bool Equals(object obj)
 	{
-		if (obj is Serwis serwis && serwis.SerwisId == this.SerwisId)
-		{
-			return true;
-		}
+		if (obj is Serwis serwis && serwis.Id == Id) return true;
 
 		return false;
+	}
+
+	public override int GetHashCode()
+	{
+		return Id;
 	}
 }

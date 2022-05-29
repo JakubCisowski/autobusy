@@ -4,32 +4,36 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        xmlns:local="clr-namespace:Autobusy"
         mc:Ignorable="d" WindowStyle="SingleBorderWindow" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize"
         Title="Autobusy" Height="720" Width="1280" Closing="MainWindow_OnClosing">
-    <Grid>
-	   <Grid.RowDefinitions>
-		   <RowDefinition Height="*"></RowDefinition>
-		   <RowDefinition Height="4*"></RowDefinition>	<!-- * = 120px -->
-		   <RowDefinition Height="*"></RowDefinition>
-	   </Grid.RowDefinitions>
-	    
-	    <Grid.ColumnDefinitions>
-		    <ColumnDefinition Width="*"/>
-		    <ColumnDefinition Width="*"/>
-	    </Grid.ColumnDefinitions>
-		   
-	    <TextBlock Grid.Row="0" Grid.ColumnSpan="2" Text="Autobusy" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" FontWeight="Bold"/>
-	    
-	    <Button x:Name="HelpButton" Grid.Row="0" Grid.Column="1" Width="50" Style="{StaticResource MaterialDesignIconForegroundButton}" Background="LightGray" Click="HelpButton_OnClick" Margin="200,0,0,0">
-		    <Button.Content>
-			    <materialDesign:PackIcon Kind="Help" Width="40" Height="40" Foreground="DarkSlateBlue"/>
-		    </Button.Content>
-	    </Button>
-	    
-	    <Frame x:Name="MainFrame" Grid.Row="1" Grid.ColumnSpan="2" NavigationUIVisibility="Hidden" Source="Pages/GlownyPage.xaml" Margin="50,0,50,0" Padding="0"/>
-	    
-	    <TextBlock Grid.Row="2" Grid.ColumnSpan="2" Text="{Binding Data, StringFormat='{}{0:dd.MM.yy HH:mm}'}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18"/>
-	    
-    </Grid>
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*" />
+			<RowDefinition Height="4*" />	<!-- * = 120px -->
+			<RowDefinition Height="*" />
+		</Grid.RowDefinitions>
+
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="*" />
+			<ColumnDefinition Width="*" />
+		</Grid.ColumnDefinitions>
+
+		<TextBlock Grid.Row="0" Grid.ColumnSpan="2" Text="Autobusy" HorizontalAlignment="Center" VerticalAlignment="Center"
+		           FontSize="24" FontWeight="Bold" />
+
+		<Button x:Name="HelpButton" Grid.Row="0" Grid.Column="1" Width="50"
+		        Style="{StaticResource MaterialDesignIconForegroundButton}" Background="LightGray" Click="HelpButton_OnClick"
+		        Margin="200,0,0,0">
+			<Button.Content>
+				<materialDesign:PackIcon Kind="Help" Width="40" Height="40" Foreground="DarkSlateBlue" />
+			</Button.Content>
+		</Button>
+
+		<Frame x:Name="MainFrame" Grid.Row="1" Grid.ColumnSpan="2" NavigationUIVisibility="Hidden"
+		       Source="Pages/GlownyPage.xaml" Margin="50,0,50,0" Padding="0" />
+
+		<TextBlock Grid.Row="2" Grid.ColumnSpan="2" Text="{Binding Data, StringFormat='{}{0:dd.MM.yy HH:mm}'}"
+		           HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" />
+
+	</Grid>
 </Window>

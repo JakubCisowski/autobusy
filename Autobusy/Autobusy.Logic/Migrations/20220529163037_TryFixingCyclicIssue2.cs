@@ -4,7 +4,7 @@
 
 namespace Autobusy.Logic.Migrations
 {
-    public partial class TestMigration : Migration
+    public partial class TryFixingCyclicIssue2 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

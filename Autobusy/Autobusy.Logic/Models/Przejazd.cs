@@ -1,37 +1,34 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using Autobusy.Logic.Interfaces;
 
 namespace Autobusy.Logic.Models;
 
-public class Przejazd
+public class Przejazd : IIdentifiable
 {
-	[Key]
-	[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-	public int PrzejazdId { get; set; }
-	
-	public double IloscSpalonegoPaliwa{ get; set; }
+	public double IloscSpalonegoPaliwa { get; set; }
 	public int IloscSkasowanychBiletow { get; set; }
 	public DateTime Data { get; set; }
-	
-	[ForeignKey("KursId")]
+
+	public int KursId { get; set; }
 	public Kurs Kurs { get; set; }
-	
-	[ForeignKey("KierowcaId")]
+
+	public int KierowcaId { get; set; }
 	public Kierowca Kierowca { get; set; }
-	
-	[ForeignKey("AutobusId")]
+
+	public int AutobusId { get; set; }
 	public Autobus Autobus { get; set; }
-	
+
 	public List<RealizacjaPrzejazdu> RealizacjePrzejazdu { get; set; }
-	
+	public int Id { get; set; }
+
 	public override bool Equals(object obj)
 	{
-		if (obj is Przejazd przejazd && przejazd.PrzejazdId == this.PrzejazdId)
-		{
-			return true;
-		}
+		if (obj is Przejazd przejazd && przejazd.Id == Id) return true;
 
 		return false;
+	}
+
+	public override int GetHashCode()
+	{
+		return Id;
 	}
 }

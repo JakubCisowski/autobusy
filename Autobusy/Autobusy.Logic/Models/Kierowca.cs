@@ -1,28 +1,25 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using Autobusy.Logic.Interfaces;
 
 namespace Autobusy.Logic.Models;
 
-public class Kierowca
+public class Kierowca : IIdentifiable
 {
-	[Key]
-	[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-	public int KierowcaId { get; set; }
-	
 	public string Imie { get; set; }
 	public string Nazwisko { get; set; }
-	public int Doswiadczenie{ get; set; }
-	
+	public int Doswiadczenie { get; set; }
+
 	public List<Przejazd> Przejazdy { get; set; }
+	public int Id { get; set; }
 
 	public override bool Equals(object obj)
 	{
-		if (obj is Kierowca kierowca && kierowca.KierowcaId == this.KierowcaId)
-		{
-			return true;
-		}
+		if (obj is Kierowca kierowca && kierowca.Id == Id) return true;
 
 		return false;
+	}
+
+	public override int GetHashCode()
+	{
+		return Id;
 	}
 }

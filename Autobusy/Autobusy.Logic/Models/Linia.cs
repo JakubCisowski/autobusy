@@ -1,29 +1,26 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using Autobusy.Logic.Interfaces;
 
 namespace Autobusy.Logic.Models;
 
-public class Linia
+public class Linia : IIdentifiable
 {
-	[Key]
-	[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-	public int LiniaId { get; set; }
-	
 	public string Numer { get; set; }
 	public TypLinii Typ { get; set; }
 	public double DlugoscWKm { get; set; }
-	
-	public List<PrzystanekWLinii> Przystanki { get; set; }
+
+	public List<PrzystanekWLinii> PrzystankiWLinii { get; set; }
 	public List<Kurs> Kursy { get; set; }
-	
+	public int Id { get; set; }
+
 	public override bool Equals(object obj)
 	{
-		if (obj is Linia linia && linia.LiniaId == this.LiniaId)
-		{
-			return true;
-		}
+		if (obj is Linia linia && linia.Id == Id) return true;
 
 		return false;
+	}
+
+	public override int GetHashCode()
+	{
+		return Id;
 	}
 }

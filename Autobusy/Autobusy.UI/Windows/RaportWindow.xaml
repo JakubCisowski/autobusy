@@ -3,24 +3,26 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:local="clr-namespace:Autobusy.UI.Windows"
-        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         Title="Raporty" Height="450" Width="800">
 	<Grid>
 		<Grid.RowDefinitions>
-			<RowDefinition Height="*"/>
-			<RowDefinition Height="*"/>
-			<RowDefinition Height="*"/>
-			<RowDefinition Height="*"/>
+			<RowDefinition Height="*" />
+			<RowDefinition Height="*" />
+			<RowDefinition Height="*" />
+			<RowDefinition Height="*" />
 		</Grid.RowDefinitions>
-		
-		<CheckBox x:Name="KierowcyCheckBox" Grid.Row="0" Content="Informacje o kierowcach" HorizontalAlignment="Center" VerticalContentAlignment="Center" FontSize="16"/>
-		
-		<CheckBox x:Name="LinieCheckBox" Grid.Row="1" Content="Informacje o liniach" HorizontalAlignment="Center" VerticalContentAlignment="Center" FontSize="16"/>
-		
-		<CheckBox x:Name="BazaDanychCheckBox" Grid.Row="2" Content="Informacje o bazie danych" HorizontalAlignment="Center" VerticalContentAlignment="Center" FontSize="16"/>
-		
-		<Button x:Name="GenerujButton" Grid.Row="3" Width="200" Height="60" Content="Generuj!" FontSize="16" Style="{StaticResource MaterialDesignRaisedButton}" Click="GenerujButton_OnClick"/>
+
+		<CheckBox x:Name="KierowcyCheckBox" Grid.Row="0" Content="Informacje o kierowcach" HorizontalAlignment="Center"
+		          VerticalContentAlignment="Center" FontSize="16" />
+
+		<CheckBox x:Name="LinieCheckBox" Grid.Row="1" Content="Informacje o liniach" HorizontalAlignment="Center"
+		          VerticalContentAlignment="Center" FontSize="16" />
+
+		<CheckBox x:Name="BazaDanychCheckBox" Grid.Row="2" Content="Informacje o bazie danych" HorizontalAlignment="Center"
+		          VerticalContentAlignment="Center" FontSize="16" />
+
+		<Button x:Name="GenerujButton" Grid.Row="3" Width="200" Height="60" Content="Generuj!" FontSize="16"
+		        Style="{StaticResource MaterialDesignRaisedButton}" Click="GenerujButton_OnClick" />
 	</Grid>
 </Window>

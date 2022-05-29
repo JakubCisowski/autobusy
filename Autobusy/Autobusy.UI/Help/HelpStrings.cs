@@ -23,11 +23,11 @@ public static class HelpStrings
 	public static List<Inline> StringToInlineCollection(string str)
 	{
 		IEnumerable<Inline> stringInlines = str.Split('\n').Select(x => new Run(x));
-		
-		return stringInlines.SelectMany(x => new []
+
+		return stringInlines.SelectMany(x => new[]
 		{
 			x,
 			new LineBreak()
 		}).ToList();
 	}
-} 
+}
