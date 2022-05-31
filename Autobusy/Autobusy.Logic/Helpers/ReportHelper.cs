@@ -40,8 +40,7 @@ public class ReportHelper
 							text.Line($"Raport zawiera: {coZawieraRaport}").FontSize(18).FontColor(Colors.Blue.Darken1);
 						});
 
-					// OMEGA TODO:
-					// Wygenerować wiele page'ów w takiej formie:
+					// Raport przyjmuje następującą formę (w zależności co zostało wybrane przez użytkownika):
 					// I. Informacje o kierowcach (tabelki z przejazdami spóźnieniami itd):
 					// 1. Jan Kowalski
 					// 2. Jakub Nowak
@@ -118,7 +117,7 @@ public class ReportHelper
 				
 				foreach (var przejazd in kierowca.Przejazdy)
 				{
-					var przejazdFromDb = repo.GetById(przejazd.Id, x=>x.Kurs, y=>y.Kurs.Linia);
+					var przejazdFromDb = repo.GetById(przejazd.Id, x=>x.Kurs, y=>y.Kurs.Linia, z=>z.RealizacjePrzejazdu);
 					
 					przejazdy.Add(przejazdFromDb);
 				}
@@ -171,20 +170,30 @@ public class ReportHelper
 				double iloscMinutSpoznienia = 0;
 				var iloscSpoznien = 0;
 
-				foreach (var przejazd in kierowca.Przejazdy)
+				using (var repo = new DatabaseRepository<PlanKursu>(new AutobusyContext()))
 				{
-					if (przejazd.RealizacjePrzejazdu is not null && przejazd.RealizacjePrzejazdu.Count > 0)
+					foreach (var przejazd in kierowca.Przejazdy)
 					{
-						iloscSpoznien++;
+						if (przejazd.RealizacjePrzejazdu is null || przejazd.RealizacjePrzejazdu.Count == 0)
+						{
+							continue;
+						}
+
+						foreach (var realizacjaPrzejazdu in przejazd.RealizacjePrzejazdu)
+						{
+							realizacjaPrzejazdu.PlanKursu = repo.GetById(realizacjaPrzejazdu.PlanKursuId);
+						}
+						
+						iloscSpoznien += przejazd.RealizacjePrzejazdu.Count;
 						iloscMinutSpoznienia += przejazd.RealizacjePrzejazdu.Sum(x => (x.FaktycznaGodzina - x.PlanKursu.PlanowaGodzina).TotalMinutes);
 					}
 				}
-
+				
 				table.Cell().Element(CellStyle).AlignRight().Text(iloscSpoznien);
 
 				var srednieSpoznienie = iloscSpoznien == 0 ? 0 : iloscMinutSpoznienia / iloscSpoznien;
 
-				table.Cell().Element(CellStyle).AlignRight().Text(srednieSpoznienie);
+				table.Cell().Element(CellStyle).AlignRight().Text(srednieSpoznienie.ToString("0.00"));
 			}
 		});
 	}

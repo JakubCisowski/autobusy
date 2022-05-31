@@ -3,6 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d"
       Title="DyspozytorPrzejazdyPage" Height="480" Width="1180">
 	<Grid>
@@ -21,12 +22,12 @@
 
 		<TextBlock Grid.Row="0" Grid.ColumnSpan="4" Text="Dyspozytor - Przejazdy" HorizontalAlignment="Center"
 		           VerticalAlignment="Center" FontSize="18" FontWeight="Bold" />
-
+		
 		<ComboBox x:Name="LiniaComboBox" Grid.Row="1" Grid.Column="1" Width="100" Text="Wybór linii"
-		          SelectionChanged="LiniaComboBox_OnSelectionChanged" Margin="5,0,0,0" />
+		          SelectionChanged="LiniaComboBox_OnSelectionChanged" Margin="5,0,0,0"/>
 
 		<ComboBox x:Name="KursComboBox" Grid.Row="1" Grid.Column="2" Width="100" Text="Wybór kursu"
-		          SelectionChanged="KursComboBox_OnSelectionChanged" Margin="5,0,0,0" />
+		          SelectionChanged="KursComboBox_OnSelectionChanged" Margin="5,0,0,0"/>
 
 		<Button x:Name="DodajPrzejazdButton" Grid.Row="1" Grid.Column="3" Width="150" Content="Dodaj przejazd"
 		        Style="{StaticResource MaterialDesignRaisedLightButton}" HorizontalAlignment="Center"
@@ -38,7 +39,7 @@
 
 			<DataGrid.Columns>
 				<!-- ID -->
-				<DataGridTextColumn Binding="{Binding PrzejazdId}" Header="Id"
+				<DataGridTextColumn Binding="{Binding Id}" Header="Id"
 				                    ElementStyle="{StaticResource 
 				MaterialDesignDataGridTextColumnStyle}" IsReadOnly="True"
 				                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
@@ -92,6 +93,17 @@
 						<DataTemplate>
 							<Button x:Name="WybierzAutobusButton" Content="Wybierz" Style="{StaticResource MaterialDesignRaisedLightButton}"
 							        HorizontalAlignment="Center" CommandParameter="{Binding}" Click="WybierzAutobusButton_OnClick"
+							        HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+						</DataTemplate>
+					</DataGridTemplateColumn.CellTemplate>
+				</DataGridTemplateColumn>
+				
+				<!-- Oznacz spóźnienie - przycisk -->
+				<DataGridTemplateColumn Header="Spóźnienia">
+					<DataGridTemplateColumn.CellTemplate>
+						<DataTemplate>
+							<Button x:Name="OdznaczSpoznienieButton" Content="Odznacz" Style="{StaticResource MaterialDesignRaisedLightButton}"
+							        HorizontalAlignment="Center" CommandParameter="{Binding}" Click="OdznaczSpoznienieButton_OnClick"
 							        HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
 						</DataTemplate>
 					</DataGridTemplateColumn.CellTemplate>

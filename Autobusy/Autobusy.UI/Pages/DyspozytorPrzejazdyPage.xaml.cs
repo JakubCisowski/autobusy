@@ -148,4 +148,14 @@ public partial class DyspozytorPrzejazdyPage : Page
 			repo.UpdateMany(_przejazdy);
 		}
 	}
+
+	private void OdznaczSpoznienieButton_OnClick(object sender, RoutedEventArgs e)
+	{
+		if ((sender as Button)?.CommandParameter is not Przejazd przejazd)
+		{
+			return;
+		}
+
+		new SpoznieniaWindow(przejazd).ShowDialog();
+	}
 }

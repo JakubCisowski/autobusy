@@ -20,7 +20,15 @@ public partial class SpoznieniaWindow : Window
 
 		using (var repo = new DatabaseRepository<Przejazd>(new AutobusyContext()))
 		{
-			_przejazd = repo.GetById(przejazd.Id, x => x.RealizacjePrzejazdu);
+			_przejazd = repo.GetById(przejazd.Id, x => x.RealizacjePrzejazdu, y=>y.Kurs, z=>z.Kierowca, a=>a.Kurs.Linia, b=>b.Kurs.PlanyKursu);
+		}
+
+		using (var repo = new DatabaseRepository<PrzystanekWLinii>(new AutobusyContext()))
+		{
+			foreach (var planKursu in _przejazd.Kurs.PlanyKursu)
+			{
+				planKursu.PrzystanekWLinii = repo.GetById(planKursu.PrzystanekWLiniiId, x => x.Przystanek);
+			}
 		}
 
 		PrzejazdInfoBlock.Text = $"Data: {_przejazd.Data}, linia: {_przejazd.Kurs.Linia.Numer}";
@@ -31,7 +39,9 @@ public partial class SpoznieniaWindow : Window
 		{
 			var realizacjaPrzejazdu = new RealizacjaPrzejazdu
 			{
-				FaktycznaGodzina = DateTime.Now
+				FaktycznaGodzina = planKursu.PlanowaGodzina,
+				PlanKursu = planKursu,
+				Przejazd = _przejazd
 			};
 
 			_realizacjePrzejazdu.Add(realizacjaPrzejazdu);
@@ -46,9 +56,12 @@ public partial class SpoznieniaWindow : Window
 
 	private void SpoznieniaWindow_OnClosing(object sender, CancelEventArgs e)
 	{
-		using (var repo = new DatabaseRepository<Przejazd>(new AutobusyContext()))
+		using (var repo = new DatabaseRepository<RealizacjaPrzejazdu>(new AutobusyContext()))
 		{
-			repo.Update(_przejazd);
+			foreach (var realizacjaPrzejazdu in _realizacjePrzejazdu)
+			{
+				repo.ExecuteSqlQuery($"INSERT INTO dbo.RealizacjePrzejazdu (FaktycznaGodzina, PlanKursuId, PrzejazdId) VALUES ('{realizacjaPrzejazdu.FaktycznaGodzina:s}', {realizacjaPrzejazdu.PlanKursu.Id}, {realizacjaPrzejazdu.Przejazd.Id})");
+			}
 		}
 	}
 }
