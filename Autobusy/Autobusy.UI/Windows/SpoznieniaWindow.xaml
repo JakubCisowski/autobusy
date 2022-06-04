@@ -5,7 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="SpoznieniaWindow" Height="450" Width="800" Closing="SpoznieniaWindow_OnClosing" ResizeMode="CanMinimize"
+        Title="Spóźnienia Kierowców" Height="450" Width="800" Closing="SpoznieniaWindow_OnClosing" ResizeMode="CanMinimize"
         WindowStyle="SingleBorderWindow">
 	<Grid>
 		<Grid.RowDefinitions>

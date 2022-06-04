@@ -1,7 +1,9 @@
 using System.Globalization;
 using System.Linq;
 using System.Windows;
+using Autobusy.Logic.Contexts;
 using Autobusy.Logic.Models;
+using Autobusy.Logic.Repositories;
 
 namespace Autobusy.UI.Windows;
 
@@ -13,8 +15,19 @@ public partial class RentownoscWindow : Window
 	{
 		InitializeComponent();
 
-		_linia = linia;
+		using (var repo = new DatabaseRepository<Linia>(new AutobusyContext()))
+		{
+			_linia = repo.GetById(linia.Id, x => x.Kursy);
+		}
 
+		using (var repo = new DatabaseRepository<Przejazd>(new AutobusyContext()))
+		{
+			foreach (var kurs in _linia.Kursy)
+			{
+				kurs.Przejazdy = repo.List(x => x.KursId == kurs.Id, y=>y.Kurs);
+			}
+		}
+		
 		ObliczRentownosc();
 	}
 
@@ -40,6 +53,10 @@ public partial class RentownoscWindow : Window
 		IloscPaliwaBlock.Text = iloscSpalonegoPaliwa.HasValue ? iloscSpalonegoPaliwa.Value.ToString(CultureInfo.CurrentCulture) : "Brak danych";
 		IloscBiletowBlock.Text = iloscSkasowanychBiletow.HasValue ? iloscSkasowanychBiletow.Value.ToString() : "Brak danych";
 		NajwiekszyRuchBlock.Text = kursNajwiekszyRuch is null ? "Brak danych" : najwiekszyRuchDzienTygodnia + " " + najwiekszyRuchGodzina;
-		NajmniejszyRuchBlock.Text = kursNajmniejszyRuch is null ? "Brak danych" : najmniejszyRuchDzienTygodnia + " " + najmniejszyRuchGodzina;
+
+		if (kursNajmniejszyRuch?.Id != kursNajwiekszyRuch?.Id)
+		{
+			NajmniejszyRuchBlock.Text = kursNajmniejszyRuch is null ? "Brak danych" : najmniejszyRuchDzienTygodnia + " " + najmniejszyRuchGodzina;
+		}
 	}
 }

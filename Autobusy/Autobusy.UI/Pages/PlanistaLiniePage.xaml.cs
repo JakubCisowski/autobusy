@@ -167,7 +167,7 @@ public partial class PlanistaLiniePage : Page
 
 		using (var repo = new DatabaseRepository<PrzystanekWLinii>(new AutobusyContext()))
 		{
-			_przystanki = repo.List(x => x.Linia.Numer == selectedNumerLinii, y => y.Przystanek);
+			_przystanki = repo.List(x => x.Linia.Numer == selectedNumerLinii, y => y.Przystanek, z=>z.Linia);
 			this.DataContext = _przystanki;
 		}
 	}

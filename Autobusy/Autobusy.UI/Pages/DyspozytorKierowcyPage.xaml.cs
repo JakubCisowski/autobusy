@@ -18,7 +18,7 @@ public partial class DyspozytorKierowcyPage : Page
 
 		using (var repo = new DatabaseRepository<Kierowca>(new AutobusyContext()))
 		{
-			_kierowcy = repo.List();
+			_kierowcy = repo.List(x=>x.Przejazdy);
 		}
 
 		this.DataContext = _kierowcy;
@@ -53,7 +53,7 @@ public partial class DyspozytorKierowcyPage : Page
 
 		if (averageFuelConsumption.HasValue)
 		{
-			MessageBox.Show($"Średnie spalanie kierowcy {kierowca.Imie} {kierowca.Nazwisko} wynosi: {averageFuelConsumption}.", "Średnie spalanie kierowcy");
+			MessageBox.Show($"Średnie spalanie kierowcy {kierowca.Imie} {kierowca.Nazwisko} wynosi: {averageFuelConsumption.Value.ToString("0.00")}", "Średnie spalanie kierowcy");
 		}
 		else
 		{
@@ -81,6 +81,17 @@ public partial class DyspozytorKierowcyPage : Page
 		double spoznieniaSuma = 0;
 		var spoznieniaIlosc = 0;
 
+		using (var repo = new DatabaseRepository<PlanKursu>(new AutobusyContext()))
+		{
+			foreach (var przejazd in kierowca.Przejazdy)
+			{
+				foreach (var realizacjaPrzejazdu in przejazd.RealizacjePrzejazdu)
+				{
+					realizacjaPrzejazdu.PlanKursu = repo.GetById(realizacjaPrzejazdu.PlanKursuId);
+				}
+			}
+		}
+
 		if (przejazdyKierowcy != null)
 		{
 			foreach (var przejazdKierowcy in przejazdyKierowcy)
@@ -94,7 +105,7 @@ public partial class DyspozytorKierowcyPage : Page
 
 			if (spoznieniaIlosc != 0)
 			{
-				MessageBox.Show($"Średni czas spóźnienia kierowcy {kierowca.Imie} {kierowca.Nazwisko} wynosi: {spoznieniaSuma / spoznieniaIlosc} minut.", "Średni czas spóźnienia kierowcy");
+				MessageBox.Show($"Średni czas spóźnienia kierowcy {kierowca.Imie} {kierowca.Nazwisko} wynosi: {(spoznieniaSuma / spoznieniaIlosc).ToString("0.00")} minut.", "Średni czas spóźnienia kierowcy");
 
 				return;
 			}

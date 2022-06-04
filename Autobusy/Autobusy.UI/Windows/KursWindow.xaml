@@ -5,7 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="KursWindow" Height="450" Width="800" Closing="KursWindow_OnClosing" ResizeMode="CanMinimize"
+        Title="Definiowanie Kursu" Height="450" Width="800" Closing="KursWindow_OnClosing" ResizeMode="CanMinimize"
         WindowStyle="SingleBorderWindow">
 	<Grid>
 		<Grid.RowDefinitions>

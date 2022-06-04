@@ -21,11 +21,17 @@
 		<TextBlock Grid.Row="0" Grid.ColumnSpan="2" Text="Autobusy" HorizontalAlignment="Center" VerticalAlignment="Center"
 		           FontSize="24" FontWeight="Bold" />
 
-		<Button x:Name="HelpButton" Grid.Row="0" Grid.Column="1" Width="50"
-		        Style="{StaticResource MaterialDesignIconForegroundButton}" Background="LightGray" Click="HelpButton_OnClick"
+		<Button x:Name="HelpButton" Grid.Row="0" Grid.Column="1" Width="140" Height="30"
+		        Style="{StaticResource MaterialDesignFlatLightButton}" Background="LightGray" Click="HelpButton_OnClick"
 		        Margin="200,0,0,0">
 			<Button.Content>
-				<materialDesign:PackIcon Kind="Help" Width="40" Height="40" Foreground="DarkSlateBlue" />
+				<StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+					<materialDesign:PackIcon Kind="Help" Width="20" Height="20" Foreground="DarkSlateBlue" />
+					
+					<TextBlock Text="Pomoc" Foreground="DarkSlateBlue" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,5,0" FontWeight="DemiBold"/>
+					
+					<materialDesign:PackIcon Kind="Help" Width="20" Height="20" Foreground="DarkSlateBlue" />
+				</StackPanel>
 			</Button.Content>
 		</Button>
 

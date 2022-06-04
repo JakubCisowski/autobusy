@@ -79,7 +79,7 @@
 				</DataGridTemplateColumn>
 
 				<!-- Spalanie na 100 -->
-				<DataGridTextColumn Binding="{Binding SpalanieNa100}" Header="Spalanie na 100"
+				<DataGridTextColumn Binding="{Binding SpalanieNa100, StringFormat='0.00'}" Header="Spalanie na 100"
 				                    ElementStyle="{StaticResource 
 				MaterialDesignDataGridTextColumnStyle}"
 				                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"

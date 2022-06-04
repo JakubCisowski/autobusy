@@ -6,7 +6,7 @@
         xmlns:models="clr-namespace:Autobusy.Logic.Models;assembly=Autobusy.Logic"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
-        Title="LiniaWindow" Height="450" Width="800" Closing="LiniaWindow_OnClosing" ResizeMode="CanMinimize"
+        Title="Definiowanie Linii" Height="450" Width="800" Closing="LiniaWindow_OnClosing" ResizeMode="CanMinimize"
         WindowStyle="SingleBorderWindow">
 
 	<Window.Resources>
@@ -31,7 +31,7 @@
 		<!-- Id -->
 		<StackPanel Grid.Column="0" VerticalAlignment="Center">
 			<TextBlock Text="Id" HorizontalAlignment="Center" />
-			<TextBox x:Name="IdBox" Margin="0,10,0,0" FontSize="16" Width="150" Height="50" Text="{Binding LiniaId}"
+			<TextBox x:Name="IdBox" Margin="0,10,0,0" FontSize="16" Width="150" Height="50" Text="{Binding Id}"
 			         IsReadOnly="True" />
 		</StackPanel>
 
