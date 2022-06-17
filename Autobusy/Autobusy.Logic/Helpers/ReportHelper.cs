@@ -210,12 +210,12 @@ public class ReportHelper
 
 		using (var repo = new DatabaseRepository<Kurs>(new AutobusyContext()))
 		{
-			foreach (var linia in linieFromDb)
+			container.Column(column =>
 			{
-				var kursyLinii = repo.List(x => x.LiniaId == linia.Id, y => y.Linia, z => z.Przejazdy);;
-				
-				container.Column(column =>
+				foreach (var linia in linieFromDb)
 				{
+					var kursyLinii = repo.List(x => x.LiniaId == linia.Id, y => y.Linia, z => z.Przejazdy);
+
 					// Informacje o linii
 					column.Item().Text(text =>
 					{
@@ -224,9 +224,10 @@ public class ReportHelper
 						text.Line($"Typ linii: {linia.Typ.ToString()}");
 						text.Line($"Długość linii: {linia.DlugoscWKm:0.00}");
 					});
-					
+
 					// Tabela z kursami
-					column.Item().Table(table =>{
+					column.Item().Table(table =>
+					{
 						table.ColumnsDefinition(columns =>
 						{
 							columns.ConstantColumn(25); // Id kursu w ramach linii
@@ -246,7 +247,7 @@ public class ReportHelper
 							header.Cell().Element(CellStyle).AlignRight().Text("Ilość sprzedanych biletów");
 							header.Cell().Element(CellStyle).AlignRight().Text("Ilość spalonego paliwa");
 						});
-						
+
 						foreach (var kurs in kursyLinii)
 						{
 							table.Cell().Element(CellStyle).Text(kurs.Id);
@@ -266,8 +267,10 @@ public class ReportHelper
 							}
 						}
 					});
-				});
-			}
+
+					column.Item().Text("");
+				}
+			});
 		}
 	}
 
