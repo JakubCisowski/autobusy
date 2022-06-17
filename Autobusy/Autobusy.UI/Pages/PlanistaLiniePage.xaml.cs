@@ -74,11 +74,6 @@ public partial class PlanistaLiniePage : Page
 			_przystanki = linia.PrzystankiWLinii;
 		}
 
-		using (var repo = new DatabaseRepository<Linia>(new AutobusyContext()))
-		{
-			repo.Add(linia);
-		}
-
 		PrzystankiGrid.Items.Refresh();
 		LinieComboBox.ItemsSource = _linie.Select(x => x.Numer);
 		LinieComboBox.SelectedItem = linia.Numer;

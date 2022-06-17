@@ -38,14 +38,14 @@
 				                    FontSize="16" />
 
 				<!-- Imię -->
-				<DataGridTextColumn Binding="{Binding Imie}" Header="Imię"
+				<DataGridTextColumn Binding="{Binding Imie, UpdateSourceTrigger=LostFocus}" Header="Imię"
 				                    ElementStyle="{StaticResource 
 				MaterialDesignDataGridTextColumnStyle}"
 				                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
 				                    FontSize="16" />
 
 				<!-- Nazwisko -->
-				<DataGridTextColumn Binding="{Binding Nazwisko}" Header="Nazwisko"
+				<DataGridTextColumn Binding="{Binding Nazwisko, UpdateSourceTrigger=LostFocus}" Header="Nazwisko"
 				                    ElementStyle="{StaticResource 
 				MaterialDesignDataGridTextColumnStyle}"
 				                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"

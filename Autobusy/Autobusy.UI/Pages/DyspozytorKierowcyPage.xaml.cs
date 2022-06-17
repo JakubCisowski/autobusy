@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -35,7 +36,10 @@ public partial class DyspozytorKierowcyPage : Page
 
 	private void DodajKierowceButton_OnClick(object sender, RoutedEventArgs e)
 	{
-		var nowyKierowca = new Kierowca();
+		var nowyKierowca = new Kierowca()
+		{
+			Przejazdy = new List<Przejazd>()
+		};
 
 		_kierowcy.Add(nowyKierowca);
 
@@ -44,6 +48,8 @@ public partial class DyspozytorKierowcyPage : Page
 
 	private void SpalanieButton_OnClick(object sender, RoutedEventArgs e)
 	{
+		SaveChanges();
+		
 		if ((sender as Button)?.CommandParameter is not Kierowca kierowca)
 		{
 			return;
@@ -51,7 +57,7 @@ public partial class DyspozytorKierowcyPage : Page
 
 		var averageFuelConsumption = kierowca.Przejazdy?.Sum(x => x.IloscSpalonegoPaliwa);
 
-		if (averageFuelConsumption.HasValue)
+		if (averageFuelConsumption.HasValue && averageFuelConsumption.Value > double.Epsilon)
 		{
 			MessageBox.Show($"Średnie spalanie kierowcy {kierowca.Imie} {kierowca.Nazwisko} wynosi: {averageFuelConsumption.Value.ToString("0.00")}", "Średnie spalanie kierowcy");
 		}
@@ -71,6 +77,8 @@ public partial class DyspozytorKierowcyPage : Page
 
 	private void SpoznieniaButton_OnClick(object sender, RoutedEventArgs e)
 	{
+		SaveChanges();
+		
 		if ((sender as Button)?.CommandParameter is not Kierowca kierowca)
 		{
 			return;

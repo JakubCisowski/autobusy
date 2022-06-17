@@ -57,6 +57,8 @@ public partial class ZarzadcaFlotaPage : Page
 
 	private void WycofanieAutobusuButton_OnClick(object sender, RoutedEventArgs e)
 	{
+		SaveChanges();
+		
 		if ((sender as Button)?.CommandParameter is not Autobus autobus)
 		{
 			return;
@@ -69,11 +71,15 @@ public partial class ZarzadcaFlotaPage : Page
 			repo.Delete(autobus);
 		}
 
+		AutobusyGrid.ItemsSource = _autobusy;
+		
 		AutobusyGrid.Items.Refresh();
 	}
 
 	private void SerwisAutobusuButton_OnClick(object sender, RoutedEventArgs e)
 	{
+		SaveChanges();
+			
 		if ((sender as Button)?.CommandParameter is not Autobus autobus)
 		{
 			return;

@@ -34,6 +34,8 @@ public partial class PlanistaPrzystankiPage : Page
 
 	private void UsuwaniePrzystankuButton_OnClick(object sender, RoutedEventArgs e)
 	{
+		SaveChanges();
+		
 		if ((sender as Button)?.CommandParameter is not Przystanek przystanek)
 		{
 			return;
