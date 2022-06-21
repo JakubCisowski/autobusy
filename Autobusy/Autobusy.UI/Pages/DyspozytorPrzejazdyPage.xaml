@@ -23,6 +23,10 @@
 		<TextBlock Grid.Row="0" Grid.ColumnSpan="4" Text="Dyspozytor - Przejazdy" HorizontalAlignment="Center"
 		           VerticalAlignment="Center" FontSize="18" FontWeight="Bold" />
 		
+		<TextBlock Grid.Row="0" Grid.Column="1" Text="Linia" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,40,0,0" FontStyle="Italic"/>
+		
+		<TextBlock Grid.Row="0" Grid.Column="2" Text="Kurs" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,40,0,0" FontStyle="Italic"/>
+		
 		<ComboBox x:Name="LiniaComboBox" Grid.Row="1" Grid.Column="1" Width="100" Text="Wybór linii"
 		          SelectionChanged="LiniaComboBox_OnSelectionChanged" Margin="5,0,0,0"/>
 

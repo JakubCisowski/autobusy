@@ -30,31 +30,31 @@
 
 		<!-- Id -->
 		<StackPanel Grid.Column="0" VerticalAlignment="Center">
-			<TextBlock Text="Id" HorizontalAlignment="Center" />
-			<TextBox x:Name="IdBox" Margin="0,10,0,0" FontSize="16" Width="150" Height="50" Text="{Binding Id}"
-			         IsReadOnly="True" HorizontalContentAlignment="Center"/>
+			<TextBlock Text="Id" HorizontalAlignment="Center" FontStyle="Italic"/>
+			<TextBox x:Name="IdBox" Margin="0,10,0,0" FontSize="18" Width="150" Height="50" Text="{Binding Id}"
+			         IsReadOnly="True" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
 		</StackPanel>
 
 		<!-- Numer -->
 		<StackPanel Grid.Column="1" VerticalAlignment="Center">
-			<TextBlock Text="Numer" HorizontalAlignment="Center" />
-			<TextBox x:Name="NumerBox" Margin="0,10,0,0" FontSize="16" Width="150" Height="50"
-			         Text="{Binding Numer, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" HorizontalContentAlignment="Center"/>
+			<TextBlock Text="Numer" HorizontalAlignment="Center" FontStyle="Italic"/>
+			<TextBox x:Name="NumerBox" Margin="0,10,0,0" FontSize="18" Width="150" Height="50"
+			         Text="{Binding Numer, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
 		</StackPanel>
 
 		<!-- Typ linii -->
 		<StackPanel Grid.Column="2" VerticalAlignment="Center">
-			<TextBlock Text="Typ linii" HorizontalAlignment="Center" />
-			<ComboBox x:Name="TypLiniiComboBox" Margin="0,10,0,0" Width="150" Height="50"
+			<TextBlock Text="Typ linii" HorizontalAlignment="Center" FontStyle="Italic"/>
+			<ComboBox x:Name="TypLiniiComboBox" Margin="0,10,0,0" Width="150" Height="50" FontSize="18"
 			          ItemsSource="{Binding Source={StaticResource EnumDataProvider}}"
-			          SelectedValue="{Binding Typ, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalContentAlignment="Center"/>
+			          SelectedValue="{Binding Typ, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
 		</StackPanel>
 
 		<!-- Długość w KM -->
 		<StackPanel Grid.Column="3" VerticalAlignment="Center">
-			<TextBlock Text="Długość" HorizontalAlignment="Center" />
-			<TextBox x:Name="DlugoscBox" Margin="0,10,0,0" FontSize="16" Width="150" Height="50"
-			         Text="{Binding DlugoscWKm, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" HorizontalAlignment="Center"/>
+			<TextBlock Text="Długość" HorizontalAlignment="Center" FontStyle="Italic"/>
+			<TextBox x:Name="DlugoscBox" Margin="0,10,0,0" FontSize="18" Width="150" Height="50"
+			         Text="{Binding DlugoscWKm, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
 		</StackPanel>
 	</Grid>
 </Window>

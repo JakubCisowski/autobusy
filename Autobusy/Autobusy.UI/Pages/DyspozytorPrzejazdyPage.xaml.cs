@@ -119,7 +119,7 @@ public partial class DyspozytorPrzejazdyPage : Page
 			przejazdFromDb.Kierowca = WyborKierowcyWindow.Kierowca;
 			przejazdFromDb.KierowcaId = WyborKierowcyWindow.Kierowca.Id;
 			
-			repo.ExecuteSqlQuery($"UPDATE Przejazdy SET KierowcaId = {WyborKierowcyWindow.Kierowca.Id} WHERE Id = {przejazdFromDb.Id}");
+			repo.SaveChanges();
 
 			var przejadFromList = _przejazdy.FirstOrDefault(x => x.Id == przejazdFromDb.Id);
 			przejadFromList.Kierowca = WyborKierowcyWindow.Kierowca;
@@ -143,7 +143,7 @@ public partial class DyspozytorPrzejazdyPage : Page
 			przejazdFromDb.Autobus = WyborAutobusuWindow.Autobus;
 			przejazdFromDb.AutobusId = WyborAutobusuWindow.Autobus.Id;
 			
-			repo.ExecuteSqlQuery($"UPDATE Przejazdy SET AutobusId = {WyborAutobusuWindow.Autobus.Id} WHERE Id = {przejazdFromDb.Id}");
+			repo.SaveChanges();
 			
 			var przejadFromList = _przejazdy.FirstOrDefault(x => x.Id == przejazdFromDb.Id);
 			przejadFromList.Autobus = WyborAutobusuWindow.Autobus;
