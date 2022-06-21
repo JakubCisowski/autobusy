@@ -117,8 +117,13 @@ public partial class DyspozytorPrzejazdyPage : Page
 			var przejazdFromDb = repo.GetById(przejazd.Id);
 
 			przejazdFromDb.Kierowca = WyborKierowcyWindow.Kierowca;
+			przejazdFromDb.KierowcaId = WyborKierowcyWindow.Kierowca.Id;
 			
-			repo.SaveChanges();
+			repo.ExecuteSqlQuery($"UPDATE Przejazdy SET KierowcaId = {WyborKierowcyWindow.Kierowca.Id} WHERE Id = {przejazdFromDb.Id}");
+
+			var przejadFromList = _przejazdy.FirstOrDefault(x => x.Id == przejazdFromDb.Id);
+			przejadFromList.Kierowca = WyborKierowcyWindow.Kierowca;
+			przejadFromList.KierowcaId = WyborKierowcyWindow.Kierowca.Id;
 		}
 	}
 
@@ -136,8 +141,13 @@ public partial class DyspozytorPrzejazdyPage : Page
 			var przejazdFromDb = repo.GetById(przejazd.Id);
 
 			przejazdFromDb.Autobus = WyborAutobusuWindow.Autobus;
+			przejazdFromDb.AutobusId = WyborAutobusuWindow.Autobus.Id;
 			
-			repo.SaveChanges();
+			repo.ExecuteSqlQuery($"UPDATE Przejazdy SET AutobusId = {WyborAutobusuWindow.Autobus.Id} WHERE Id = {przejazdFromDb.Id}");
+			
+			var przejadFromList = _przejazdy.FirstOrDefault(x => x.Id == przejazdFromDb.Id);
+			przejadFromList.Autobus = WyborAutobusuWindow.Autobus;
+			przejadFromList.AutobusId = WyborAutobusuWindow.Autobus.Id;
 		}
 	}
 

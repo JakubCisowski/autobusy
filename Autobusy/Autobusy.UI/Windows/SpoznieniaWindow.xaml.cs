@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 using Autobusy.Logic.Contexts;
 using Autobusy.Logic.Models;
@@ -33,23 +34,30 @@ public partial class SpoznieniaWindow : Window
 
 		PrzejazdInfoBlock.Text = $"Data: {_przejazd.Data}, linia: {_przejazd.Kurs.Linia.Numer}";
 
-		_realizacjePrzejazdu = new List<RealizacjaPrzejazdu>();
-
-		foreach (var planKursu in _przejazd.Kurs.PlanyKursu)
+		if (_przejazd.RealizacjePrzejazdu != null && _przejazd.RealizacjePrzejazdu.Count > 0)
 		{
-			var realizacjaPrzejazdu = new RealizacjaPrzejazdu
-			{
-				FaktycznaGodzina = planKursu.PlanowaGodzina,
-				PlanKursu = planKursu,
-				Przejazd = _przejazd
-			};
-
-			_realizacjePrzejazdu.Add(realizacjaPrzejazdu);
-
-			planKursu.RealizacjePrzejazdu = _realizacjePrzejazdu;
+			_realizacjePrzejazdu = _przejazd.RealizacjePrzejazdu;
 		}
+		else
+		{
+			_realizacjePrzejazdu = new List<RealizacjaPrzejazdu>();
 
-		_przejazd.RealizacjePrzejazdu = _realizacjePrzejazdu;
+			foreach (var planKursu in _przejazd.Kurs.PlanyKursu)
+			{
+				var realizacjaPrzejazdu = new RealizacjaPrzejazdu
+				{
+					FaktycznaGodzina = planKursu.PlanowaGodzina,
+					PlanKursu = planKursu,
+					Przejazd = _przejazd
+				};
+
+				_realizacjePrzejazdu.Add(realizacjaPrzejazdu);
+
+				planKursu.RealizacjePrzejazdu = _realizacjePrzejazdu;
+			}
+
+			_przejazd.RealizacjePrzejazdu = _realizacjePrzejazdu;
+		}
 
 		this.DataContext = _realizacjePrzejazdu;
 	}
@@ -58,9 +66,16 @@ public partial class SpoznieniaWindow : Window
 	{
 		using (var repo = new DatabaseRepository<RealizacjaPrzejazdu>(new AutobusyContext()))
 		{
-			foreach (var realizacjaPrzejazdu in _realizacjePrzejazdu)
+			if (_realizacjePrzejazdu.All(x => x.Id == default))
 			{
-				repo.ExecuteSqlQuery($"INSERT INTO dbo.RealizacjePrzejazdu (FaktycznaGodzina, PlanKursuId, PrzejazdId) VALUES ('{realizacjaPrzejazdu.FaktycznaGodzina:s}', {realizacjaPrzejazdu.PlanKursu.Id}, {realizacjaPrzejazdu.Przejazd.Id})");
+				foreach (var realizacjaPrzejazdu in _realizacjePrzejazdu)
+				{
+					repo.ExecuteSqlQuery($"INSERT INTO dbo.RealizacjePrzejazdu (FaktycznaGodzina, PlanKursuId, PrzejazdId) VALUES ('{realizacjaPrzejazdu.FaktycznaGodzina:s}', {realizacjaPrzejazdu.PlanKursu.Id}, {realizacjaPrzejazdu.Przejazd.Id})");
+				}
+			}
+			else
+			{
+				repo.UpdateMany(_realizacjePrzejazdu);
 			}
 		}
 	}

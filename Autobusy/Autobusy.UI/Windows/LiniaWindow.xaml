@@ -32,14 +32,14 @@
 		<StackPanel Grid.Column="0" VerticalAlignment="Center">
 			<TextBlock Text="Id" HorizontalAlignment="Center" />
 			<TextBox x:Name="IdBox" Margin="0,10,0,0" FontSize="16" Width="150" Height="50" Text="{Binding Id}"
-			         IsReadOnly="True" />
+			         IsReadOnly="True" HorizontalContentAlignment="Center"/>
 		</StackPanel>
 
 		<!-- Numer -->
 		<StackPanel Grid.Column="1" VerticalAlignment="Center">
 			<TextBlock Text="Numer" HorizontalAlignment="Center" />
 			<TextBox x:Name="NumerBox" Margin="0,10,0,0" FontSize="16" Width="150" Height="50"
-			         Text="{Binding Numer, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
+			         Text="{Binding Numer, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" HorizontalContentAlignment="Center"/>
 		</StackPanel>
 
 		<!-- Typ linii -->
@@ -47,14 +47,14 @@
 			<TextBlock Text="Typ linii" HorizontalAlignment="Center" />
 			<ComboBox x:Name="TypLiniiComboBox" Margin="0,10,0,0" Width="150" Height="50"
 			          ItemsSource="{Binding Source={StaticResource EnumDataProvider}}"
-			          SelectedValue="{Binding Typ, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+			          SelectedValue="{Binding Typ, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalContentAlignment="Center"/>
 		</StackPanel>
 
 		<!-- Długość w KM -->
 		<StackPanel Grid.Column="3" VerticalAlignment="Center">
 			<TextBlock Text="Długość" HorizontalAlignment="Center" />
 			<TextBox x:Name="DlugoscBox" Margin="0,10,0,0" FontSize="16" Width="150" Height="50"
-			         Text="{Binding DlugoscWKm, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
+			         Text="{Binding DlugoscWKm, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" HorizontalAlignment="Center"/>
 		</StackPanel>
 	</Grid>
 </Window>
